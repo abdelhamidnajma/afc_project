@@ -1,4 +1,4 @@
-# AFC Beroepenproject 
+# AFC Beroepenproject
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlabsrv05.stichtingpraktijkleren.nl/abdelhamid.najma/afc-beroepenproject.git
+git remote add origin https://gitlabsrv05.stichtingpraktijkleren.nl/naira.choudhry/afc-beroepenproject.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlabsrv05.stichtingpraktijkleren.nl/abdelhamid.najma/afc-beroepenproject/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlabsrv05.stichtingpraktijkleren.nl/naira.choudhry/afc-beroepenproject/-/settings/integrations)
 
 ## Collaborate with your team
 

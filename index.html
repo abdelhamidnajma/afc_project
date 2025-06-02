@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - AFC</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/logo.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <button class="nav-toggle" aria-label="Toggle Navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="AFC Logo">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i>Nieuws</a></li>
+                <li><a href="wedstrijden.html"><i class="fas fa-futbol"></i>Wedstrijden</a></li>
+                <li><a href="teams.html"><i class="fas fa-users"></i>Teams</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+                <li><a href="admin.html"><i class="fas fa-user-shield"></i>Admin</a></li>
+            </ul>
+            <button class="theme-toggle" aria-label="Toggle Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Welkom bij AFC</h1>
+                    <p class="subtitle">Ontdek de passie voor voetbal bij onze vereniging</p>
+                    <div class="hero-buttons">
+                        <a href="#nieuws" class="btn btn-primary">Bekijk het laatste nieuws</a>
+                        <a href="contact.html" class="btn btn-secondary">Word lid</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Next Match Section -->
+        <section class="section">
+            <div class="container">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="match-info">
+                            <div class="match-date">
+                                <span class="day">15</span>
+                                <span class="month">Mei</span>
+                                <span class="year">2024</span>
+                            </div>
+                            <div class="match-teams">
+                                <div class="team home">
+                                    <img src="images/team1.jpg" alt="AFC">
+                                    <h3>AFC</h3>
+                                    <span class="team-stats">1e plaats</span>
+                                </div>
+                                <div class="match-details">
+                                    <span class="time">15:00</span>
+                                    <span class="vs">VS</span>
+                                    <span class="competition">Hoofdklasse</span>
+                                    <span class="stadium">Sportpark</span>
+                                </div>
+                                <div class="team away">
+                                    <img src="images/team2.jpg" alt="Tegenstander">
+                                    <h3>Rivalen</h3>
+                                    <span class="team-stats">3e plaats</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="match-actions">
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-ticket-alt"></i>
+                                Koop Tickets
+                            </a>
+                            <a href="#" class="btn btn-secondary">
+                                <i class="fas fa-info-circle"></i>
+                                Wedstrijd Info
+                            </a>
+                            <a href="#" class="btn btn-secondary">
+                                <i class="far fa-calendar-alt"></i>
+                                Voeg toe aan agenda
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured News Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Uitgelicht Nieuws</h2>
+                    <p class="subtitle">Blijf op de hoogte van het laatste nieuws</p>
+                </div>
+                <div class="featured-grid">
+                    <article class="card featured-card main">
+                        <div class="card-image">
+                            <img src="images/featured1.jpg" alt="Kampioenschap AFC 1">
+                            <span class="category">Hoofdklasse</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">
+                                <span class="date"><i class="far fa-calendar"></i> 10 mei 2024</span>
+                                <span class="author"><i class="far fa-user"></i> Redactie</span>
+                            </div>
+                            <h3>Kampioenschap voor AFC 1!</h3>
+                            <p>Na een zinderend seizoen is AFC 1 kampioen geworden in de hoofdklasse. De ontlading was groot na het laatste fluitsignaal.</p>
+                            <a href="#" class="btn btn-secondary">Lees het verslag</a>
+                        </div>
+                    </article>
+                    <div class="featured-side">
+                        <article class="card featured-card">
+                            <div class="card-image">
+                                <img src="images/featured2.jpg" alt="Jeugdtoernooi AFC">
+                                <span class="category">Jeugd</span>
+                            </div>
+                            <div class="card-content">
+                                <h3>Jeugdtoernooi AFC groot succes</h3>
+                                <p>Meer dan 200 kinderen deden mee aan het jaarlijkse jeugdtoernooi. Het was een dag vol sportiviteit en plezier.</p>
+                                <a href="#" class="btn btn-secondary">Lees meer</a>
+                            </div>
+                        </article>
+                        <article class="card featured-card">
+                            <div class="card-image">
+                                <img src="images/featured3.jpg" alt="Nieuwe kantine AFC">
+                                <span class="category">Faciliteiten</span>
+                            </div>
+                            <div class="card-content">
+                                <h3>Nieuwe kantine AFC geopend</h3>
+                                <p>De vernieuwde kantine is feestelijk geopend! Kom snel langs voor een hapje en drankje na de wedstrijd.</p>
+                                <a href="#" class="btn btn-secondary">Lees meer</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teams Overview Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Onze Teams</h2>
+                    <p class="subtitle">Ontdek onze verschillende teams en hun prestaties</p>
+                </div>
+                <div class="teams-grid">
+                    <div class="card team-card">
+                        <div class="card-image">
+                            <img src="images/team1.jpg" alt="Eerste Elftal">
+                            <div class="team-overlay">
+                                <div class="team-stats">
+                                    <div class="stat">
+                                        <span class="stat-value">24</span>
+                                        <span class="stat-label">Wedstrijden</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-value">45</span>
+                                        <span class="stat-label">Punten</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-value">1</span>
+                                        <span class="stat-label">Plaats</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Eerste Elftal</h3>
+                            <p>Hoofdklasse</p>
+                            <a href="teams.html" class="btn btn-secondary">Team Details</a>
+                        </div>
+                    </div>
+                    <!-- More team cards... -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest News Section -->
+        <section id="nieuws" class="news-section">
+            <div class="section-header">
+                <h2>Laatste Nieuws</h2>
+                <div class="news-filters">
+                    <button class="filter-btn active" data-filter="all">Alles</button>
+                    <button class="filter-btn" data-filter="team">Team</button>
+                    <button class="filter-btn" data-filter="jeugd">Jeugd</button>
+                    <button class="filter-btn" data-filter="faciliteiten">Faciliteiten</button>
+                </div>
+            </div>
+            <div class="news-grid">
+                <article class="news-card" data-category="team">
+                    <div class="news-image">
+                        <img src="images/news1.jpg" alt="Nieuws 1">
+                        <span class="category">Team</span>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="date"><i class="far fa-calendar"></i> 10 Mei 2024</span>
+                            <span class="author"><i class="far fa-user"></i> AFC</span>
+                        </div>
+                        <h3>Succesvol seizoen voor AFC</h3>
+                        <p>Ons eerste elftal heeft een geweldig seizoen achter de rug met promotie naar de hoofdklasse.</p>
+                        <a href="#" class="read-more">Lees meer <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <!-- More news cards... -->
+            </div>
+            <div class="load-more">
+                <button class="load-more-btn">
+                    <span>Laad meer nieuws</span>
+                    <i class="fas fa-spinner"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter-section">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h2>Blijf op de hoogte</h2>
+                    <p>Schrijf je in voor onze nieuwsbrief en mis geen enkel nieuws of evenement</p>
+                </div>
+                <form class="newsletter-form">
+                    <div class="form-group">
+                        <input type="email" placeholder="Jouw e-mailadres" required>
+                        <button type="submit">
+                            <span>Inschrijven</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Sportpark 1, 1234 AB Stad</p>
+                    <p><i class="fas fa-phone"></i> (012) 345 6789</p>
+                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Openingstijden</h3>
+                    <p>Maandag - Vrijdag: 09:00 - 22:00</p>
+                    <p>Zaterdag: 10:00 - 18:00</p>
+                    <p>Zondag: 12:00 - 17:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Volg ons</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AFC. Alle rechten voorbehouden.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html> 

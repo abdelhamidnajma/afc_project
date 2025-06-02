@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uitslagen - AFC</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/logo.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <button class="nav-toggle" aria-label="Toggle Navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="AFC Logo">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i>Nieuws</a></li>
+                <li><a href="wedstrijden.html"><i class="fas fa-futbol"></i>Wedstrijden</a></li>
+                <li><a href="teams.html"><i class="fas fa-users"></i>Teams</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+            </ul>
+            <button class="theme-toggle" aria-label="Toggle Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="results-hero">
+            <div class="container">
+                <h1>Wedstrijduitslagen</h1>
+                <p class="subtitle">Bekijk alle uitslagen van onze teams</p>
+            </div>
+        </section>
+
+        <section class="results-section">
+            <div class="container">
+                <div class="results-filters">
+                    <div class="filter-group">
+                        <label for="competition-filter">Competitie</label>
+                        <select id="competition-filter">
+                            <option value="">Alle competities</option>
+                            <option value="Hoofdklasse">Hoofdklasse</option>
+                            <option value="Eerste Klasse">Eerste Klasse</option>
+                            <option value="Tweede Klasse">Tweede Klasse</option>
+                            <option value="Derde Klasse">Derde Klasse</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="team-filter">Team</label>
+                        <select id="team-filter">
+                            <option value="">Alle teams</option>
+                            <option value="AFC 1">AFC 1</option>
+                            <option value="AFC 2">AFC 2</option>
+                            <option value="AFC 3">AFC 3</option>
+                            <option value="AFC 4">AFC 4</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="date-filter">Periode</label>
+                        <select id="date-filter">
+                            <option value="all">Alle periodes</option>
+                            <option value="week">Afgelopen week</option>
+                            <option value="month">Afgelopen maand</option>
+                            <option value="season">Dit seizoen</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="results-grid" id="results-grid">
+                    <!-- Results will be populated by JavaScript -->
+                </div>
+
+                <div class="results-summary">
+                    <div class="summary-card">
+                        <h3>Team Statistieken</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-value" id="total-matches">0</span>
+                                <span class="stat-label">Wedstrijden</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="total-wins">0</span>
+                                <span class="stat-label">Gewonnen</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="total-draws">0</span>
+                                <span class="stat-label">Gelijk</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="total-losses">0</span>
+                                <span class="stat-label">Verloren</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Sportpark 1, 1234 AB Stad</p>
+                    <p><i class="fas fa-phone"></i> (012) 345 6789</p>
+                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Volg Ons</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Links</h3>
+                    <ul>
+                        <li><a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="sponsors.html">Sponsors</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AFC. Alle rechten voorbehouden.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Update copyright year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Load and filter results
+        function loadResults() {
+            const competition = document.getElementById('competition-filter').value;
+            const team = document.getElementById('team-filter').value;
+            const period = document.getElementById('date-filter').value;
+
+            fetch('php/get-results.php')
+                .then(response => response.json())
+                .then(data => {
+                    // Filter results
+                    let filteredResults = data;
+                    
+                    if (competition) {
+                        filteredResults = filteredResults.filter(result => 
+                            result.competition === competition
+                        );
+                    }
+                    
+                    if (team) {
+                        filteredResults = filteredResults.filter(result => 
+                            result.team1 === team || result.team2 === team
+                        );
+                    }
+                    
+                    if (period !== 'all') {
+                        const now = new Date();
+                        const cutoff = new Date();
+                        
+                        switch (period) {
+                            case 'week':
+                                cutoff.setDate(now.getDate() - 7);
+                                break;
+                            case 'month':
+                                cutoff.setMonth(now.getMonth() - 1);
+                                break;
+                            case 'season':
+                                cutoff.setMonth(7); // Start of season (August)
+                                cutoff.setDate(1);
+                                break;
+                        }
+                        
+                        filteredResults = filteredResults.filter(result => 
+                            new Date(result.date) >= cutoff
+                        );
+                    }
+
+                    // Update results display
+                    displayResults(filteredResults);
+                    updateStats(filteredResults, team);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Er is een fout opgetreden bij het laden van de uitslagen.');
+                });
+        }
+
+        // Display results in grid
+        function displayResults(results) {
+            const grid = document.getElementById('results-grid');
+            grid.innerHTML = '';
+
+            if (results.length === 0) {
+                grid.innerHTML = '<p class="no-results">Geen uitslagen gevonden</p>';
+                return;
+            }
+
+            results.forEach(result => {
+                const resultCard = document.createElement('div');
+                resultCard.className = 'result-card';
+                
+                const date = new Date(result.date);
+                const formattedDate = date.toLocaleDateString('nl-NL', {
+                    weekday: 'long',
+                    day: 'numeric',
+                    month: 'long'
+                });
+
+                resultCard.innerHTML = `
+                    <div class="result-header">
+                        <span class="competition">${result.competition}</span>
+                        <span class="date">${formattedDate}</span>
+                    </div>
+                    <div class="result-content">
+                        <div class="team team1">
+                            <span class="team-name">${result.team1}</span>
+                            <span class="score">${result.score1}</span>
+                        </div>
+                        <div class="versus">-</div>
+                        <div class="team team2">
+                            <span class="team-name">${result.team2}</span>
+                            <span class="score">${result.score2}</span>
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(resultCard);
+            });
+        }
+
+        // Update statistics
+        function updateStats(results, selectedTeam) {
+            let stats = {
+                matches: results.length,
+                wins: 0,
+                draws: 0,
+                losses: 0
+            };
+
+            if (selectedTeam) {
+                results.forEach(result => {
+                    const isTeam1 = result.team1 === selectedTeam;
+                    const teamScore = isTeam1 ? result.score1 : result.score2;
+                    const opponentScore = isTeam1 ? result.score2 : result.score1;
+
+                    if (teamScore > opponentScore) stats.wins++;
+                    else if (teamScore === opponentScore) stats.draws++;
+                    else stats.losses++;
+                });
+            }
+
+            document.getElementById('total-matches').textContent = stats.matches;
+            document.getElementById('total-wins').textContent = stats.wins;
+            document.getElementById('total-draws').textContent = stats.draws;
+            document.getElementById('total-losses').textContent = stats.losses;
+        }
+
+        // Add event listeners for filters
+        document.getElementById('competition-filter').addEventListener('change', loadResults);
+        document.getElementById('team-filter').addEventListener('change', loadResults);
+        document.getElementById('date-filter').addEventListener('change', loadResults);
+
+        // Load initial results
+        document.addEventListener('DOMContentLoaded', loadResults);
+    </script>
+
+    <style>
+        .results-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .filter-group select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .result-header {
+            background: #f8f9fa;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .competition {
+            font-weight: 600;
+            color: #007bff;
+        }
+
+        .date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .result-content {
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .team-name {
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .score {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #007bff;
+        }
+
+        .versus {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .results-summary {
+            margin-top: 2rem;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #007bff;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-content {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</body>
+</html> 

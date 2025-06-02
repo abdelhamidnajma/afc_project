@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registratie - AFC</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/logo.png">
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-header">
+            <img src="../images/logo.png" alt="Logo" class="register-logo">
+            <h1>Admin Registratie</h1>
+            <p>Maak een nieuw admin account aan</p>
+        </div>
+
+        <form id="registerForm" class="register-form" method="POST" action="auth.php">
+            <div class="form-group">
+                <label for="username">Gebruikersnaam</label>
+                <input type="text" id="username" name="username" required
+                       minlength="3" maxlength="50"
+                       pattern="[a-zA-Z0-9_-]+"
+                       title="Alleen letters, cijfers, underscores en streepjes zijn toegestaan">
+                <div class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="role">Rol</label>
+                <select id="role" name="role" required>
+                    <option value="editor" selected>Editor</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+                <div class="error-message"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mailadres</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error-message"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Wachtwoord</label>
+                <input type="password" id="password" name="password" required
+                       minlength="8">
+                <div class="password-requirements">
+                    <p>Wachtwoord moet voldoen aan:</p>
+                    <ul>
+                        <li id="length" class="invalid">
+                            <i class="fas fa-times"></i>
+                            Minimaal 8 karakters
+                        </li>
+                        <li id="uppercase" class="invalid">
+                            <i class="fas fa-times"></i>
+                            Minimaal 1 hoofdletter
+                        </li>
+                        <li id="lowercase" class="invalid">
+                            <i class="fas fa-times"></i>
+                            Minimaal 1 kleine letter
+                        </li>
+                        <li id="number" class="invalid">
+                            <i class="fas fa-times"></i>
+                            Minimaal 1 cijfer
+                        </li>
+                        <li id="special" class="invalid">
+                            <i class="fas fa-times"></i>
+                            Minimaal 1 speciaal teken
+                        </li>
+                    </ul>
+                </div>
+                <div class="error-message"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Bevestig wachtwoord</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div class="error-message"></div>
+            </div>
+
+            <div class="form-footer">
+                <a href="admin.html" class="login-link">Terug naar login</a>
+                <button type="submit" class="btn btn-primary">Registreren</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registerForm');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const requirements = {
+                length: document.getElementById('length'),
+                uppercase: document.getElementById('uppercase'),
+                lowercase: document.getElementById('lowercase'),
+                number: document.getElementById('number'),
+                special: document.getElementById('special')
+            };
+
+            // Password validation rules
+            const rules = {
+                length: (pwd) => pwd.length >= 8,
+                uppercase: (pwd) => /[A-Z]/.test(pwd),
+                lowercase: (pwd) => /[a-z]/.test(pwd),
+                number: (pwd) => /[0-9]/.test(pwd),
+                special: (pwd) => /[!@#$%^&*(),.?":{}|<>]/.test(pwd)
+            };
+
+            // Update password requirements in real-time
+            password.addEventListener('input', function() {
+                const pwd = this.value;
+                Object.keys(rules).forEach(rule => {
+                    const isValid = rules[rule](pwd);
+                    requirements[rule].className = isValid ? 'valid' : 'invalid';
+                    requirements[rule].querySelector('i').className = 
+                        isValid ? 'fas fa-check' : 'fas fa-times';
+                });
+            });
+
+            // Form validation
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Reset previous errors
+                document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+                document.querySelectorAll('input.error').forEach(el => el.classList.remove('error'));
+
+                // Validate all fields
+                let isValid = true;
+                const formData = new FormData(form);
+
+                // Username validation
+                const username = formData.get('username');
+                if (!/^[a-zA-Z0-9_-]{3,50}$/.test(username)) {
+                    showError('username', 'Gebruikersnaam moet 3-50 karakters bevatten en mag alleen letters, cijfers, underscores en streepjes bevatten');
+                    isValid = false;
+                }
+
+                // Email validation
+                const email = formData.get('email');
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showError('email', 'Voer een geldig e-mailadres in');
+                    isValid = false;
+                }
+
+                // Password validation
+                const pwd = formData.get('password');
+                if (!Object.values(rules).every(rule => rule(pwd))) {
+                    showError('password', 'Wachtwoord voldoet niet aan alle vereisten');
+                    isValid = false;
+                }
+
+                // Confirm password
+                if (pwd !== formData.get('confirmPassword')) {
+                    showError('confirmPassword', 'Wachtwoorden komen niet overeen');
+                    isValid = false;
+                }
+
+                if (!isValid) return;
+
+                try {
+                    const response = await fetch('auth.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                body: JSON.stringify({
+                    action: 'register',
+                    username: username,
+                    role: formData.get('role'),
+                    email: email,
+                    password: pwd
+                })
+                    });
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        alert('Registratie succesvol! U kunt nu inloggen.');
+                        window.location.href = 'admin.html';
+                    } else {
+                        // Show backend error message if available
+                        const message = data.message || 'Er is een fout opgetreden bij het registreren';
+                        showError('username', message);
+                    }
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    // Show error message from error object if available
+                    const message = error.message || 'Er is een fout opgetreden bij het registreren';
+                    showError('username', message);
+                }
+            });
+
+            function showError(fieldId, message) {
+                const field = document.getElementById(fieldId);
+                const errorDiv = field.nextElementSibling;
+                field.classList.add('error');
+                errorDiv.textContent = message;
+            }
+        });
+    </script>
+</body>
+</html> 

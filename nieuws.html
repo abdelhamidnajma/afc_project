@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nieuws - AFC</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/logo.png">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="AFC Logo">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="teams.html"><i class="fas fa-users"></i>Teams</a></li>
+                <li><a href="nieuws.html" class="active"><i class="fas fa-newspaper"></i>Nieuws</a></li>
+                <li><a href="wedstrijden.html"><i class="fas fa-futbol"></i>Wedstrijden</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+                <li><a href="admin.html"><i class="fas fa-user-shield"></i>Admin</a></li>
+            </ul>
+            <button class="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="news-hero">
+            <div class="hero-content">
+                <h1>Nieuws</h1>
+                <p>Blijf op de hoogte van het laatste nieuws</p>
+            </div>
+        </section>
+
+        <section class="news-section">
+            <div class="news-container">
+                <div class="news-filters">
+                    <button class="filter-btn active" data-filter="all">Alle</button>
+                    <button class="filter-btn" data-filter="team">Team</button>
+                    <button class="filter-btn" data-filter="club">Club</button>
+                    <button class="filter-btn" data-filter="jeugd">Jeugd</button>
+                </div>
+
+                <div class="news-grid">
+                    <article class="news-card" data-category="team">
+                        <img src="images/news1.jpg" alt="Kampioenschap">
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span class="news-date">10 Mei 2024</span>
+                                <span class="news-category">Team</span>
+                            </div>
+                            <h3>Eerste Team Kampioen!</h3>
+                            <p>In een spannende wedstrijd heeft ons eerste team het kampioenschap gewonnen...</p>
+                            <a href="#" class="read-more">Lees meer</a>
+                        </div>
+                    </article>
+
+                    <article class="news-card" data-category="club">
+                        <img src="images/news2.jpg" alt="Nieuwe Trainer">
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span class="news-date">8 Mei 2024</span>
+                                <span class="news-category">Club</span>
+                            </div>
+                            <h3>Nieuwe Trainer Aangesteld</h3>
+                            <p>We zijn verheugd om aan te kondigen dat we een nieuwe trainer hebben aangesteld...</p>
+                            <a href="#" class="read-more">Lees meer</a>
+                        </div>
+                    </article>
+
+                    <article class="news-card" data-category="jeugd">
+                        <img src="images/news3.jpg" alt="Jeugdtoernooi">
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span class="news-date">5 Mei 2024</span>
+                                <span class="news-category">Jeugd</span>
+                            </div>
+                            <h3>Jeugdteam Wint Toernooi</h3>
+                            <p>Ons jeugdteam heeft het regionale toernooi gewonnen...</p>
+                            <a href="#" class="read-more">Lees meer</a>
+                        </div>
+                    </article>
+
+                    <article class="news-card" data-category="club">
+                        <img src="images/news4.jpg" alt="Faciliteiten">
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span class="news-date">3 Mei 2024</span>
+                                <span class="news-category">Club</span>
+                            </div>
+                            <h3>Nieuwe Trainingsfaciliteiten</h3>
+                            <p>De club heeft nieuwe trainingsfaciliteiten geopend...</p>
+                            <a href="#" class="read-more">Lees meer</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="news-pagination">
+                    <button class="pagination-btn active">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">3</button>
+                    <button class="pagination-btn next">Volgende</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter-section">
+            <div class="newsletter-content">
+                <h2>Blijf op de hoogte</h2>
+                <p>Schrijf je in voor onze nieuwsbrief en ontvang het laatste nieuws direct in je inbox.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Je e-mailadres" required>
+                    <button type="submit" class="submit-button">Inschrijven</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Sportpark 1, 1234 AB Stad</p>
+                <p><i class="fas fa-phone"></i> (012) 345 6789</p>
+                <p><i class="fas fa-envelope"></i> info@afc.nl</p>
+            </div>
+            <div class="footer-section">
+                <h3>Volg ons</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Openingstijden</h3>
+                <p>Ma-Vr: 09:00 - 22:00</p>
+                <p>Za-Zo: 10:00 - 18:00</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AFC. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const newsGrid = document.querySelector('.news-grid');
+            const filterButtons = document.querySelectorAll('.news-filters .filter-btn');
+            const paginationButtons = document.querySelectorAll('.news-pagination .pagination-btn');
+
+            let currentPage = 1;
+            const itemsPerPage = 6; // Adjust based on how many items you want per page
+            let currentFilter = 'all';
+
+            async function fetchNews(page = 1, filter = 'all') {
+                try {
+                    const offset = (page - 1) * itemsPerPage;
+                    const response = await fetch('admin/api.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'get_news',
+                            offset: offset,
+                            limit: itemsPerPage,
+                            filter: filter
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success && data.news) {
+                        displayNews(data.news);
+                         // You might need to update pagination controls based on total items from backend
+
+                    } else {
+                        console.error('Error fetching news:', data.message);
+                        // Optionally display an error message on the page
+                    }
+                } catch (error) {
+                    console.error('Error fetching news:', error);
+                    // Optionally display an error message on the page
+                } finally {
+                    // You might want to re-enable buttons or hide loading indicators here
+                }
+            }
+
+            function displayNews(newsItems) {
+                newsGrid.innerHTML = ''; // Clear current news
+                if (newsItems.length === 0) {
+                    newsGrid.innerHTML = '<p>Geen nieuws gevonden voor deze selectie.</p>';
+                    return;
+                }
+
+                newsItems.forEach(news => {
+                    const newsCard = document.createElement('article');
+                    newsCard.classList.add('news-card');
+                    newsCard.dataset.category = news.category; // Add category data attribute
+
+                    newsCard.innerHTML = `
+                        <img src="images/news/${news.image_url || 'default.jpg'}" alt="${news.title}">
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span class="news-date">${new Date(news.created_at).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                                <span class="news-category">${news.category}</span>
+                            </div>
+                            <h3>${news.title}</h3>
+                            <p>${news.excerpt || news.content.substring(0, 150) + '...'}</p>
+                            <a href="nieuws-detail.html?id=${news.id}" class="read-more">Lees meer</a>
+                        </div>
+                    `;
+                    newsGrid.appendChild(newsCard);
+                });
+            }
+
+            // Initial load
+            fetchNews(currentPage, currentFilter);
+
+            // Filter button click handling
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    currentPage = 1; // Reset to first page on filter change
+                    fetchNews(currentPage, currentFilter);
+                });
+            });
+
+            // Pagination button click handling (You'll need to implement logic to show/hide buttons)
+            paginationButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.classList.contains('next')) {
+                        currentPage++;
+                    } else {
+                        currentPage = parseInt(this.textContent);
+                    }
+                     // Add logic to disable/enable next/prev buttons based on total pages
+                    fetchNews(currentPage, currentFilter);
+                });
+            });
+
+            // Note: Full pagination logic (calculating total pages, disabling/enabling buttons)
+            // would require the backend to return the total number of news items.
+            // The current implementation fetches one page at a time.
+        });
+    </script>
+</body>
+</html> 

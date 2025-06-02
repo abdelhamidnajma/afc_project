@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uitslagen Admin - AFC</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/logo.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <button class="nav-toggle" aria-label="Toggle Navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="AFC Logo">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i>Nieuws</a></li>
+                <li><a href="wedstrijden.html"><i class="fas fa-futbol"></i>Wedstrijden</a></li>
+                <li><a href="teams.html"><i class="fas fa-users"></i>Teams</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+            </ul>
+            <button class="theme-toggle" aria-label="Toggle Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="admin-hero">
+            <div class="container">
+                <h1>Uitslagen Beheer</h1>
+                <p class="subtitle">Beheer wedstrijduitslagen en competities</p>
+            </div>
+        </section>
+
+        <section class="admin-content">
+            <div class="container">
+                <div class="admin-grid">
+                    <!-- Add Result Form -->
+                    <div class="admin-card">
+                        <h2>Nieuwe Uitslag Toevoegen</h2>
+                        <form id="add-result-form" class="admin-form">
+                            <div class="form-group">
+                                <label for="competition">Competitie</label>
+                                <select id="competition" name="competition" required>
+                                    <option value="">Selecteer competitie</option>
+                                    <option value="Hoofdklasse">Hoofdklasse</option>
+                                    <option value="Eerste Klasse">Eerste Klasse</option>
+                                    <option value="Tweede Klasse">Tweede Klasse</option>
+                                    <option value="Derde Klasse">Derde Klasse</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="team1">Team 1</label>
+                                <select id="team1" name="team1" required>
+                                    <option value="">Selecteer team</option>
+                                    <option value="AFC 1">AFC 1</option>
+                                    <option value="AFC 2">AFC 2</option>
+                                    <option value="AFC 3">AFC 3</option>
+                                    <option value="AFC 4">AFC 4</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="team2">Team 2</label>
+                                <select id="team2" name="team2" required>
+                                    <option value="">Selecteer team</option>
+                                    <option value="Rivalen 1">Rivalen 1</option>
+                                    <option value="Rivalen 2">Rivalen 2</option>
+                                    <option value="Rivalen 3">Rivalen 3</option>
+                                    <option value="Rivalen 4">Rivalen 4</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="score1">Score Team 1</label>
+                                    <input type="number" id="score1" name="score1" min="0" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="score2">Score Team 2</label>
+                                    <input type="number" id="score2" name="score2" min="0" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="match-date">Datum</label>
+                                <input type="date" id="match-date" name="match-date" required>
+                            </div>
+
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-save"></i> Uitslag Opslaan
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Recent Results -->
+                    <div class="admin-card">
+                        <h2>Recente Uitslagen</h2>
+                        <div class="results-table-wrapper">
+                            <table class="results-table">
+                                <thead>
+                                    <tr>
+                                        <th>Datum</th>
+                                        <th>Competitie</th>
+                                        <th>Team 1</th>
+                                        <th>Score</th>
+                                        <th>Team 2</th>
+                                        <th>Acties</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-results">
+                                    <!-- Results will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Sportpark 1, 1234 AB Stad</p>
+                    <p><i class="fas fa-phone"></i> (012) 345 6789</p>
+                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Volg Ons</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Links</h3>
+                    <ul>
+                        <li><a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="sponsors.html">Sponsors</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AFC. Alle rechten voorbehouden.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        // Update copyright year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Form submission
+        document.getElementById('add-result-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = {
+                competition: formData.get('competition'),
+                team1: formData.get('team1'),
+                team2: formData.get('team2'),
+                score1: formData.get('score1'),
+                score2: formData.get('score2'),
+                date: formData.get('match-date')
+            };
+
+            // Send to server
+            fetch('php/add-result.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Uitslag succesvol toegevoegd!');
+                    this.reset();
+                    loadRecentResults(); // Reload the results table
+                } else {
+                    alert('Er is een fout opgetreden: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Er is een fout opgetreden bij het opslaan van de uitslag.');
+            });
+        });
+
+        // Load recent results
+        function loadRecentResults() {
+            fetch('php/get-results.php')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('recent-results');
+                    tbody.innerHTML = '';
+
+                    data.forEach(result => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${formatDate(result.date)}</td>
+                            <td>${result.competition}</td>
+                            <td>${result.team1}</td>
+                            <td>${result.score1} - ${result.score2}</td>
+                            <td>${result.team2}</td>
+                            <td>
+                                <button class="btn-icon edit" data-id="${result.id}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete" data-id="${result.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+
+                    // Add event listeners for edit and delete buttons
+                    addResultActionListeners();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Er is een fout opgetreden bij het laden van de uitslagen.');
+                });
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            return new Date(dateString).toLocaleDateString('nl-NL', options);
+        }
+
+        // Add event listeners for edit and delete buttons
+        function addResultActionListeners() {
+            document.querySelectorAll('.btn-icon.edit').forEach(button => {
+                button.addEventListener('click', function() {
+                    const resultId = this.dataset.id;
+                    // Implement edit functionality
+                    alert('Edit functionality coming soon!');
+                });
+            });
+
+            document.querySelectorAll('.btn-icon.delete').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (confirm('Weet je zeker dat je deze uitslag wilt verwijderen?')) {
+                        const resultId = this.dataset.id;
+                        deleteResult(resultId);
+                    }
+                });
+            });
+        }
+
+        // Delete result
+        function deleteResult(resultId) {
+            fetch('php/delete-result.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: resultId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Uitslag succesvol verwijderd!');
+                    loadRecentResults(); // Reload the results table
+                } else {
+                    alert('Er is een fout opgetreden: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Er is een fout opgetreden bij het verwijderen van de uitslag.');
+            });
+        }
+
+        // Load initial results
+        document.addEventListener('DOMContentLoaded', loadRecentResults);
+    </script>
+
+    <style>
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .admin-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .results-table-wrapper {
+            overflow-x: auto;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .results-table th,
+        .results-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .results-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            color: #666;
+            transition: color 0.2s;
+        }
+
+        .btn-icon.edit:hover {
+            color: #007bff;
+        }
+
+        .btn-icon.delete:hover {
+            color: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html> 

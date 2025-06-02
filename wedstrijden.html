@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedstrijden - AFC</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/logo.png">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="AFC Logo">
+                </a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="teams.html"><i class="fas fa-users"></i>Teams</a></li>
+                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i>Nieuws</a></li>
+                <li><a href="wedstrijden.html" class="active"><i class="fas fa-futbol"></i>Wedstrijden</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+                <li><a href="admin.html"><i class="fas fa-user-shield"></i>Admin</a></li>
+            </ul>
+            <button class="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="matches-hero">
+            <div class="hero-content">
+                <h1>Wedstrijden</h1>
+                <p>Bekijk onze aankomende en afgelopen wedstrijden</p>
+            </div>
+        </section>
+
+        <section class="matches-section">
+            <div class="matches-container">
+                <div class="matches-header">
+                    <div class="matches-tabs">
+                        <button class="tab-btn active" data-tab="upcoming">Aankomende Wedstrijden</button>
+                        <button class="tab-btn" data-tab="past">Afgelopen Wedstrijden</button>
+                    </div>
+                    <div class="matches-filter">
+                        <select id="teamFilter" class="filter-select">
+                            <option value="all">Alle Teams</option>
+                            <option value="senior">Senioren</option>
+                            <option value="youth">Jeugd</option>
+                            <option value="women">Vrouwen</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="matches-content">
+                    <div class="tab-content active" id="upcoming">
+                        <div class="matches-grid">
+                            <div class="match-card">
+                                <div class="match-header">
+                                    <span class="match-date">10 Mei 2024</span>
+                                    <span class="match-time">15:00</span>
+                                </div>
+                                <div class="match-teams">
+                                    <div class="team">
+                                        <img src="images/teams/afc-senior.jpg" alt="AFC">
+                                        <span>AFC</span>
+                                    </div>
+                                    <div class="vs">VS</div>
+                                    <div class="team">
+                                        <img src="images/teams/quick-boys.jpg" alt="Quick Boys">
+                                        <span>Quick Boys</span>
+                                    </div>
+                                </div>
+                                <div class="match-info">
+                                    <span class="match-location"><i class="fas fa-map-marker-alt"></i> Sportpark Goed Genoeg</span>
+                                    <div class="match-actions">
+                                        <a href="#" class="match-link"><i class="fas fa-info-circle"></i> Info</a>
+                                        <a href="#" class="match-link"><i class="fas fa-ticket-alt"></i> Tickets</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="match-card">
+                                <div class="match-header">
+                                    <span class="match-date">17 Mei 2024</span>
+                                    <span class="match-time">19:30</span>
+                                </div>
+                                <div class="match-teams">
+                                    <div class="team">
+                                        <img src="images/teams/jong-almere.jpg" alt="Jong Almere City">
+                                        <span>Jong Almere City</span>
+                                    </div>
+                                    <div class="vs">VS</div>
+                                    <div class="team">
+                                        <img src="images/teams/afc-senior.jpg" alt="AFC">
+                                        <span>AFC</span>
+                                    </div>
+                                </div>
+                                <div class="match-info">
+                                    <span class="match-location"><i class="fas fa-map-marker-alt"></i> Uitwedstrijd</span>
+                                    <div class="match-actions">
+                                        <a href="#" class="match-link"><i class="fas fa-info-circle"></i> Info</a>
+                                        <a href="#" class="match-link"><i class="fas fa-ticket-alt"></i> Tickets</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="load-more">
+                            <button class="btn load-more-btn">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                Laad meer wedstrijden
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="past">
+                        <div class="matches-grid">
+                            <div class="match-card past">
+                                <div class="match-header">
+                                    <span class="match-date">3 Mei 2024</span>
+                                    <span class="match-time">15:00</span>
+                                </div>
+                                <div class="match-teams">
+                                    <div class="team">
+                                        <img src="images/teams/afc-senior.jpg" alt="AFC">
+                                        <span>AFC</span>
+                                    </div>
+                                    <div class="score">2 - 1</div>
+                                    <div class="team">
+                                        <img src="images/teams/gvvv.jpg" alt="GVVV">
+                                        <span>GVVV</span>
+                                    </div>
+                                </div>
+                                <div class="match-info">
+                                    <span class="match-result win">Gewonnen</span>
+                                    <div class="match-actions">
+                                        <a href="#" class="match-link"><i class="fas fa-newspaper"></i> Verslag</a>
+                                        <a href="#" class="match-link"><i class="fas fa-video"></i> Highlights</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="match-card past">
+                                <div class="match-header">
+                                    <span class="match-date">26 April 2024</span>
+                                    <span class="match-time">19:30</span>
+                                </div>
+                                <div class="match-teams">
+                                    <div class="team">
+                                        <img src="images/teams/udi19.jpg" alt="UDI'19">
+                                        <span>UDI'19</span>
+                                    </div>
+                                    <div class="score">1 - 1</div>
+                                    <div class="team">
+                                        <img src="images/teams/afc-senior.jpg" alt="AFC">
+                                        <span>AFC</span>
+                                    </div>
+                                </div>
+                                <div class="match-info">
+                                    <span class="match-result draw">Gelijk</span>
+                                    <div class="match-actions">
+                                        <a href="#" class="match-link"><i class="fas fa-newspaper"></i> Verslag</a>
+                                        <a href="#" class="match-link"><i class="fas fa-video"></i> Highlights</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="load-more">
+                            <button class="btn load-more-btn">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                Laad meer wedstrijden
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="calendar-section">
+            <div class="calendar-content">
+                <h2>Wedstrijdkalender</h2>
+                <p>Download onze wedstrijdkalender en blijf op de hoogte van alle wedstrijden.</p>
+                <div class="calendar-actions">
+                    <a href="#" class="download-btn">
+                        <i class="fas fa-download"></i>
+                        Download Kalender
+                    </a>
+                    <a href="#" class="btn">
+                        <i class="fas fa-calendar-alt"></i>
+                        Voeg toe aan Google Calendar
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Sportpark 1, 1234 AB Stad</p>
+                <p><i class="fas fa-phone"></i> (012) 345 6789</p>
+                <p><i class="fas fa-envelope"></i> info@afc.nl</p>
+            </div>
+            <div class="footer-section">
+                <h3>Volg ons</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Openingstijden</h3>
+                <p>Ma-Vr: 09:00 - 22:00</p>
+                <p>Za-Zo: 10:00 - 18:00</p>
+                <div class="footer-actions">
+                    <a href="#" class="btn">Word lid</a>
+                    <a href="#" class="btn">Sponsor worden</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AFC. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
+    <button id="scrollToTop" class="scroll-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const upcomingMatchesGrid = document.querySelector('#upcoming .matches-grid');
+            const pastMatchesGrid = document.querySelector('#past .matches-grid');
+            const loadMoreBtn = document.querySelector('.load-more-btn');
+            const teamFilterSelect = document.getElementById('teamFilter');
+
+            let offset = 0;
+            const limit = 10; // Number of matches to load per request
+            let isLoading = false;
+            let allMatches = [];
+
+            async function fetchMatches(filter = 'all') {
+                if (isLoading) return;
+                isLoading = true;
+                loadMoreBtn.disabled = true;
+                loadMoreBtn.querySelector('.fas').classList.add('fa-spin');
+
+                try {
+                    const response = await fetch('admin/api.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'get_matches',
+                            offset: offset,
+                            limit: limit,
+                            filter: filter // Send selected filter to backend
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success && data.matches) {
+                        allMatches = [...allMatches, ...data.matches]; // Append new matches
+                        displayMatches(data.matches);
+
+                        offset += data.matches.length;
+
+                        // Hide load more button if no more matches
+                        if (data.matches.length < limit) {
+                            loadMoreBtn.style.display = 'none';
+                        } else {
+                             loadMoreBtn.style.display = 'block';
+                        }
+
+                    } else {
+                        console.error('Error fetching matches:', data.message);
+                        // Optionally display an error message on the page
+                    }
+                } catch (error) {
+                    console.error('Error fetching matches:', error);
+                    // Optionally display an error message on the page
+                } finally {
+                    isLoading = false;
+                    loadMoreBtn.disabled = false;
+                    loadMoreBtn.querySelector('.fas').classList.remove('fa-spin');
+                }
+            }
+
+            function displayMatches(matches) {
+                const now = new Date();
+
+                matches.forEach(match => {
+                    const matchDate = new Date(match.match_date);
+                    const isUpcoming = matchDate >= now;
+                    const grid = isUpcoming ? upcomingMatchesGrid : pastMatchesGrid;
+
+                    const matchCard = document.createElement('div');
+                    matchCard.classList.add('match-card');
+                    if (!isUpcoming) {
+                        matchCard.classList.add('past');
+                    }
+
+                    const scoreDisplay = match.home_score !== null && match.away_score !== null ?
+                        `<div class="score">${match.home_score} - ${match.away_score}</div>` : '';
+
+                    const resultDisplay = !isUpcoming && match.status === 'completed' ?
+                         `<span class="match-result ${match.home_score > match.away_score ? 'win' : (match.home_score === match.away_score ? 'draw' : 'loss')}">${match.home_score > match.away_score ? 'Gewonnen' : (match.home_score === match.away_score ? 'Gelijk' : 'Verloren')}</span>` : '';
+
+                    const actionsDisplay = isUpcoming ?
+                         `<div class="match-actions">
+                             <a href="#" class="match-link"><i class="fas fa-info-circle"></i> Info</a>
+                             <a href="#" class="match-link"><i class="fas fa-ticket-alt"></i> Tickets</a>
+                         </div>` :
+                         `<div class="match-actions">
+                             <a href="#" class="match-link"><i class="fas fa-newspaper"></i> Verslag</a>
+                             <a href="#" class="match-link"><i class="fas fa-video"></i> Highlights</a>
+                         </div>`;
+
+
+                    matchCard.innerHTML = `
+                        <div class="match-header">
+                            <span class="match-date">${new Date(match.match_date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                            <span class="match-time">${new Date(match.match_date).toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' })}</span>
+                        </div>
+                        <div class="match-teams">
+                            <div class="team">
+                                <img src="images/teams/${match.home_team_slug || 'default'}.jpg" alt="${match.home_team_name || 'Home Team'}">
+                                <span>${match.home_team_name || 'Home Team'}</span>
+                            </div>
+                            ${scoreDisplay || '<div class="vs">VS</div>'}
+                            <div class="team">
+                                <img src="images/teams/${match.away_team_slug || 'default'}.jpg" alt="${match.away_team_name || 'Away Team'}">
+                                <span>${match.away_team_name || 'Away Team'}</span>
+                            </div>
+                        </div>
+                        <div class="match-info">
+                            <span class="match-location"><i class="fas fa-map-marker-alt"></i> ${match.venue || 'Onbekend'}</span>
+                             ${resultDisplay}
+                            ${actionsDisplay}
+                        </div>
+                    `;
+
+                    grid.appendChild(matchCard);
+                });
+            }
+
+             // Initial load
+             fetchMatches();
+
+             // Load more button click
+             loadMoreBtn.addEventListener('click', function() {
+                 fetchMatches(teamFilterSelect.value);
+             });
+
+             // Team filter change
+             teamFilterSelect.addEventListener('change', function() {
+                 offset = 0; // Reset offset
+                 allMatches = []; // Clear previous matches
+                 upcomingMatchesGrid.innerHTML = ''; // Clear displayed matches
+                 pastMatchesGrid.innerHTML = '';
+                 loadMoreBtn.style.display = 'block'; // Show load more button
+                 fetchMatches(this.value); // Fetch with new filter
+             });
+
+             // Tab switching (optional, depending on how tabs are implemented)
+             document.querySelectorAll('.tab-btn').forEach(button => {
+                 button.addEventListener('click', function() {
+                     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                     this.classList.add('active');
+                     document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                     document.getElementById(this.dataset.tab).classList.add('active');
+                     // You might want to refetch based on the active tab if you filter by upcoming/past on the backend
+                 });
+             });
+        });
+    </script>
+</body>
+</html> 

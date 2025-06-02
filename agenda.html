@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda - AFC</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/logo.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <button class="nav-toggle" aria-label="Toggle Navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="AFC Logo">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i>Nieuws</a></li>
+                <li><a href="wedstrijden.html"><i class="fas fa-futbol"></i>Wedstrijden</a></li>
+                <li><a href="teams.html"><i class="fas fa-users"></i>Teams</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+            </ul>
+            <button class="theme-toggle" aria-label="Toggle Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="calendar-hero">
+            <div class="container">
+                <h1>Agenda Juni 2025</h1>
+                <p class="subtitle">Bekijk alle evenementen en wedstrijden</p>
+            </div>
+        </section>
+
+        <section class="calendar-section">
+            <div class="container">
+                <div class="calendar-wrapper">
+                    <div class="calendar-header">
+                        <h2>Juni 2025</h2>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-days">
+                            <div>Ma</div>
+                            <div>Di</div>
+                            <div>Wo</div>
+                            <div>Do</div>
+                            <div>Vr</div>
+                            <div>Za</div>
+                            <div>Zo</div>
+                        </div>
+                        <div class="calendar-dates" id="calendar-dates">
+                            <!-- Calendar dates will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Popup -->
+                <div id="event-popup" class="event-popup">
+                    <div class="event-popup-content">
+                        <button class="close-popup" aria-label="Sluit popup">&times;</button>
+                        <h3 id="event-title"></h3>
+                        <div class="event-details">
+                            <p><i class="far fa-calendar"></i> <span id="event-date"></span></p>
+                            <p><i class="far fa-clock"></i> <span id="event-time"></span></p>
+                            <p><i class="fas fa-map-marker-alt"></i> <span id="event-location"></span></p>
+                        </div>
+                        <div class="event-description">
+                            <p id="event-description"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="upcoming-events">
+            <div class="container">
+                <h2>Komende Evenementen</h2>
+                <div class="events-list" id="events-list">
+                    <!-- Events will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Sportpark 1, 1234 AB Stad</p>
+                    <p><i class="fas fa-phone"></i> (012) 345 6789</p>
+                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Volg Ons</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Links</h3>
+                    <ul>
+                        <li><a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="sponsors.html">Sponsors</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AFC. Alle rechten voorbehouden.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarDates = document.getElementById('calendar-dates');
+            const eventPopup = document.getElementById('event-popup');
+            const closePopupBtn = document.querySelector('.close-popup');
+            const eventTitle = document.getElementById('event-title');
+            const eventDate = document.getElementById('event-date');
+            const eventTime = document.getElementById('event-time');
+            const eventLocation = document.getElementById('event-location');
+            const eventDescription = document.getElementById('event-description');
+            const eventsList = document.getElementById('events-list');
+
+            let allEvents = [];
+
+            async function fetchEvents() {
+                try {
+                    const response = await fetch('admin/api.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'get_events'
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success && data.events) {
+                        allEvents = data.events;
+                        initializeCalendar(allEvents);
+                        displayUpcomingEvents(allEvents);
+                    } else {
+                        console.error('Error fetching events:', data.message);
+                        // Optionally display an error message on the page
+                    }
+                } catch (error) {
+                    console.error('Error fetching events:', error);
+                    // Optionally display an error message on the page
+                }
+            }
+
+            function initializeCalendar(events) {
+                // Basic calendar rendering - you might want to use a library for a more complex calendar
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = today.getMonth(); // 0-indexed
+
+                // Clear previous dates
+                calendarDates.innerHTML = '';
+
+                // Get number of days in month and first day of the month
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 for Sunday, 1 for Monday
+
+                // Adjust firstDayOfMonth to be 0 for Monday, ..., 6 for Sunday
+                const startDay = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
+
+                // Add empty divs for days before the 1st
+                for (let i = 0; i < startDay; i++) {
+                    const emptyDiv = document.createElement('div');
+                    calendarDates.appendChild(emptyDiv);
+                }
+
+                // Add divs for each day of the month
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dateDiv = document.createElement('div');
+                    dateDiv.textContent = day;
+                    dateDiv.classList.add('calendar-date');
+
+                    const currentMonthDate = new Date(year, month, day);
+
+                    // Check for events on this date
+                    const eventsOnThisDate = events.filter(event => {
+                        const eventDate = new Date(event.date);
+                        return eventDate.getFullYear() === year &&
+                               eventDate.getMonth() === month &&
+                               eventDate.getDate() === day;
+                    });
+
+                    if (eventsOnThisDate.length > 0) {
+                        dateDiv.classList.add('has-event');
+                        dateDiv.dataset.events = JSON.stringify(eventsOnThisDate);
+                        dateDiv.addEventListener('click', showEventPopup);
+                    }
+
+                    calendarDates.appendChild(dateDiv);
+                }
+            }
+
+            function displayUpcomingEvents(events) {
+                eventsList.innerHTML = ''; // Clear current events
+                const now = new Date();
+
+                const upcomingEvents = events.filter(event => new Date(event.date) >= now)
+                                             .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+                if (upcomingEvents.length === 0) {
+                    eventsList.innerHTML = '<p>Geen komende evenementen.</p>';
+                    return;
+                }
+
+                upcomingEvents.forEach(event => {
+                    const eventItem = document.createElement('div');
+                    eventItem.classList.add('event-item');
+                    eventItem.innerHTML = `
+                        <div class="event-date">${new Date(event.date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })}</div>
+                        <div class="event-details">
+                            <h3>${event.title}</h3>
+                            <p><i class="far fa-clock"></i> ${event.time}</p>
+                            <p><i class="fas fa-map-marker-alt"></i> ${event.location}</p>
+                        </div>
+                    `;
+                    eventsList.appendChild(eventItem);
+                });
+            }
+
+            function showEventPopup(e) {
+                const events = JSON.parse(e.target.dataset.events);
+                const event = events[0]; // Assuming one event per day for this simple example
+
+                eventTitle.textContent = event.title;
+                eventDate.textContent = new Date(event.date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+                eventTime.textContent = event.time;
+                eventLocation.textContent = event.location;
+                eventDescription.textContent = event.description;
+
+                eventPopup.style.display = 'block';
+            }
+
+            closePopupBtn.addEventListener('click', function() {
+                eventPopup.style.display = 'none';
+            });
+
+            // Close popup when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === eventPopup) {
+                    eventPopup.style.display = 'none';
+                }
+            });
+
+            // Initial data fetch
+            fetchEvents();
+
+             // Placeholder for initializeCalendar call - now done within fetchEvents
+             // initializeCalendar(events);
+        });
+    </script>
+</body>
+</html>

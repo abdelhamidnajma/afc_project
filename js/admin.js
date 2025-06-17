@@ -1,39 +1,53 @@
-// Admin page JavaScript from admin.html inline script
-
-// Add validation functions
+// Validatie functies toevoegen voor formulier controle
 const validators = {
+    // Verplicht veld controle
     required: (value) => value.trim() !== '' || 'Dit veld is verplicht',
-    email: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'Ongeldig e-mailadres',
-    url: (value) => !value || /^https?:\/\/.+/.test(value) || 'Ongeldige URL',
-    phone: (value) => !value || /^[0-9\s\-\(\)]{10,15}$/.test(value) || 'Ongeldig telefoonnummer',
-    minLength: (min) => (value) => value.length >= min || `Minimaal ${min} tekens`,
-    maxLength: (max) => (value) => value.length <= max || `Maximaal ${max} tekens`,
-    pattern: (pattern, message) => (value) => pattern.test(value) || message,
-    date: (value) => !value || /^\d{4}-\d{2}-\d{2}$/.test(value) || 'Ongeldige datum (YYYY-MM-DD)',
-    datetime: (value) => !value || /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(value) || 'Ongeldige datum/tijd (YYYY-MM-DD HH:MM:SS)',
-    number: (value) => !value || !isNaN(value) || 'Moet een getal zijn',
-    min: (min) => (value) => !value || Number(value) >= min || `Minimaal ${min}`,
-    max: (max) => (value) => !value || Number(value) <= max || `Maximaal ${max}`,
+    // E-mail validatie met regex
+    email: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'Voer een geldig e-mailadres in',
+    // URL validatie (optioneel)
+    url: (value) => value === '' || /^https?:\/\/.+/.test(value) || 'Voer een geldige URL in',
+    // Telefoonnummer validatie (optioneel)
+    phone: (value) => value === '' || /^[\+]?[0-9\s\-\(\)]{10,}$/.test(value) || 'Voer een geldig telefoonnummer in',
+    // Minimale lengte controle
+    minLength: (min) => (value) => value.length >= min || `Minimaal ${min} tekens vereist`,
+    // Maximale lengte controle
+    maxLength: (max) => (value) => value.length <= max || `Maximaal ${max} tekens toegestaan`,
+    // Patroon validatie met custom bericht
+    pattern: (regex, message) => (value) => regex.test(value) || message,
+    // Datum validatie (YYYY-MM-DD formaat)
+    date: (value) => /^\d{4}-\d{2}-\d{2}$/.test(value) || 'Gebruik het formaat: YYYY-MM-DD',
+    // Datum/tijd validatie (YYYY-MM-DD HH:MM:SS formaat)
+    datetime: (value) => /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(value) || 'Gebruik het formaat: YYYY-MM-DD HH:MM:SS',
+    // Numerieke waarde controle
+    number: (value) => !isNaN(value) && value !== '' || 'Voer een geldig nummer in',
+    // Minimum waarde controle
+    min: (min) => (value) => parseFloat(value) >= min || `Minimale waarde is ${min}`,
+    // Maximum waarde controle
+    max: (max) => (value) => parseFloat(value) <= max || `Maximale waarde is ${max}`,
+    // Wachtwoord validatie met complexiteit eisen
     password: (value) => {
-        if (!value) return true;
         if (value.length < 8) return 'Wachtwoord moet minimaal 8 tekens lang zijn';
         if (!/[A-Z]/.test(value)) return 'Wachtwoord moet minimaal één hoofdletter bevatten';
         if (!/[a-z]/.test(value)) return 'Wachtwoord moet minimaal één kleine letter bevatten';
         if (!/[0-9]/.test(value)) return 'Wachtwoord moet minimaal één cijfer bevatten';
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) return 'Wachtwoord moet minimaal één speciaal teken bevatten';
         return true;
     }
 };
 
-// Form validation function
-function validateForm(form, rules) {
+// Formulier validatie functie - controleert alle velden volgens opgegeven regels
+function validateForm(form) {
+    const rules = form.dataset.validationRules ? JSON.parse(form.dataset.validationRules) : {};
     const errors = {};
     let isValid = true;
 
+    // Loop door alle veldregels
     for (const [fieldName, fieldRules] of Object.entries(rules)) {
         const field = form.querySelector(`[name="${fieldName}"]`);
         if (!field) continue;
 
         const value = field.value;
+        // Controleer elke regel voor het veld
         for (const rule of fieldRules) {
             const result = typeof rule === 'function' ? rule(value) : rule(value);
             if (result !== true) {
@@ -44,7 +58,7 @@ function validateForm(form, rules) {
         }
     }
 
-    // Show/hide error messages
+    // Foutmeldingen weergeven/verbergen
     for (const [fieldName, error] of Object.entries(errors)) {
         const field = form.querySelector(`[name="${fieldName}"]`);
         const errorElement = field.parentElement.querySelector('.error-message') || 
@@ -57,7 +71,7 @@ function validateForm(form, rules) {
         field.classList.add('error');
     }
 
-    // Clear error messages for valid fields
+    // Foutmeldingen wissen voor geldige velden
     form.querySelectorAll('input, select, textarea').forEach(field => {
         if (!errors[field.name]) {
             field.classList.remove('error');
@@ -71,8 +85,9 @@ function validateForm(form, rules) {
     return isValid;
 }
 
-// Add validation rules for each form
+// Validatie regels toevoegen voor elk formulier
 const formRules = {
+    // Login formulier regels
     login: {
         username: [
             validators.required,
@@ -80,6 +95,7 @@ const formRules = {
         ],
         password: [validators.required]
     },
+    // Nieuws formulier regels
     news: {
         title: [
             validators.required,
@@ -93,12 +109,14 @@ const formRules = {
         ],
         category: [validators.required]
     },
+    // Wedstrijd formulier regels
     match: {
         home_team_id: [validators.required, validators.number],
         away_team_id: [validators.required, validators.number],
         match_date: [validators.required, validators.datetime],
         competition: [validators.maxLength(100)]
     },
+    // Team formulier regels
     team: {
         name: [
             validators.required,
@@ -109,39 +127,30 @@ const formRules = {
         division: [validators.maxLength(50)],
         coach: [validators.maxLength(100)]
     },
+    // Instellingen formulier regels
     settings: {
-        website_name: [
-            validators.required,
-            validators.minLength(2),
-            validators.maxLength(100)
-        ],
-        contact_email: [
-            validators.required,
-            validators.email
-        ],
-        phone_number: [
-            validators.required,
-            validators.phone
-        ],
+        website_name: [validators.required, validators.maxLength(100)],
+        contact_email: [validators.required, validators.email],
+        phone_number: [validators.phone],
         facebook_url: [validators.url],
         twitter_url: [validators.url],
         instagram_url: [validators.url]
     }
 };
 
-// Admin functionality
+// Admin functionaliteit - hoofdscript dat wordt uitgevoerd bij het laden van de pagina
 document.addEventListener('DOMContentLoaded', function() {
-    // Check authentication status
+    // Authenticatie status controleren
     checkAuth();
 
-    // Login handling
+    // Login handling - formulier submit afhandelen
     const loginForm = document.getElementById('login');
     const loginSection = document.getElementById('loginForm');
     const dashboard = document.getElementById('dashboard');
 
     loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        if (!validateForm(this, formRules.login)) return;
+        if (!validateForm(this)) return;
         
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
@@ -174,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Logout handling
+    // Logout handling - uitloggen en sessie beëindigen
     document.getElementById('logoutBtn').addEventListener('click', async function() {
         try {
             const response = await fetch('admin/auth.php', {
@@ -337,8 +346,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="team-item">
                 <div class="team-info">
                     <h3>${team.name}</h3>
-                    <p>${team.category} - ${team.division}</p>
-                    <p>Coach: ${team.coach}</p>
+                    <p>${team.category} - ${team.division || 'Geen divisie'}</p>
+                    <p>Coach: ${team.coach || 'Niet toegewezen'}</p>
                 </div>
                 <div class="team-actions">
                     <button class="btn-edit" data-id="${team.id}">
@@ -415,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (newsForm) {
         newsForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            if (!validateForm(this, formRules.news)) return;
+            if (!validateForm(this)) return;
             
             // ... existing news submission code ...
         });
@@ -426,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (matchForm) {
         matchForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            if (!validateForm(this, formRules.match)) return;
+            if (!validateForm(this)) return;
             
             // ... existing match submission code ...
         });
@@ -437,7 +446,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (teamForm) {
         teamForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            if (!validateForm(this, formRules.team)) return;
+            if (!validateForm(this)) return;
             
             // ... existing team submission code ...
         });
@@ -448,7 +457,7 @@ document.addEventListener('DOMContentLoaded', function() {
     settingsForms.forEach(form => {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            if (!validateForm(this, formRules.settings)) return;
+            if (!validateForm(this)) return;
             
             // ... existing settings submission code ...
         });
@@ -469,7 +478,7 @@ document.addEventListener('DOMContentLoaded', function() {
             else return;
 
             if (rules[this.name]) {
-                validateForm(form, { [this.name]: rules[this.name] });
+                validateForm(form);
             }
         });
     });

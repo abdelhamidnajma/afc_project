@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AFC</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="../fotos/afc-logo.svg">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8fafc;
+            color: #1f2937;
+        }
+
+        .admin-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .admin-logo h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #dc2626;
+        }
+
+        .admin-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-nav a {
+            color: #6b7280;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .admin-nav a:hover {
+            color: #dc2626;
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .logout-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #b91c1c;
+        }
+
+        .admin-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .welcome-card {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .welcome-card h2 {
+            color: #1f2937;
+            margin: 0 0 1rem 0;
+            font-size: 1.875rem;
+            font-weight: 700;
+        }
+
+        .welcome-card p {
+            color: #6b7280;
+            margin: 0;
+            font-size: 1.125rem;
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .stat-card .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .stat-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-card h3 {
+            color: #1f2937;
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dashboard-card p {
+            color: #6b7280;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .dashboard-card .icon {
+            color: #dc2626;
+            font-size: 1.5rem;
+        }
+
+        .quick-actions {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .quick-actions h3 {
+            color: #1f2937;
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+        }
+
+        .action-btn.secondary {
+            background: #6b7280;
+        }
+
+        .action-btn.secondary:hover {
+            background: #4b5563;
+        }
+
+        .action-btn.success {
+            background: #10b981;
+        }
+
+        .action-btn.success:hover {
+            background: #059669;
+        }
+
+        .recent-activity {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            margin-top: 2rem;
+        }
+
+        .recent-activity h3 {
+            color: #1f2937;
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .activity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .activity-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #dc2626;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            color: #1f2937;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .activity-time {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .admin-header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .admin-content {
+                padding: 0 1rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="admin-logo">
+            <img src="../fotos/afc-logo.svg" alt="AFC Logo">
+            <h1>Admin Dashboard</h1>
+        </div>
+        <nav class="admin-nav">
+            <div class="user-info">
+                <i class="fas fa-user"></i>
+                <span id="username">Loading...</span>
+                <span id="user-role">(Loading...)</span>
+            </div>
+            <a href="../index.html"><i class="fas fa-home"></i> Website</a>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Uitloggen
+            </button>
+        </nav>
+    </header>
+
+    <main class="admin-content">
+        <div class="welcome-card">
+            <h2>Welkom bij het AFC Beheerderspaneel</h2>
+            <p>Beheer je website content, gebruikers en instellingen vanuit dit centrale dashboard.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="total-users">-</div>
+                <div class="stat-label">Gebruikers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-news">-</div>
+                <div class="stat-label">Nieuws Artikelen</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-teams">-</div>
+                <div class="stat-label">Teams</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-events">-</div>
+                <div class="stat-label">Evenementen</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card" onclick="window.location.href='users_manager.php'">
+                <h3><i class="fas fa-user-cog icon"></i> Gebruikers Beheer</h3>
+                <p>Beheer gebruikersaccounts, rollen en toegangsrechten.</p>
+            </div>
+
+            <div class="dashboard-card" onclick="window.location.href='news_manager.php'">
+                <h3><i class="fas fa-newspaper icon"></i> Nieuws Beheer</h3>
+                <p>Beheer nieuwsartikelen, voeg nieuwe content toe en bewerk bestaande artikelen.</p>
+            </div>
+
+            <div class="dashboard-card" onclick="window.location.href='teams_manager.php'">
+                <h3><i class="fas fa-users icon"></i> Team Beheer</h3>
+                <p>Beheer teams, spelers en teaminformatie voor alle leeftijdscategorieën.</p>
+            </div>
+
+            <div class="dashboard-card" onclick="window.location.href='events_manager.php'">
+                <h3><i class="fas fa-calendar-alt icon"></i> Evenementen</h3>
+                <p>Plan en beheer evenementen, wedstrijden en andere clubactiviteiten.</p>
+            </div>
+
+            <div class="dashboard-card" onclick="window.location.href='settings.php'">
+                <h3><i class="fas fa-cog icon"></i> Instellingen</h3>
+                <p>Beheer website instellingen, systeemconfiguratie en algemene opties.</p>
+            </div>
+
+            <div class="dashboard-card" onclick="window.location.href='activity_log.php'">
+                <h3><i class="fas fa-chart-bar icon"></i> Activiteit Log</h3>
+                <p>Bekijk gebruikersactiviteit, login pogingen en systeem logs.</p>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <h3>Snelle Acties</h3>
+            <div class="action-buttons">
+                <a href="users_manager.php?action=add" class="action-btn">
+                    <i class="fas fa-user-plus"></i>
+                    Gebruiker Toevoegen
+                </a>
+                <a href="news_manager.php?action=add" class="action-btn">
+                    <i class="fas fa-plus"></i>
+                    Nieuw Artikel
+                </a>
+                <a href="teams_manager.php?action=add" class="action-btn success">
+                    <i class="fas fa-plus"></i>
+                    Team Toevoegen
+                </a>
+                <a href="events_manager.php?action=add" class="action-btn success">
+                    <i class="fas fa-calendar-plus"></i>
+                    Evenement Toevoegen
+                </a>
+                <a href="backup.php" class="action-btn secondary">
+                    <i class="fas fa-download"></i>
+                    Backup Maken
+                </a>
+                <a href="settings.php" class="action-btn secondary">
+                    <i class="fas fa-cog"></i>
+                    Instellingen
+                </a>
+            </div>
+        </div>
+
+        <div class="recent-activity">
+            <h3>Recente Activiteit</h3>
+            <ul class="activity-list" id="activity-list">
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p class="activity-text">Laden...</p>
+                        <p class="activity-time">Even geduld</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <script>
+        // Check if user is logged in and load user info
+        fetch('check_session.php')
+            .then(response => response.json())
+            .then(data => {
+                if (!data.logged_in) {
+                    window.location.href = 'login.html';
+                } else {
+                    document.getElementById('username').textContent = data.user.username;
+                    document.getElementById('user-role').textContent = `(${data.user.role})`;
+                    loadDashboardData();
+                }
+            })
+            .catch(error => {
+                console.error('Session check failed:', error);
+                window.location.href = 'login.html';
+            });
+
+        function loadDashboardData() {
+            // Load statistics
+            fetch('api/dashboard_stats.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('total-users').textContent = data.stats.users || 0;
+                        document.getElementById('total-news').textContent = data.stats.news || 0;
+                        document.getElementById('total-teams').textContent = data.stats.teams || 0;
+                        document.getElementById('total-events').textContent = data.stats.events || 0;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading stats:', error);
+                    // Set default values if API fails
+                    document.getElementById('total-users').textContent = '0';
+                    document.getElementById('total-news').textContent = '0';
+                    document.getElementById('total-teams').textContent = '0';
+                    document.getElementById('total-events').textContent = '0';
+                });
+
+            // Load recent activity
+            fetch('api/recent_activity.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const activityList = document.getElementById('activity-list');
+                        activityList.innerHTML = '';
+                        
+                        if (data.activities.length === 0) {
+                            activityList.innerHTML = '<li class="activity-item"><p class="activity-text">Geen recente activiteit</p></li>';
+                        } else {
+                            data.activities.forEach(activity => {
+                                const item = document.createElement('li');
+                                item.className = 'activity-item';
+                                item.innerHTML = `
+                                    <div class="activity-icon">
+                                        <i class="fas fa-${getActivityIcon(activity.action)}"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p class="activity-text">${activity.description}</p>
+                                        <p class="activity-time">${activity.time_ago}</p>
+                                    </div>
+                                `;
+                                activityList.appendChild(item);
+                            });
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading activity:', error);
+                    const activityList = document.getElementById('activity-list');
+                    activityList.innerHTML = '<li class="activity-item"><p class="activity-text">Kon activiteit niet laden</p></li>';
+                });
+        }
+
+        function getActivityIcon(action) {
+            const icons = {
+                'login': 'sign-in-alt',
+                'logout': 'sign-out-alt',
+                'register': 'user-plus',
+                'create': 'plus',
+                'update': 'edit',
+                'delete': 'trash',
+                'default': 'circle'
+            };
+            return icons[action] || icons.default;
+        }
+
+        function logout() {
+            if (confirm('Weet je zeker dat je wilt uitloggen?')) {
+                fetch('logout.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = 'login.html';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Logout failed:', error);
+                        window.location.href = 'login.html';
+                    });
+            }
+        }
+    </script>
+</body>
+</html> 

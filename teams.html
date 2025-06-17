@@ -3,28 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teams - AFC</title>
+    <title>Teams - Amsterdamsche FC</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="icon" type="image/svg+xml" href="fotos/afc-logo.svg">
 </head>
 <body>
     <header>
         <nav class="main-nav">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="images/logo.png" alt="AFC Logo">
+            <div class="logo-container">
+                <a href="index.html" class="logo-link">
+                    <img src="fotos/afc-logo.svg" alt="AFC Logo" class="logo-image" style="height: 40px !important; width: auto !important; max-height: 40px !important;">
                 </a>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
-                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i>Nieuws</a></li>
-                <li><a href="wedstrijden.html"><i class="fas fa-futbol"></i>Wedstrijden</a></li>
-                <li><a href="teams.html" class="active"><i class="fas fa-users"></i>Teams</a></li>
-                <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i> Nieuws</a></li>
+                <li><a href="agenda.html"><i class="fas fa-calendar"></i> Agenda</a></li>
+                <li><a href="uitslagen.html"><i class="fas fa-trophy"></i> Uitslagen</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="geschiedenis.html"><i class="fas fa-history"></i> Geschiedenis</a></li>
+                <li><a href="admin/dashboard.html" style="background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%); color: white;"><i class="fas fa-cog"></i> Admin</a></li>
             </ul>
-            <button class="theme-toggle" aria-label="Toggle Theme">
+            <button class="theme-toggle" id="theme-toggle">
                 <i class="fas fa-moon"></i>
             </button>
         </nav>
@@ -42,99 +44,98 @@
 
         <section class="section">
             <div class="container">
-                <div class="team-category">
-                    <div class="section-header">
-                        <h2>Senioren</h2>
-                        <p class="subtitle">Onze seniorenteams in actie</p>
-                    </div>
-                    <div class="teams-grid">
-                        <div class="card team-card">
-                            <div class="card-image">
-                                <img src="images/team1.jpg" alt="Eerste Team">
-                            </div>
-                            <div class="card-content">
-                                <h3>Eerste Team</h3>
-                                <p class="team-category">Hoofdklasse</p>
-                                <div class="team-stats">
-                                    <div class="stat">
-                                        <span class="stat-label">Wedstrijden</span>
-                                        <span class="stat-value">24</span>
-                                    </div>
-                                    <div class="stat">
-                                        <span class="stat-label">Punten</span>
-                                        <span class="stat-value">45</span>
-                                    </div>
-                                </div>
-                                <a href="#" class="btn btn-secondary">Team Details</a>
-                            </div>
-                        </div>
-                        <div class="card team-card">
-                            <div class="card-image">
-                                <img src="images/team2.jpg" alt="Tweede Team">
-                            </div>
-                            <div class="card-content">
-                                <h3>Tweede Team</h3>
-                                <p class="team-category">Eerste Klasse</p>
-                                <div class="team-stats">
-                                    <div class="stat">
-                                        <span class="stat-label">Wedstrijden</span>
-                                        <span class="stat-value">22</span>
-                                    </div>
-                                    <div class="stat">
-                                        <span class="stat-label">Punten</span>
-                                        <span class="stat-value">38</span>
-                                    </div>
-                                </div>
-                                <a href="#" class="btn btn-secondary">Team Details</a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="section-header">
+                    <h2>Senioren</h2>
+                    <p class="subtitle">Onze seniorenteams in actie</p>
                 </div>
-
-                <div class="team-category">
-                    <div class="section-header">
-                        <h2>Jeugd</h2>
-                        <p class="subtitle">De toekomst van AFC</p>
-                    </div>
-                    <div class="teams-grid">
-                        <div class="card team-card">
-                            <div class="card-image">
-                                <img src="images/youth1.jpg" alt="A1 Team">
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-xl);">
+                    <div class="card">
+                        <div class="card-content">
+                            <div style="text-align: center; margin-bottom: var(--spacing-lg);">
+                                <i class="fas fa-users" style="font-size: 3rem; color: var(--color-secondary); margin-bottom: var(--spacing-md);"></i>
+                                <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">AFC 1</h3>
+                                <span style="background: var(--color-secondary); color: white; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-md); font-size: 0.875rem; font-weight: 600;">
+                                    Hoofdklasse
+                                </span>
                             </div>
-                            <div class="card-content">
-                                <h3>A1 Team</h3>
-                                <p class="team-category">Hoofdklasse Jeugd</p>
-                                <div class="team-stats">
-                                    <div class="stat">
-                                        <span class="stat-label">Wedstrijden</span>
-                                        <span class="stat-value">20</span>
-                                    </div>
-                                    <div class="stat">
-                                        <span class="stat-label">Punten</span>
-                                        <span class="stat-value">42</span>
-                                    </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+                                <div style="text-align: center; padding: var(--spacing-sm); background: var(--color-background-alt); border-radius: var(--radius-md);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">24</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-light);">Wedstrijden</div>
                                 </div>
-                                <a href="#" class="btn btn-secondary">Team Details</a>
+                                <div style="text-align: center; padding: var(--spacing-sm); background: var(--color-background-alt); border-radius: var(--radius-md);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">45</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-light);">Punten</div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <a href="#" class="btn btn-secondary">
+                                    <i class="fas fa-info-circle"></i>
+                                    Team Details
+                                </a>
                             </div>
                         </div>
-                        <div class="card team-card">
-                            <div class="card-image">
-                                <img src="images/youth2.jpg" alt="B1 Team">
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <div style="text-align: center; margin-bottom: var(--spacing-lg);">
+                                <i class="fas fa-users" style="font-size: 3rem; color: var(--color-secondary); margin-bottom: var(--spacing-md);"></i>
+                                <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">AFC 2</h3>
+                                <span style="background: var(--color-secondary); color: white; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-md); font-size: 0.875rem; font-weight: 600;">
+                                    Eerste Klasse
+                                </span>
                             </div>
-                            <div class="card-content">
-                                <h3>B1 Team</h3>
-                                <p class="team-category">Eerste Klasse Jeugd</p>
-                                <div class="team-stats">
-                                    <div class="stat">
-                                        <span class="stat-label">Wedstrijden</span>
-                                        <span class="stat-value">18</span>
-                                    </div>
-                                    <div class="stat">
-                                        <span class="stat-label">Punten</span>
-                                        <span class="stat-value">35</span>
-                                    </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+                                <div style="text-align: center; padding: var(--spacing-sm); background: var(--color-background-alt); border-radius: var(--radius-md);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">22</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-light);">Wedstrijden</div>
                                 </div>
-                                <a href="#" class="btn btn-secondary">Team Details</a>
+                                <div style="text-align: center; padding: var(--spacing-sm); background: var(--color-background-alt); border-radius: var(--radius-md);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">38</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-light);">Punten</div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <a href="#" class="btn btn-secondary">
+                                    <i class="fas fa-info-circle"></i>
+                                    Team Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <div style="text-align: center; margin-bottom: var(--spacing-lg);">
+                                <i class="fas fa-users" style="font-size: 3rem; color: var(--color-secondary); margin-bottom: var(--spacing-md);"></i>
+                                <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">AFC 3</h3>
+                                <span style="background: var(--color-secondary); color: white; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-md); font-size: 0.875rem; font-weight: 600;">
+                                    Tweede Klasse
+                                </span>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+                                <div style="text-align: center; padding: var(--spacing-sm); background: var(--color-background-alt); border-radius: var(--radius-md);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">20</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-light);">Wedstrijden</div>
+                                </div>
+                                <div style="text-align: center; padding: var(--spacing-sm); background: var(--color-background-alt); border-radius: var(--radius-md);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">32</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-light);">Punten</div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <a href="#" class="btn btn-secondary">
+                                    <i class="fas fa-info-circle"></i>
+                                    Team Details
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -142,12 +143,124 @@
             </div>
         </section>
 
-        <section class="section bg-accent">
+        <section class="section" style="background: var(--color-background-alt);">
             <div class="container">
-                <div class="section-header text-center">
-                    <h2>Word lid van een team</h2>
-                    <p class="subtitle">Ben je geïnteresseerd in het lid worden van een van onze teams? Neem contact met ons op voor meer informatie.</p>
-                    <a href="contact.html" class="btn btn-primary">Neem contact op</a>
+                <div class="section-header">
+                    <h2>Jeugd</h2>
+                    <p class="subtitle">De toekomst van AFC</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg);">
+                    <div class="card">
+                        <div class="card-content">
+                            <div style="text-align: center; margin-bottom: var(--spacing-lg);">
+                                <i class="fas fa-child" style="font-size: 3rem; color: var(--color-secondary); margin-bottom: var(--spacing-md);"></i>
+                                <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">A1 Team</h3>
+                                <span style="background: var(--color-secondary); color: white; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-md); font-size: 0.875rem; font-weight: 600;">
+                                    Hoofdklasse Jeugd
+                                </span>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+                                <div style="text-align: center; padding: var(--spacing-sm); background: var(--color-background-alt); border-radius: var(--radius-md);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">20</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-light);">Wedstrijden</div>
+                                </div>
+                                <div style="text-align: center; padding: var(--spacing-sm); background: var(--color-background-alt); border-radius: var(--radius-md);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">42</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-light);">Punten</div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <a href="#" class="btn btn-secondary">
+                                    <i class="fas fa-info-circle"></i>
+                                    Team Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <div style="text-align: center; margin-bottom: var(--spacing-lg);">
+                                <i class="fas fa-child" style="font-size: 3rem; color: var(--color-secondary); margin-bottom: var(--spacing-md);"></i>
+                                <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">B1 Team</h3>
+                                <span style="background: var(--color-secondary); color: white; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-md); font-size: 0.875rem; font-weight: 600;">
+                                    Eerste Klasse Jeugd
+                                </span>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+                                <div style="text-align: center; padding: var(--spacing-sm); background: var(--color-background-alt); border-radius: var(--radius-md);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">18</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-light);">Wedstrijden</div>
+                                </div>
+                                <div style="text-align: center; padding: var(--spacing-sm); background: var(--color-background-alt); border-radius: var(--radius-md);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">35</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-light);">Punten</div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <a href="#" class="btn btn-secondary">
+                                    <i class="fas fa-info-circle"></i>
+                                    Team Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <div style="text-align: center; margin-bottom: var(--spacing-lg);">
+                                <i class="fas fa-child" style="font-size: 3rem; color: var(--color-secondary); margin-bottom: var(--spacing-md);"></i>
+                                <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">C1 Team</h3>
+                                <span style="background: var(--color-secondary); color: white; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-md); font-size: 0.875rem; font-weight: 600;">
+                                    Tweede Klasse Jeugd
+                                </span>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+                                <div style="text-align: center; padding: var(--spacing-sm); background: var(--color-background-alt); border-radius: var(--radius-md);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">16</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-light);">Wedstrijden</div>
+                                </div>
+                                <div style="text-align: center; padding: var(--spacing-sm); background: var(--color-background-alt); border-radius: var(--radius-md);">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">28</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-light);">Punten</div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <a href="#" class="btn btn-secondary">
+                                    <i class="fas fa-info-circle"></i>
+                                    Team Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="card" style="max-width: 800px; margin: 0 auto;">
+                    <div class="card-content">
+                        <div style="text-align: center;">
+                            <h2 style="margin-bottom: var(--spacing-md); color: var(--color-text);">
+                                <i class="fas fa-user-plus"></i> Word lid van een team
+                            </h2>
+                            <p style="margin-bottom: var(--spacing-lg); color: var(--color-text-light); line-height: 1.6;">
+                                Ben je geïnteresseerd in het lid worden van een van onze teams? Neem contact met ons op voor meer informatie over trainingstijden, inschrijving en lidmaatschap.
+                            </p>
+                            <a href="contact.html" class="btn btn-primary">
+                                <i class="fas fa-envelope"></i>
+                                Neem contact op
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -157,19 +270,8 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Sportpark 1, 1234 AB Stad</p>
-                    <p><i class="fas fa-phone"></i> (012) 345 6789</p>
-                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Openingstijden</h3>
-                    <p>Maandag - Vrijdag: 09:00 - 22:00</p>
-                    <p>Zaterdag: 10:00 - 18:00</p>
-                    <p>Zondag: 12:00 - 17:00</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Volg ons</h3>
+                    <h3>Amsterdamsche FC</h3>
+                    <p>Al meer dan 100 jaar de trots van Amsterdam. Wij zijn een amateurvoetbalclub die zich inzet voor sportiviteit, respect en plezier in het voetbal.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -177,77 +279,69 @@
                         <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
+                
+                <div class="footer-section">
+                    <h3>Snelle Links</h3>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="nieuws.html">Nieuws</a></p>
+                    <p><a href="agenda.html">Agenda</a></p>
+                    <p><a href="uitslagen.html">Uitslagen</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Maurice Ravellaan 4, 1083 HR Amsterdam</p>
+                    <p><i class="fas fa-phone"></i> +31 (0)20-6445575</p>
+                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Openingstijden</h3>
+                    <p>Administratie: 09:00 - 17:00</p>
+                    <p>Horeca: 15:30 - 00:00</p>
+                    <p>Training: Di & Do 19:00 - 21:00</p>
+                </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2024 AFC. Alle rechten voorbehouden.</p>
+                <p>&copy; <span id="current-year">2025</span> Amsterdamsche FC. Alle rechten voorbehouden. | 
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a> | 
+                <a href="#">Cookie Policy</a></p>
             </div>
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const teamsGrid = document.querySelector('.teams-grid');
+        // Thema toggle functionaliteit
+        const themeToggle = document.querySelector('.theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
 
-            async function fetchTeams() {
-                try {
-                    const response = await fetch('admin/api.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            action: 'get_teams'
-                        })
-                    });
-
-                    const data = await response.json();
-
-                    if (data.success && data.teams) {
-                        displayTeams(data.teams);
-                    } else {
-                        console.error('Error fetching teams:', data.message);
-                        teamsGrid.innerHTML = '<p>Er is een fout opgetreden bij het laden van de teams.</p>';
-                    }
-                } catch (error) {
-                    console.error('Error fetching teams:', error);
-                    teamsGrid.innerHTML = '<p>Kon geen verbinding maken met de server om teams te laden.</p>';
-                }
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                document.documentElement.classList.remove('dark-mode');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
             }
+            localStorage.setItem('theme', theme);
+        }
 
-            function displayTeams(teams) {
-                teamsGrid.innerHTML = ''; // Clear current teams
-                if (teams.length === 0) {
-                    teamsGrid.innerHTML = '<p>Geen teams gevonden.</p>';
-                    return;
-                }
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
 
-                teams.forEach(team => {
-                    const teamCard = document.createElement('div');
-                    teamCard.classList.add('team-card');
-
-                    teamCard.innerHTML = `
-                        <div class="team-image">
-                            <img src="images/teams/${team.slug || 'default'}.jpg" alt="${team.name}">
-                            <div class="team-overlay">
-                                <!-- Optionally add team stats or other info here -->
-                            </div>
-                        </div>
-                        <div class="team-content">
-                            <h3>${team.name}</h3>
-                            <p>Categorie: ${team.category}</p>
-                            ${team.division ? `<p>Divisie: ${team.division}</p>` : ''}
-                            ${team.coach ? `<p>Coach: ${team.coach}</p>` : ''}
-                             <a href="#" class="btn btn-secondary team-link">Meer info</a>
-                        </div>
-                    `;
-                    teamsGrid.appendChild(teamCard);
-                });
-            }
-
-            // Initial load
-            fetchTeams();
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
         });
+
+        // Huidige jaar bijwerken
+        document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html> 

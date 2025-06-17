@@ -1,169 +1,276 @@
 <!DOCTYPE html>
+<!-- 
+    AFC Website - Nieuws Pagina
+    ===========================
+    
+    Dit is de nieuws pagina van de AFC website waar alle nieuwsberichten
+    worden weergegeven. De pagina bevat:
+    - Dynamisch geladen nieuwsartikelen uit de database
+    - Filter functionaliteit (alle, team, club, jeugd)
+    - Paginering met "meer laden" functionaliteit
+    - Nieuwsbrief inschrijfformulier
+    - Responsive design voor alle apparaten
+    
+    Functionaliteit:
+    - AJAX loading van nieuws via API
+    - Real-time filtering
+    - Newsletter signup
+    - SEO geoptimaliseerd
+    
+    Auteur: AFC Development Team
+    Laatste update: 2024
+-->
 <html lang="nl">
 <head>
+    <!-- Meta tags voor SEO en viewport instellingen -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nieuws - AFC</title>
+    <title>Nieuws - Amsterdamsche FC</title>
+    
+    <!-- CSS bestanden voor styling -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="icon" type="image/svg+xml" href="fotos/afc-logo.svg">
 </head>
 <body>
+    <!-- Header sectie met navigatie -->
     <header>
         <nav class="main-nav">
-            <div class="logo">
+            <!-- Logo container met AFC logo -->
+            <div class="logo-container">
                 <a href="index.html">
-                    <img src="images/logo.png" alt="AFC Logo">
+                    <img src="fotos/afc-logo.svg" alt="AFC Logo" class="logo-image" style="height: 40px !important; width: auto !important; max-height: 40px !important; max-width: 40px !important;">
                 </a>
             </div>
-            <ul class="nav-links">
-                <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
-                <li><a href="teams.html"><i class="fas fa-users"></i>Teams</a></li>
-                <li><a href="nieuws.html" class="active"><i class="fas fa-newspaper"></i>Nieuws</a></li>
-                <li><a href="wedstrijden.html"><i class="fas fa-futbol"></i>Wedstrijden</a></li>
-                <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
-                <li><a href="admin.html"><i class="fas fa-user-shield"></i>Admin</a></li>
+            
+            <!-- Navigatie links voor alle pagina's -->
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="nieuws.html" class="active"><i class="fas fa-newspaper"></i> Nieuws</a></li>
+                <li><a href="agenda.html"><i class="fas fa-calendar"></i> Agenda</a></li>
+                <li><a href="uitslagen.html"><i class="fas fa-trophy"></i> Uitslagen</a></li>
+                <li><a href="teams.html"><i class="fas fa-users"></i> Teams</a></li>
+                <li><a href="historie.html"><i class="fas fa-history"></i> Historie</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="admin/login.html" style="background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%); color: white;"><i class="fas fa-cog"></i> Admin</a></li>
             </ul>
-            <button class="theme-toggle" aria-label="Toggle theme">
-                <i class="fas fa-moon"></i>
-            </button>
+            
+            <!-- Navigatie controls voor thema toggle en mobiele menu -->
+            <div class="nav-controls">
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </nav>
     </header>
 
+    <!-- Hoofdinhoud van de pagina -->
     <main>
-        <section class="news-hero">
-            <div class="hero-content">
-                <h1>Nieuws</h1>
-                <p>Blijf op de hoogte van het laatste nieuws</p>
-            </div>
-        </section>
-
-        <section class="news-section">
-            <div class="news-container">
-                <div class="news-filters">
-                    <button class="filter-btn active" data-filter="all">Alle</button>
-                    <button class="filter-btn" data-filter="team">Team</button>
-                    <button class="filter-btn" data-filter="club">Club</button>
-                    <button class="filter-btn" data-filter="jeugd">Jeugd</button>
-                </div>
-
-                <div class="news-grid">
-                    <article class="news-card" data-category="team">
-                        <img src="images/news1.jpg" alt="Kampioenschap">
-                        <div class="news-content">
-                            <div class="news-meta">
-                                <span class="news-date">10 Mei 2024</span>
-                                <span class="news-category">Team</span>
-                            </div>
-                            <h3>Eerste Team Kampioen!</h3>
-                            <p>In een spannende wedstrijd heeft ons eerste team het kampioenschap gewonnen...</p>
-                            <a href="#" class="read-more">Lees meer</a>
-                        </div>
-                    </article>
-
-                    <article class="news-card" data-category="club">
-                        <img src="images/news2.jpg" alt="Nieuwe Trainer">
-                        <div class="news-content">
-                            <div class="news-meta">
-                                <span class="news-date">8 Mei 2024</span>
-                                <span class="news-category">Club</span>
-                            </div>
-                            <h3>Nieuwe Trainer Aangesteld</h3>
-                            <p>We zijn verheugd om aan te kondigen dat we een nieuwe trainer hebben aangesteld...</p>
-                            <a href="#" class="read-more">Lees meer</a>
-                        </div>
-                    </article>
-
-                    <article class="news-card" data-category="jeugd">
-                        <img src="images/news3.jpg" alt="Jeugdtoernooi">
-                        <div class="news-content">
-                            <div class="news-meta">
-                                <span class="news-date">5 Mei 2024</span>
-                                <span class="news-category">Jeugd</span>
-                            </div>
-                            <h3>Jeugdteam Wint Toernooi</h3>
-                            <p>Ons jeugdteam heeft het regionale toernooi gewonnen...</p>
-                            <a href="#" class="read-more">Lees meer</a>
-                        </div>
-                    </article>
-
-                    <article class="news-card" data-category="club">
-                        <img src="images/news4.jpg" alt="Faciliteiten">
-                        <div class="news-content">
-                            <div class="news-meta">
-                                <span class="news-date">3 Mei 2024</span>
-                                <span class="news-category">Club</span>
-                            </div>
-                            <h3>Nieuwe Trainingsfaciliteiten</h3>
-                            <p>De club heeft nieuwe trainingsfaciliteiten geopend...</p>
-                            <a href="#" class="read-more">Lees meer</a>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="news-pagination">
-                    <button class="pagination-btn active">1</button>
-                    <button class="pagination-btn">2</button>
-                    <button class="pagination-btn">3</button>
-                    <button class="pagination-btn next">Volgende</button>
+        <!-- Hero sectie met pagina titel -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Nieuws</h1>
+                    <p class="subtitle">Blijf op de hoogte van het laatste nieuws van AFC</p>
                 </div>
             </div>
         </section>
 
-        <section class="newsletter-section">
-            <div class="newsletter-content">
-                <h2>Blijf op de hoogte</h2>
-                <p>Schrijf je in voor onze nieuwsbrief en ontvang het laatste nieuws direct in je inbox.</p>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Je e-mailadres" required>
-                    <button type="submit" class="submit-button">Inschrijven</button>
-                </form>
+        <!-- Nieuws sectie met filters en artikelen -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Laatste Nieuws</h2>
+                    <p class="subtitle">Ontdek wat er speelt bij Amsterdamsche FC</p>
+                </div>
+                
+                <!-- Filter knoppen voor nieuws categorieën -->
+                <div class="news-filters" style="display: flex; gap: var(--spacing-sm); margin-bottom: var(--spacing-xl); justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-secondary filter-btn active" data-filter="all">Alle</button>
+                    <button class="btn btn-secondary filter-btn" data-filter="team">Team</button>
+                    <button class="btn btn-secondary filter-btn" data-filter="club">Club</button>
+                    <button class="btn btn-secondary filter-btn" data-filter="jeugd">Jeugd</button>
+                </div>
+
+                <!-- Container voor dynamisch geladen nieuws artikelen -->
+                <div id="news-container" style="display: grid; gap: var(--spacing-lg); grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                    <!-- Loading placeholder - wordt vervangen door echte content -->
+                    <div style="text-align: center; padding: var(--spacing-xl); color: var(--color-text-light); grid-column: 1 / -1;">
+                        <i class="fas fa-newspaper" style="font-size: 3rem; margin-bottom: var(--spacing-md); opacity: 0.5;"></i>
+                        <h3>Nieuws Laden...</h3>
+                        <p>Even geduld terwijl we de laatste nieuwsberichten ophalen.</p>
+                    </div>
+                </div>
+
+                <!-- Meer nieuws laden knop -->
+                <div style="text-align: center; margin-top: var(--spacing-xl);">
+                    <button class="btn btn-primary" id="load-more-btn" style="display: none;">
+                        <i class="fas fa-plus"></i>
+                        Meer Nieuws Laden
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nieuwsbrief sectie voor inschrijvingen -->
+        <section class="section" style="background: var(--color-background-alt);">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Nieuwsbrief</h2>
+                    <p class="subtitle">Blijf op de hoogte van alle ontwikkelingen</p>
+                </div>
+                
+                <!-- Nieuwsbrief inschrijfformulier -->
+                <div class="card" style="max-width: 600px; margin: 0 auto;">
+                    <div class="card-content">
+                        <h3 style="text-align: center; margin-bottom: var(--spacing-lg);">
+                            <i class="fas fa-envelope"></i> Schrijf je in voor onze nieuwsbrief
+                        </h3>
+                        <p style="text-align: center; margin-bottom: var(--spacing-lg); color: var(--color-text-light);">
+                            Ontvang het laatste nieuws, wedstrijdverslagen en evenementen direct in je inbox.
+                        </p>
+                        
+                        <!-- Nieuwsbrief formulier -->
+                        <form id="newsletter-form" style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
+                            <input type="email" placeholder="Je e-mailadres" required style="flex: 1; min-width: 250px;">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                                Inschrijven
+                            </button>
+                        </form>
+                        
+                        <!-- Bericht voor feedback na inschrijving -->
+                        <div id="newsletter-message" style="margin-top: var(--spacing-md); text-align: center;"></div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
+    <!-- Footer met contactinformatie en links -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p><i class="fas fa-map-marker-alt"></i> Sportpark 1, 1234 AB Stad</p>
-                <p><i class="fas fa-phone"></i> (012) 345 6789</p>
-                <p><i class="fas fa-envelope"></i> info@afc.nl</p>
-            </div>
-            <div class="footer-section">
-                <h3>Volg ons</h3>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Over AFC sectie in footer -->
+                <div class="footer-section">
+                    <h3>Amsterdamsche FC</h3>
+                    <p>Al meer dan 100 jaar de trots van Amsterdam. Wij zijn een amateurvoetbalclub die zich inzet voor sportiviteit, respect en plezier in het voetbal.</p>
+                    <!-- Social media links -->
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Snelle links sectie -->
+                <div class="footer-section">
+                    <h3>Snelle Links</h3>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="nieuws.html">Nieuws</a></p>
+                    <p><a href="agenda.html">Agenda</a></p>
+                    <p><a href="uitslagen.html">Uitslagen</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                </div>
+                
+                <!-- Contact informatie sectie -->
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Maurice Ravellaan 4, 1083 HR Amsterdam</p>
+                    <p><i class="fas fa-phone"></i> +31 (0)20-6445575</p>
+                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
+                </div>
+                
+                <!-- Openingstijden sectie -->
+                <div class="footer-section">
+                    <h3>Openingstijden</h3>
+                    <p>Administratie: Maandag - Vrijdag: 09:00 - 17:00</p>
+                    <p>Horeca: Maandag - Zondag: 15:30 - 00:00</p>
                 </div>
             </div>
-            <div class="footer-section">
-                <h3>Openingstijden</h3>
-                <p>Ma-Vr: 09:00 - 22:00</p>
-                <p>Za-Zo: 10:00 - 18:00</p>
+            
+            <!-- Copyright sectie -->
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year">2025</span> Amsterdamsche FC. Alle rechten voorbehouden.</p>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 AFC. Alle rechten voorbehouden.</p>
         </div>
     </footer>
 
+    <!-- JavaScript voor nieuws functionaliteit -->
     <script>
+        // Hoofdscript voor nieuws pagina functionaliteit
         document.addEventListener('DOMContentLoaded', function() {
-            const newsGrid = document.querySelector('.news-grid');
-            const filterButtons = document.querySelectorAll('.news-filters .filter-btn');
-            const paginationButtons = document.querySelectorAll('.news-pagination .pagination-btn');
-
+            // DOM elementen ophalen voor nieuws functionaliteit
+            const newsContainer = document.getElementById('news-container');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            const newsletterForm = document.getElementById('newsletter-form');
+            const newsletterMessage = document.getElementById('newsletter-message');
+            
+            // Variabelen voor paginering en filtering
             let currentPage = 1;
-            const itemsPerPage = 6; // Adjust based on how many items you want per page
             let currentFilter = 'all';
+            const itemsPerPage = 6;
 
-            async function fetchNews(page = 1, filter = 'all') {
+            // Initiële nieuws laden
+            loadNews();
+
+            // Filter functionaliteit - wisselen tussen nieuws categorieën
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    currentPage = 1;
+                    loadNews();
+                });
+            });
+
+            // Meer nieuws laden functionaliteit
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', function() {
+                    currentPage++;
+                    loadNews(true);
+                });
+            }
+
+            // Nieuwsbrief formulier handling
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('input[type="email"]').value;
+                
+                // Nieuwsbrief inschrijving simuleren
+                newsletterMessage.innerHTML = `
+                    <div class="form-message success">
+                        <i class="fas fa-check-circle"></i>
+                        Bedankt! Je bent succesvol ingeschreven voor onze nieuwsbrief.
+                    </div>
+                `;
+                
+                this.reset();
+            });
+
+            async function loadNews(append = false) {
                 try {
-                    const offset = (page - 1) * itemsPerPage;
-                    const response = await fetch('admin/api.php', {
+                    const offset = (currentPage - 1) * itemsPerPage;
+                    
+                    // Show loading state
+                    if (!append) {
+                        newsContainer.innerHTML = `
+                            <div style="text-align: center; padding: var(--spacing-xl); color: var(--color-text-light); grid-column: 1 / -1;">
+                                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: var(--spacing-md);"></i>
+                                <h3>Nieuws Laden...</h3>
+                            </div>
+                        `;
+                    }
+
+                    // Simulate API call - replace with actual API endpoint
+                    const response = await fetch('php/get_news.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -172,86 +279,183 @@
                             action: 'get_news',
                             offset: offset,
                             limit: itemsPerPage,
-                            filter: filter
+                            filter: currentFilter
                         })
                     });
 
                     const data = await response.json();
 
                     if (data.success && data.news) {
-                        displayNews(data.news);
-                         // You might need to update pagination controls based on total items from backend
-
+                        displayNews(data.news, append);
+                        
+                        // Show/hide load more button
+                        if (data.news.length === itemsPerPage) {
+                            loadMoreBtn.style.display = 'inline-flex';
+                        } else {
+                            loadMoreBtn.style.display = 'none';
+                        }
                     } else {
-                        console.error('Error fetching news:', data.message);
-                        // Optionally display an error message on the page
+                        // Fallback to static news if API fails
+                        displayStaticNews(append);
                     }
                 } catch (error) {
-                    console.error('Error fetching news:', error);
-                    // Optionally display an error message on the page
-                } finally {
-                    // You might want to re-enable buttons or hide loading indicators here
+                    console.error('Error loading news:', error);
+                    // Fallback to static news
+                    displayStaticNews(append);
                 }
             }
 
-            function displayNews(newsItems) {
-                newsGrid.innerHTML = ''; // Clear current news
-                if (newsItems.length === 0) {
-                    newsGrid.innerHTML = '<p>Geen nieuws gevonden voor deze selectie.</p>';
-                    return;
+            function displayNews(newsItems, append = false) {
+                if (!append) {
+                    newsContainer.innerHTML = '';
                 }
 
                 newsItems.forEach(news => {
                     const newsCard = document.createElement('article');
-                    newsCard.classList.add('news-card');
-                    newsCard.dataset.category = news.category; // Add category data attribute
-
+                    newsCard.className = 'card';
+                    newsCard.style.cursor = 'pointer';
+                    
                     newsCard.innerHTML = `
-                        <img src="images/news/${news.image_url || 'default.jpg'}" alt="${news.title}">
-                        <div class="news-content">
-                            <div class="news-meta">
-                                <span class="news-date">${new Date(news.created_at).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-                                <span class="news-category">${news.category}</span>
+                        <div class="card-content">
+                            <div style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-md);">
+                                <span style="background: var(--color-secondary); color: white; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-md); font-size: 0.75rem; font-weight: 600; text-transform: uppercase;">
+                                    ${news.category || 'Club'}
+                                </span>
+                                <span style="color: var(--color-text-light); font-size: 0.875rem;">
+                                    ${formatDate(news.created_at)}
+                                </span>
                             </div>
-                            <h3>${news.title}</h3>
-                            <p>${news.excerpt || news.content.substring(0, 150) + '...'}</p>
-                            <a href="nieuws-detail.html?id=${news.id}" class="read-more">Lees meer</a>
+                            <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">
+                                ${news.title}
+                            </h3>
+                            <p style="color: var(--color-text-light); margin-bottom: var(--spacing-md); line-height: 1.6;">
+                                ${news.excerpt || news.content.substring(0, 150) + '...'}
+                            </p>
+                            <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                                <span style="color: var(--color-text-light); font-size: 0.875rem;">
+                                    <i class="fas fa-user"></i> ${news.author || 'Redactie'}
+                                </span>
+                                <a href="#" style="color: var(--color-secondary); text-decoration: none; font-weight: 500; margin-left: auto;">
+                                    Lees meer <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
                     `;
-                    newsGrid.appendChild(newsCard);
+                    
+                    newsContainer.appendChild(newsCard);
                 });
             }
 
-            // Initial load
-            fetchNews(currentPage, currentFilter);
+            function displayStaticNews(append = false) {
+                if (!append) {
+                    newsContainer.innerHTML = '';
+                }
 
-            // Filter button click handling
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    currentFilter = this.dataset.filter;
-                    currentPage = 1; // Reset to first page on filter change
-                    fetchNews(currentPage, currentFilter);
-                });
-            });
-
-            // Pagination button click handling (You'll need to implement logic to show/hide buttons)
-            paginationButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    if (this.classList.contains('next')) {
-                        currentPage++;
-                    } else {
-                        currentPage = parseInt(this.textContent);
+                const staticNews = [
+                    {
+                        title: 'AFC 1 Kampioen!',
+                        content: 'Na een spannend seizoen is AFC 1 kampioen geworden in de hoofdklasse. Het team heeft een geweldige prestatie neergezet en we zijn trots op alle spelers en staf.',
+                        category: 'Team',
+                        author: 'Redactie',
+                        date: '2025-06-15'
+                    },
+                    {
+                        title: 'Nieuw Jeugdtoernooi',
+                        content: 'Dit jaar organiseren we een nieuw jeugdtoernooi voor alle leeftijdscategorieën. Het toernooi vindt plaats op 5 juli en alle jeugdleden zijn welkom om mee te doen.',
+                        category: 'Jeugd',
+                        author: 'Jeugdcommissie',
+                        date: '2025-06-10'
+                    },
+                    {
+                        title: 'Vernieuwde Kantine',
+                        content: 'De kantine is volledig vernieuwd en vanaf volgende week weer open. Kom langs voor een hapje en drankje na de wedstrijd!',
+                        category: 'Club',
+                        author: 'Bestuur',
+                        date: '2025-06-05'
                     }
-                     // Add logic to disable/enable next/prev buttons based on total pages
-                    fetchNews(currentPage, currentFilter);
+                ];
+
+                staticNews.forEach(news => {
+                    const newsCard = document.createElement('article');
+                    newsCard.className = 'card';
+                    newsCard.style.cursor = 'pointer';
+                    
+                    newsCard.innerHTML = `
+                        <div class="card-content">
+                            <div style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-md);">
+                                <span style="background: var(--color-secondary); color: white; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-md); font-size: 0.75rem; font-weight: 600; text-transform: uppercase;">
+                                    ${news.category}
+                                </span>
+                                <span style="color: var(--color-text-light); font-size: 0.875rem;">
+                                    ${formatDate(news.date)}
+                                </span>
+                            </div>
+                            <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">
+                                ${news.title}
+                            </h3>
+                            <p style="color: var(--color-text-light); margin-bottom: var(--spacing-md); line-height: 1.6;">
+                                ${news.content}
+                            </p>
+                            <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                                <span style="color: var(--color-text-light); font-size: 0.875rem;">
+                                    <i class="fas fa-user"></i> ${news.author}
+                                </span>
+                                <a href="#" style="color: var(--color-secondary); text-decoration: none; font-weight: 500; margin-left: auto;">
+                                    Lees meer <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    
+                    newsContainer.appendChild(newsCard);
+                });
+            }
+
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('nl-NL', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+            }
+
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.className = 'fas fa-sun';
+                } else {
+                    icon.className = 'fas fa-moon';
+                }
+            });
+
+            // Mobile menu functionality
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                const icon = this.querySelector('i');
+                if (navLinks.classList.contains('active')) {
+                    icon.className = 'fas fa-times';
+                } else {
+                    icon.className = 'fas fa-bars';
+                }
+            });
+
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileMenuToggle.querySelector('i').className = 'fas fa-bars';
                 });
             });
 
-            // Note: Full pagination logic (calculating total pages, disabling/enabling buttons)
-            // would require the backend to return the total number of news items.
-            // The current implementation fetches one page at a time.
+            // Update current year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
         });
     </script>
 </body>

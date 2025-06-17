@@ -1,112 +1,196 @@
-// Calendar functionality
-function initializeCalendar(year, month, events) {
-    const calendarDates = document.getElementById('calendar-dates');
-    const eventsList = document.getElementById('events-list');
-    const popup = document.getElementById('event-popup');
-    const closePopup = document.querySelector('.close-popup');
+// Kalender functionaliteit voor juni 2025 - hoofdscript voor agenda pagina
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM elementen ophalen voor kalender en evenementen
+    const calendar = document.getElementById('calendar');
+    const eventsList = document.getElementById('eventsList');
+    const eventPopup = document.getElementById('eventPopup');
+    const popupContent = document.getElementById('popupContent');
+    const closePopup = document.getElementById('closePopup');
+    const eventTitle = document.getElementById('event-title');
+    const eventDate = document.getElementById('event-date');
+    const eventTime = document.getElementById('event-time');
+    const eventLocation = document.getElementById('event-location');
+    const eventDescription = document.getElementById('event-description');
 
-    // Clear existing content
-    calendarDates.innerHTML = '';
-    eventsList.innerHTML = '';
+    // Voorbeeld evenementen voor juni 2025 - statische data voor demonstratie
+    const events = [
+        {
+            id: 1,
+            title: 'Training Senioren',
+            date: '2025-06-02',
+            time: '19:00',
+            location: 'Sportpark Goed Genoeg',
+            description: 'Reguliere training voor het seniorenteam'
+        },
+        {
+            id: 2,
+            title: 'Wedstrijd AFC vs Quick Boys',
+            date: '2025-06-07',
+            time: '15:00',
+            location: 'Sportpark Goed Genoeg',
+            description: 'Thuiswedstrijd tegen Quick Boys'
+        },
+        {
+            id: 3,
+            title: 'Jeugdtraining',
+            date: '2025-06-09',
+            time: '16:00',
+            location: 'Sportpark Goed Genoeg',
+            description: 'Training voor alle jeugdteams'
+        },
+        {
+            id: 4,
+            title: 'Uitwedstrijd Jong Almere City',
+            date: '2025-06-14',
+            time: '14:30',
+            location: 'Almere',
+            description: 'Uitwedstrijd tegen Jong Almere City'
+        },
+        {
+            id: 5,
+            title: 'Algemene Ledenvergadering',
+            date: '2025-06-21',
+            time: '20:00',
+            location: 'Clubhuis',
+            description: 'Jaarlijkse algemene ledenvergadering'
+        },
+        {
+            id: 6,
+            title: 'Vriendenwedstrijd',
+            date: '2025-06-28',
+            time: '15:00',
+            location: 'Sportpark Goed Genoeg',
+            description: 'Vriendschappelijke wedstrijd tegen oude bekenden'
+        }
+    ];
 
-    // Get first day of month and total days
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const totalDays = lastDay.getDate();
-    const startingDay = firstDay.getDay() || 7; // Convert Sunday (0) to 7
+    // Kalender initialiseren - bouwt de kalender op met evenementen
+    function initializeCalendar() {
+        // Bestaande content leegmaken
+        calendar.innerHTML = '';
 
-    // Add empty cells for days before the first of the month
-    for (let i = 1; i < startingDay; i++) {
-        const emptyCell = document.createElement('div');
-        emptyCell.className = 'calendar-date empty';
-        calendarDates.appendChild(emptyCell);
-    }
+        // Juni 2025 begint op zondag (0) - aanpassen voor maandag start
+        const currentDate = new Date(2025, 5, 1);
+        const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+        const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+        const startDate = new Date(firstDay);
+        
+        // Zondag (0) omzetten naar 6, maandag (1) naar 0, etc.
+        const dayOfWeek = firstDay.getDay();
+        const adjustedDay = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+        startDate.setDate(startDate.getDate() - adjustedDay);
 
-    // Add days of the month
-    for (let day = 1; day <= totalDays; day++) {
-        const dateCell = document.createElement('div');
-        dateCell.className = 'calendar-date';
-        dateCell.textContent = day;
-
-        // Check if there are events on this day
-        const currentDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const dayEvents = events.filter(event => event.date === currentDate);
-
-        if (dayEvents.length > 0) {
-            dateCell.classList.add('has-event');
-            const eventDot = document.createElement('div');
-            eventDot.className = 'event-dot';
-            dateCell.appendChild(eventDot);
-
-            // Add click event to show popup
-            dateCell.addEventListener('click', () => showEventPopup(dayEvents[0]));
+        // Lege cellen toevoegen voor dagen voor 1 juni
+        for (let i = 0; i < 42; i++) {
+            const date = new Date(startDate);
+            date.setDate(startDate.getDate() + i);
+            
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day';
+            
+            if (date.getMonth() === currentDate.getMonth()) {
+                dayElement.classList.add('current-month');
+            }
+            
+            dayElement.textContent = date.getDate();
+            
+            const dayEvents = events.filter(event => event.date === formatDate(date));
+            if (dayEvents.length > 0) {
+                dayElement.classList.add('has-event');
+                dayElement.addEventListener('click', () => showEventPopup(dayEvents[0]));
+            }
+            
+            calendar.appendChild(dayElement);
         }
 
-        calendarDates.appendChild(dateCell);
+        // Aankomende evenementen lijst vullen
+        displayUpcomingEvents();
     }
 
-    // Populate upcoming events list
-    const sortedEvents = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
-    sortedEvents.forEach(event => {
-        const eventElement = document.createElement('div');
-        eventElement.className = 'event-card';
-        eventElement.innerHTML = `
-            <div class="event-date">
-                <span class="day">${new Date(event.date).getDate()}</span>
-                <span class="month">${new Date(event.date).toLocaleString('nl-NL', { month: 'short' })}</span>
-            </div>
-            <div class="event-info">
-                <h3>${event.title}</h3>
-                <p><i class="far fa-clock"></i> ${event.time}</p>
-                <p><i class="fas fa-map-marker-alt"></i> ${event.location}</p>
-            </div>
-        `;
-        eventElement.addEventListener('click', () => showEventPopup(event));
-        eventsList.appendChild(eventElement);
-    });
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
 
-    // Close popup when clicking the close button
-    closePopup.addEventListener('click', () => {
-        popup.style.display = 'none';
-    });
+    // Aankomende evenementen weergeven in de lijst
+    function displayUpcomingEvents() {
+        if (!eventsList) return;
+        
+        eventsList.innerHTML = '';
+        
+        // Evenementen sorteren op datum
+        const sortedEvents = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
+        
+        sortedEvents.forEach(event => {
+            const eventElement = document.createElement('div');
+            eventElement.className = 'event-item';
+            eventElement.innerHTML = `
+                <div class="event-date">
+                    <span class="day">${new Date(event.date).getDate()}</span>
+                    <span class="month">${new Date(event.date).toLocaleDateString('nl-NL', { month: 'short' })}</span>
+                </div>
+                <div class="event-details">
+                    <h4>${event.title}</h4>
+                    <p>${event.time} - ${event.location}</p>
+                </div>
+            `;
+            eventElement.addEventListener('click', () => showEventPopup(event));
+            eventsList.appendChild(eventElement);
+        });
+    }
 
-    // Close popup when clicking outside
+    // Evenement popup weergeven - toont details van een evenement
+    function showEventPopup(event) {
+        if (!eventPopup || !eventTitle || !eventDate || !eventTime || !eventLocation || !eventDescription) return;
+
+        // Datum formatteren naar Nederlandse notatie
+        const eventDateObj = new Date(event.date);
+        const formattedDate = eventDateObj.toLocaleDateString('nl-NL', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+
+        // Popup content bijwerken
+        eventTitle.textContent = event.title;
+        eventDate.textContent = formattedDate;
+        eventTime.textContent = event.time;
+        eventLocation.textContent = event.location;
+        eventDescription.textContent = event.description;
+
+        // Popup weergeven
+        eventPopup.style.display = 'flex';
+    }
+
+    // Popup sluiten bij klikken op sluitknop
+    if (closePopup) {
+        closePopup.addEventListener('click', () => {
+            eventPopup.style.display = 'none';
+        });
+    }
+
+    // Popup sluiten bij klikken buiten de popup
     window.addEventListener('click', (e) => {
-        if (e.target === popup) {
-            popup.style.display = 'none';
+        if (e.target === eventPopup) {
+            eventPopup.style.display = 'none';
         }
     });
-}
 
-function showEventPopup(event) {
-    const popup = document.getElementById('event-popup');
-    const title = document.getElementById('event-title');
-    const date = document.getElementById('event-date');
-    const time = document.getElementById('event-time');
-    const location = document.getElementById('event-location');
-    const description = document.getElementById('event-description');
-
-    // Format date
-    const eventDate = new Date(event.date);
-    const formattedDate = eventDate.toLocaleDateString('nl-NL', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
+    // Popup sluiten met Escape toets
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && eventPopup.style.display === 'flex') {
+            eventPopup.style.display = 'none';
+        }
     });
 
-    // Update popup content
-    title.textContent = event.title;
-    date.textContent = formattedDate;
-    time.textContent = event.time;
-    location.textContent = event.location;
-    description.textContent = event.description;
+    // Kalender initialiseren
+    initializeCalendar();
+});
 
-    // Show popup
-    popup.style.display = 'flex';
-}
-
-// Add some CSS classes for styling
+// CSS classes toevoegen voor styling van kalender elementen
 document.head.insertAdjacentHTML('beforeend', `
     <style>
         .calendar-date {

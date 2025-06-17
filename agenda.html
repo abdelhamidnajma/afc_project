@@ -3,53 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda - AFC</title>
+    <title>Agenda - Amsterdamsche FC</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="fotos/afc-logo.svg">
 </head>
 <body>
-    <!-- Navigation -->
-    <button class="nav-toggle" aria-label="Toggle Navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-
     <header>
         <nav class="main-nav">
-            <div class="logo">
+            <div class="logo-container">
                 <a href="index.html">
-                    <img src="images/logo.png" alt="AFC Logo">
+                    <img src="fotos/afc-logo.svg" alt="AFC Logo" class="logo-image" style="height: 40px !important; width: auto !important; max-height: 40px !important;">
                 </a>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
-                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i>Nieuws</a></li>
-                <li><a href="wedstrijden.html"><i class="fas fa-futbol"></i>Wedstrijden</a></li>
-                <li><a href="teams.html"><i class="fas fa-users"></i>Teams</a></li>
-                <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i> Nieuws</a></li>
+                <li><a href="agenda.html" class="active"><i class="fas fa-calendar"></i> Agenda</a></li>
+                <li><a href="uitslagen.html"><i class="fas fa-trophy"></i> Uitslagen</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="geschiedenis.html"><i class="fas fa-history"></i> Geschiedenis</a></li>
+                <li><a href="admin/dashboard.html" style="background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%); color: white;"><i class="fas fa-cog"></i> Admin</a></li>
             </ul>
-            <button class="theme-toggle" aria-label="Toggle Theme">
+            <button class="theme-toggle" id="theme-toggle">
                 <i class="fas fa-moon"></i>
             </button>
         </nav>
     </header>
 
     <main>
-        <section class="calendar-hero">
+        <section class="hero-section">
             <div class="container">
-                <h1>Agenda Juni 2025</h1>
-                <p class="subtitle">Bekijk alle evenementen en wedstrijden</p>
+                <div class="hero-content">
+                    <h1>Agenda</h1>
+                    <p class="subtitle">Bekijk alle evenementen en wedstrijden van AFC</p>
+                </div>
             </div>
         </section>
 
-        <section class="calendar-section">
+        <section class="section">
             <div class="container">
+                <div class="section-header">
+                    <h2>Kalender Juni 2025</h2>
+                    <p class="subtitle">Plan je bezoek aan onze evenementen</p>
+                </div>
+                
                 <div class="calendar-wrapper">
                     <div class="calendar-header">
-                        <h2>Juni 2025</h2>
+                        <h3>Juni 2025</h3>
                     </div>
                     <div class="calendar-grid">
                         <div class="calendar-days">
@@ -85,11 +87,20 @@
             </div>
         </section>
 
-        <section class="upcoming-events">
+        <section class="section" style="background: var(--color-background-alt);">
             <div class="container">
-                <h2>Komende Evenementen</h2>
+                <div class="section-header">
+                    <h2>Komende Evenementen</h2>
+                    <p class="subtitle">Markeer deze data in je agenda</p>
+                </div>
+                
                 <div class="events-list" id="events-list">
                     <!-- Events will be populated by JavaScript -->
+                    <div style="text-align: center; padding: var(--spacing-xl); color: var(--color-text-light);">
+                        <i class="fas fa-calendar" style="font-size: 3rem; margin-bottom: var(--spacing-md); opacity: 0.5;"></i>
+                        <h3>Evenementen Laden...</h3>
+                        <p>Even geduld terwijl we de aankomende evenementen ophalen.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -99,181 +110,257 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Sportpark 1, 1234 AB Stad</p>
-                    <p><i class="fas fa-phone"></i> (012) 345 6789</p>
-                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Volg Ons</h3>
+                    <h3>Amsterdamsche FC</h3>
+                    <p>Al meer dan 100 jaar de trots van Amsterdam. Wij zijn een amateurvoetbalclub die zich inzet voor sportiviteit, respect en plezier in het voetbal.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
+                
                 <div class="footer-section">
-                    <h3>Links</h3>
-                    <ul>
-                        <li><a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></li>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="sponsors.html">Sponsors</a></li>
-                    </ul>
+                    <h3>Snelle Links</h3>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="nieuws.html">Nieuws</a></p>
+                    <p><a href="agenda.html">Agenda</a></p>
+                    <p><a href="uitslagen.html">Uitslagen</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Maurice Ravellaan 4, 1083 HR Amsterdam</p>
+                    <p><i class="fas fa-phone"></i> +31 (0)20-6445575</p>
+                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Openingstijden</h3>
+                    <p>Administratie: 09:00 - 17:00</p>
+                    <p>Horeca: 15:30 - 00:00</p>
+                    <p>Training: Di & Do 19:00 - 21:00</p>
                 </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2024 AFC. Alle rechten voorbehouden.</p>
+                <p>&copy; <span id="current-year">2025</span> Amsterdamsche FC. Alle rechten voorbehouden. | 
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a> | 
+                <a href="#">Cookie Policy</a></p>
             </div>
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const calendarDates = document.getElementById('calendar-dates');
-            const eventPopup = document.getElementById('event-popup');
-            const closePopupBtn = document.querySelector('.close-popup');
-            const eventTitle = document.getElementById('event-title');
-            const eventDate = document.getElementById('event-date');
-            const eventTime = document.getElementById('event-time');
-            const eventLocation = document.getElementById('event-location');
-            const eventDescription = document.getElementById('event-description');
-            const eventsList = document.getElementById('events-list');
 
-            let allEvents = [];
+            const themeToggle = document.querySelector('.theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
 
-            async function fetchEvents() {
-                try {
-                    const response = await fetch('admin/api.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            action: 'get_events'
-                        })
-                    });
-
-                    const data = await response.json();
-
-                    if (data.success && data.events) {
-                        allEvents = data.events;
-                        initializeCalendar(allEvents);
-                        displayUpcomingEvents(allEvents);
-                    } else {
-                        console.error('Error fetching events:', data.message);
-                        // Optionally display an error message on the page
-                    }
-                } catch (error) {
-                    console.error('Error fetching events:', error);
-                    // Optionally display an error message on the page
+            function setTheme(theme) {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark-mode');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    document.documentElement.classList.remove('dark-mode');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
                 }
+                localStorage.setItem('theme', theme);
             }
 
-            function initializeCalendar(events) {
-                // Basic calendar rendering - you might want to use a library for a more complex calendar
-                const today = new Date();
-                const year = today.getFullYear();
-                const month = today.getMonth(); // 0-indexed
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
 
-                // Clear previous dates
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = localStorage.getItem('theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                setTheme(newTheme);
+            });
+
+            // Huidige jaar bijwerken
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Kalender functionaliteit
+            const calendarDates = document.getElementById('calendar-dates');
+            const eventsList = document.getElementById('events-list');
+            const eventPopup = document.getElementById('event-popup');
+            const closePopup = document.querySelector('.close-popup');
+
+            // Voorbeeld evenementen data
+            const events = [
+                {
+                    id: 1,
+                    title: 'Training Senioren',
+                    date: '2025-06-02',
+                    time: '19:00',
+                    location: 'Sportpark Goed Genoeg',
+                    description: 'Reguliere training voor het seniorenteam'
+                },
+                {
+                    id: 2,
+                    title: 'Wedstrijd AFC vs Quick Boys',
+                    date: '2025-06-07',
+                    time: '15:00',
+                    location: 'Sportpark Goed Genoeg',
+                    description: 'Thuiswedstrijd tegen Quick Boys'
+                },
+                {
+                    id: 3,
+                    title: 'Jeugdtraining',
+                    date: '2025-06-09',
+                    time: '16:00',
+                    location: 'Sportpark Goed Genoeg',
+                    description: 'Training voor alle jeugdteams'
+                },
+                {
+                    id: 4,
+                    title: 'Uitwedstrijd Jong Almere City',
+                    date: '2025-06-14',
+                    time: '14:30',
+                    location: 'Almere',
+                    description: 'Uitwedstrijd tegen Jong Almere City'
+                },
+                {
+                    id: 5,
+                    title: 'Algemene Ledenvergadering',
+                    date: '2025-06-21',
+                    time: '20:00',
+                    location: 'Clubhuis',
+                    description: 'Jaarlijkse algemene ledenvergadering'
+                },
+                {
+                    id: 6,
+                    title: 'Vriendenwedstrijd',
+                    date: '2025-06-28',
+                    time: '15:00',
+                    location: 'Sportpark Goed Genoeg',
+                    description: 'Vriendschappelijke wedstrijd tegen oude bekenden'
+                }
+            ];
+
+            // Kalender genereren
+            function initializeCalendar() {
                 calendarDates.innerHTML = '';
 
-                // Get number of days in month and first day of the month
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-                const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 for Sunday, 1 for Monday
+                const currentDate = new Date(2025, 5, 1); // Juni 2025
+                const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+                const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+                const startDate = new Date(firstDay);
+                
+                const dayOfWeek = firstDay.getDay();
+                const adjustedDay = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+                startDate.setDate(startDate.getDate() - adjustedDay);
 
-                // Adjust firstDayOfMonth to be 0 for Monday, ..., 6 for Sunday
-                const startDay = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
-
-                // Add empty divs for days before the 1st
-                for (let i = 0; i < startDay; i++) {
-                    const emptyDiv = document.createElement('div');
-                    calendarDates.appendChild(emptyDiv);
-                }
-
-                // Add divs for each day of the month
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const dateDiv = document.createElement('div');
-                    dateDiv.textContent = day;
-                    dateDiv.classList.add('calendar-date');
-
-                    const currentMonthDate = new Date(year, month, day);
-
-                    // Check for events on this date
-                    const eventsOnThisDate = events.filter(event => {
-                        const eventDate = new Date(event.date);
-                        return eventDate.getFullYear() === year &&
-                               eventDate.getMonth() === month &&
-                               eventDate.getDate() === day;
-                    });
-
-                    if (eventsOnThisDate.length > 0) {
-                        dateDiv.classList.add('has-event');
-                        dateDiv.dataset.events = JSON.stringify(eventsOnThisDate);
-                        dateDiv.addEventListener('click', showEventPopup);
+                for (let i = 0; i < 42; i++) {
+                    const date = new Date(startDate);
+                    date.setDate(startDate.getDate() + i);
+                    
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-date';
+                    
+                    if (date.getMonth() === currentDate.getMonth()) {
+                        dayElement.classList.add('current-month');
                     }
-
-                    calendarDates.appendChild(dateDiv);
+                    
+                    dayElement.textContent = date.getDate();
+                    
+                    // Controleer of datum evenement heeft
+                    const dayEvents = events.filter(event => event.date === formatDate(date));
+                    if (dayEvents.length > 0) {
+                        dayElement.classList.add('has-event');
+                        dayElement.addEventListener('click', () => showEventPopup(dayEvents[0]));
+                    }
+                    
+                    calendarDates.appendChild(dayElement);
                 }
             }
 
-            function displayUpcomingEvents(events) {
-                eventsList.innerHTML = ''; // Clear current events
-                const now = new Date();
+            function formatDate(date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
 
-                const upcomingEvents = events.filter(event => new Date(event.date) >= now)
-                                             .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-                if (upcomingEvents.length === 0) {
-                    eventsList.innerHTML = '<p>Geen komende evenementen.</p>';
-                    return;
-                }
-
-                upcomingEvents.forEach(event => {
-                    const eventItem = document.createElement('div');
-                    eventItem.classList.add('event-item');
-                    eventItem.innerHTML = `
-                        <div class="event-date">${new Date(event.date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })}</div>
-                        <div class="event-details">
-                            <h3>${event.title}</h3>
-                            <p><i class="far fa-clock"></i> ${event.time}</p>
-                            <p><i class="fas fa-map-marker-alt"></i> ${event.location}</p>
-                        </div>
-                    `;
-                    eventsList.appendChild(eventItem);
+            // Toon evenement popup
+            function showEventPopup(event) {
+                const eventDate = new Date(event.date);
+                const formattedDate = eventDate.toLocaleDateString('nl-NL', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
                 });
+
+                document.getElementById('event-title').textContent = event.title;
+                document.getElementById('event-date').textContent = formattedDate;
+                document.getElementById('event-time').textContent = event.time;
+                document.getElementById('event-location').textContent = event.location;
+                document.getElementById('event-description').textContent = event.description;
+                
+                eventPopup.style.display = 'flex';
             }
 
-            function showEventPopup(e) {
-                const events = JSON.parse(e.target.dataset.events);
-                const event = events[0]; // Assuming one event per day for this simple example
-
-                eventTitle.textContent = event.title;
-                eventDate.textContent = new Date(event.date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
-                eventTime.textContent = event.time;
-                eventLocation.textContent = event.location;
-                eventDescription.textContent = event.description;
-
-                eventPopup.style.display = 'block';
-            }
-
-            closePopupBtn.addEventListener('click', function() {
+            function closeEventPopup() {
                 eventPopup.style.display = 'none';
-            });
+            }
 
-            // Close popup when clicking outside
-            window.addEventListener('click', function(e) {
+            closePopup.addEventListener('click', closeEventPopup);
+
+            eventPopup.addEventListener('click', function(e) {
                 if (e.target === eventPopup) {
-                    eventPopup.style.display = 'none';
+                    closeEventPopup();
                 }
             });
 
-            // Initial data fetch
-            fetchEvents();
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && eventPopup.style.display === 'flex') {
+                    closeEventPopup();
+                }
+            });
 
-             // Placeholder for initializeCalendar call - now done within fetchEvents
-             // initializeCalendar(events);
+            function displayEventsList() {
+                const upcomingEvents = events
+                    .filter(event => new Date(event.date) >= new Date())
+                    .sort((a, b) => new Date(a.date) - new Date(b.date))
+                    .slice(0, 5);
+
+                eventsList.innerHTML = upcomingEvents.map(event => `
+                    <div class="card">
+                        <div class="card-content">
+                            <div style="display: flex; align-items: center; gap: var(--spacing-lg);">
+                                <div style="text-align: center; min-width: 80px;">
+                                    <div style="background: var(--color-secondary); color: white; padding: var(--spacing-sm); border-radius: var(--radius-md); font-weight: 600;">
+                                        ${new Date(event.date).getDate()}
+                                    </div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-light); margin-top: var(--spacing-xs);">
+                                        ${new Date(event.date).toLocaleDateString('nl-NL', { month: 'short' })}
+                                    </div>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">
+                                        ${event.title}
+                                    </h3>
+                                    <div style="display: flex; align-items: center; gap: var(--spacing-md); color: var(--color-text-light); font-size: 0.875rem;">
+                                        <span><i class="far fa-clock"></i> ${event.time}</span>
+                                        <span><i class="fas fa-map-marker-alt"></i> ${event.location}</span>
+                                    </div>
+                                    <p style="margin-top: var(--spacing-sm); color: var(--color-text-light); line-height: 1.5;">
+                                        ${event.description}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            initializeCalendar();
+            displayEventsList();
         });
     </script>
 </body>

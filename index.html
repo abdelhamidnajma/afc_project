@@ -1,271 +1,209 @@
 <!DOCTYPE html>
+
 <html lang="nl">
 <head>
+    <!-- Meta tags voor SEO en viewport instellingen -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - AFC</title>
+    <title>AFC - Amsterdamsche Football Club</title>
+    
+    <!-- CSS bestanden voor styling -->
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="fotos/afc-logo.svg">
+    
+    <!-- Google Fonts voor typografie -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome voor iconen -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="images/logo.png">
 </head>
 <body>
-    <!-- Navigation -->
-    <button class="nav-toggle" aria-label="Toggle Navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-
+    <!-- Header sectie met navigatie -->
     <header>
         <nav class="main-nav">
-            <div class="logo">
+            <!-- Logo container met AFC logo -->
+            <div class="logo-container">
                 <a href="index.html">
-                    <img src="images/logo.png" alt="AFC Logo">
+                    <img src="fotos/afc-logo.svg" alt="AFC Logo" class="logo-image" style="height: 40px !important; width: auto !important; max-height: 40px !important; max-width: 40px !important;">
                 </a>
             </div>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active"><i class="fas fa-home"></i>Home</a></li>
-                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i>Nieuws</a></li>
-                <li><a href="wedstrijden.html"><i class="fas fa-futbol"></i>Wedstrijden</a></li>
-                <li><a href="teams.html"><i class="fas fa-users"></i>Teams</a></li>
-                <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
-                <li><a href="admin.html"><i class="fas fa-user-shield"></i>Admin</a></li>
+            
+            <!-- Navigatie links voor alle pagina's -->
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i> Nieuws</a></li>
+                <li><a href="agenda.html"><i class="fas fa-calendar"></i> Agenda</a></li>
+                <li><a href="uitslagen.html"><i class="fas fa-trophy"></i> Uitslagen</a></li>
+                <li><a href="teams.html"><i class="fas fa-users"></i> Teams</a></li>
+                <li><a href="historie.html"><i class="fas fa-history"></i> Historie</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="admin/login.html" style="background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%); color: white;"><i class="fas fa-cog"></i> Admin</a></li>
             </ul>
-            <button class="theme-toggle" aria-label="Toggle Theme">
-                <i class="fas fa-moon"></i>
-            </button>
+            
+            <!-- Navigatie controls voor thema toggle en mobiele menu -->
+            <div class="nav-controls">
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </nav>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="container">
-                <div class="hero-content">
-                    <h1>Welkom bij AFC</h1>
-                    <p class="subtitle">Ontdek de passie voor voetbal bij onze vereniging</p>
-                    <div class="hero-buttons">
-                        <a href="#nieuws" class="btn btn-primary">Bekijk het laatste nieuws</a>
-                        <a href="contact.html" class="btn btn-secondary">Word lid</a>
-                    </div>
+    <!-- Hero sectie met welkomstbericht en call-to-action buttons -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Welkom bij Amsterdamsche FC</h1>
+                <p class="subtitle">Al meer dan 100 jaar de trots van Amsterdam</p>
+                <div class="hero-buttons">
+                    <a href="nieuws.html" class="btn btn-primary">
+                        <i class="fas fa-newspaper"></i>
+                        Bekijk Nieuws
+                    </a>
+                    <a href="contact.html" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i>
+                        Neem Contact Op
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Next Match Section -->
-        <section class="section">
-            <div class="container">
+    <!-- Over AFC sectie met missie, waarden en teams informatie -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Over AFC</h2>
+                <p class="subtitle">Een rijke geschiedenis van voetbal, vriendschap en gemeenschap</p>
+            </div>
+            
+            <!-- Grid layout voor missie en teams informatie -->
+            <div class="grid-2">
+                <!-- Kaart met missie en waarden -->
                 <div class="card">
                     <div class="card-content">
-                        <div class="match-info">
-                            <div class="match-date">
-                                <span class="day">15</span>
-                                <span class="month">Mei</span>
-                                <span class="year">2024</span>
+                        <h3><i class="fas fa-trophy"></i> Onze Missie</h3>
+                        <p>Amsterdamsche FC is meer dan alleen een voetbalclub. We zijn een gemeenschap die zich inzet voor sportiviteit, respect en plezier in het voetbal. Onze missie is om voetbal toegankelijk te maken voor iedereen, ongeacht leeftijd of niveau.</p>
+                        
+                        <h4 style="margin-top: var(--spacing-lg); color: var(--color-secondary);">
+                            <i class="fas fa-star"></i> Onze Waarden
+                        </h4>
+                        <ul style="list-style: none; padding: 0; margin: var(--spacing-md) 0;">
+                            <li style="padding: var(--spacing-xs) 0; display: flex; align-items: center; gap: var(--spacing-sm);">
+                                <i class="fas fa-check-circle" style="color: var(--color-success);"></i>
+                                Sportiviteit en respect
+                            </li>
+                            <li style="padding: var(--spacing-xs) 0; display: flex; align-items: center; gap: var(--spacing-sm);">
+                                <i class="fas fa-check-circle" style="color: var(--color-success);"></i>
+                                Plezier in het spel
+                            </li>
+                            <li style="padding: var(--spacing-xs) 0; display: flex; align-items: center; gap: var(--spacing-sm);">
+                                <i class="fas fa-check-circle" style="color: var(--color-success);"></i>
+                                Ontwikkeling van talent
+                            </li>
+                            <li style="padding: var(--spacing-xs) 0; display: flex; align-items: center; gap: var(--spacing-sm);">
+                                <i class="fas fa-check-circle" style="color: var(--color-success);"></i>
+                                Sterke gemeenschap
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Kaart met teams informatie -->
+                <div class="card">
+                    <div class="card-content">
+                        <h3><i class="fas fa-users"></i> Onze Teams</h3>
+                        <p>We hebben teams in verschillende leeftijdscategorieën en niveaus. Van jeugdteams tot senioren, iedereen is welkom bij AFC.</p>
+                        
+                        <!-- Grid voor jeugd en senioren teams -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); margin-top: var(--spacing-lg);">
+                            <div style="text-align: center; padding: var(--spacing-md); background: var(--color-background-alt); border-radius: var(--radius-lg);">
+                                <i class="fas fa-child" style="font-size: 2rem; color: var(--color-secondary); margin-bottom: var(--spacing-sm);"></i>
+                                <h4>Jeugd</h4>
+                                <p style="margin: 0; font-size: 0.875rem;">U6 tot U19</p>
                             </div>
-                            <div class="match-teams">
-                                <div class="team home">
-                                    <img src="images/team1.jpg" alt="AFC">
-                                    <h3>AFC</h3>
-                                    <span class="team-stats">1e plaats</span>
-                                </div>
-                                <div class="match-details">
-                                    <span class="time">15:00</span>
-                                    <span class="vs">VS</span>
-                                    <span class="competition">Hoofdklasse</span>
-                                    <span class="stadium">Sportpark</span>
-                                </div>
-                                <div class="team away">
-                                    <img src="images/team2.jpg" alt="Tegenstander">
-                                    <h3>Rivalen</h3>
-                                    <span class="team-stats">3e plaats</span>
-                                </div>
+                            <div style="text-align: center; padding: var(--spacing-md); background: var(--color-background-alt); border-radius: var(--radius-lg);">
+                                <i class="fas fa-user-friends" style="font-size: 2rem; color: var(--color-secondary); margin-bottom: var(--spacing-sm);"></i>
+                                <h4>Senioren</h4>
+                                <p style="margin: 0; font-size: 0.875rem;">1e tot 4e team</p>
                             </div>
-                        </div>
-                        <div class="match-actions">
-                            <a href="#" class="btn btn-primary">
-                                <i class="fas fa-ticket-alt"></i>
-                                Koop Tickets
-                            </a>
-                            <a href="#" class="btn btn-secondary">
-                                <i class="fas fa-info-circle"></i>
-                                Wedstrijd Info
-                            </a>
-                            <a href="#" class="btn btn-secondary">
-                                <i class="far fa-calendar-alt"></i>
-                                Voeg toe aan agenda
-                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Featured News Section -->
-        <section class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Uitgelicht Nieuws</h2>
-                    <p class="subtitle">Blijf op de hoogte van het laatste nieuws</p>
-                </div>
-                <div class="featured-grid">
-                    <article class="card featured-card main">
-                        <div class="card-image">
-                            <img src="images/featured1.jpg" alt="Kampioenschap AFC 1">
-                            <span class="category">Hoofdklasse</span>
-                        </div>
-                        <div class="card-content">
-                            <div class="card-meta">
-                                <span class="date"><i class="far fa-calendar"></i> 10 mei 2024</span>
-                                <span class="author"><i class="far fa-user"></i> Redactie</span>
-                            </div>
-                            <h3>Kampioenschap voor AFC 1!</h3>
-                            <p>Na een zinderend seizoen is AFC 1 kampioen geworden in de hoofdklasse. De ontlading was groot na het laatste fluitsignaal.</p>
-                            <a href="#" class="btn btn-secondary">Lees het verslag</a>
-                        </div>
-                    </article>
-                    <div class="featured-side">
-                        <article class="card featured-card">
-                            <div class="card-image">
-                                <img src="images/featured2.jpg" alt="Jeugdtoernooi AFC">
-                                <span class="category">Jeugd</span>
-                            </div>
-                            <div class="card-content">
-                                <h3>Jeugdtoernooi AFC groot succes</h3>
-                                <p>Meer dan 200 kinderen deden mee aan het jaarlijkse jeugdtoernooi. Het was een dag vol sportiviteit en plezier.</p>
-                                <a href="#" class="btn btn-secondary">Lees meer</a>
-                            </div>
-                        </article>
-                        <article class="card featured-card">
-                            <div class="card-image">
-                                <img src="images/featured3.jpg" alt="Nieuwe kantine AFC">
-                                <span class="category">Faciliteiten</span>
-                            </div>
-                            <div class="card-content">
-                                <h3>Nieuwe kantine AFC geopend</h3>
-                                <p>De vernieuwde kantine is feestelijk geopend! Kom snel langs voor een hapje en drankje na de wedstrijd.</p>
-                                <a href="#" class="btn btn-secondary">Lees meer</a>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Teams Overview Section -->
-        <section class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Onze Teams</h2>
-                    <p class="subtitle">Ontdek onze verschillende teams en hun prestaties</p>
-                </div>
-                <div class="teams-grid">
-                    <div class="card team-card">
-                        <div class="card-image">
-                            <img src="images/team1.jpg" alt="Eerste Elftal">
-                            <div class="team-overlay">
-                                <div class="team-stats">
-                                    <div class="stat">
-                                        <span class="stat-value">24</span>
-                                        <span class="stat-label">Wedstrijden</span>
-                                    </div>
-                                    <div class="stat">
-                                        <span class="stat-value">45</span>
-                                        <span class="stat-label">Punten</span>
-                                    </div>
-                                    <div class="stat">
-                                        <span class="stat-value">1</span>
-                                        <span class="stat-label">Plaats</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3>Eerste Elftal</h3>
-                            <p>Hoofdklasse</p>
-                            <a href="teams.html" class="btn btn-secondary">Team Details</a>
-                        </div>
-                    </div>
-                    <!-- More team cards... -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Latest News Section -->
-        <section id="nieuws" class="news-section">
+    <!-- Laatste nieuws sectie - dynamisch geladen via JavaScript -->
+    <section class="section" style="background: var(--color-background-alt);">
+        <div class="container">
             <div class="section-header">
                 <h2>Laatste Nieuws</h2>
-                <div class="news-filters">
-                    <button class="filter-btn active" data-filter="all">Alles</button>
-                    <button class="filter-btn" data-filter="team">Team</button>
-                    <button class="filter-btn" data-filter="jeugd">Jeugd</button>
-                    <button class="filter-btn" data-filter="faciliteiten">Faciliteiten</button>
+                <p class="subtitle">Blijf op de hoogte van de laatste ontwikkelingen</p>
+            </div>
+            
+            <!-- Container voor dynamisch geladen nieuws items -->
+            <div id="news-container" style="display: grid; gap: var(--spacing-lg); max-width: 800px; margin: 0 auto;">
+                <!-- Loading placeholder - wordt vervangen door echte content -->
+                <div style="text-align: center; padding: var(--spacing-xl); color: var(--color-text-light);">
+                    <i class="fas fa-newspaper" style="font-size: 3rem; margin-bottom: var(--spacing-md); opacity: 0.5;"></i>
+                    <h3>Nieuws Laden...</h3>
+                    <p>Even geduld terwijl we de laatste nieuwsberichten ophalen.</p>
                 </div>
             </div>
-            <div class="news-grid">
-                <article class="news-card" data-category="team">
-                    <div class="news-image">
-                        <img src="images/news1.jpg" alt="Nieuws 1">
-                        <span class="category">Team</span>
-                    </div>
-                    <div class="news-content">
-                        <div class="news-meta">
-                            <span class="date"><i class="far fa-calendar"></i> 10 Mei 2024</span>
-                            <span class="author"><i class="far fa-user"></i> AFC</span>
-                        </div>
-                        <h3>Succesvol seizoen voor AFC</h3>
-                        <p>Ons eerste elftal heeft een geweldig seizoen achter de rug met promotie naar de hoofdklasse.</p>
-                        <a href="#" class="read-more">Lees meer <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </article>
-                <!-- More news cards... -->
+            
+            <!-- Link naar volledige nieuws pagina -->
+            <div style="text-align: center; margin-top: var(--spacing-xl);">
+                <a href="nieuws.html" class="btn btn-primary">
+                    <i class="fas fa-newspaper"></i>
+                    Bekijk Alle Nieuws
+                </a>
             </div>
-            <div class="load-more">
-                <button class="load-more-btn">
-                    <span>Laad meer nieuws</span>
-                    <i class="fas fa-spinner"></i>
-                </button>
-            </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Newsletter Section -->
-        <section class="newsletter-section">
-            <div class="newsletter-content">
-                <div class="newsletter-text">
-                    <h2>Blijf op de hoogte</h2>
-                    <p>Schrijf je in voor onze nieuwsbrief en mis geen enkel nieuws of evenement</p>
+    <!-- Aankomende evenementen sectie - dynamisch geladen via JavaScript -->
+    <section class="upcoming-events">
+        <div class="container">
+            <div class="section-header">
+                <h2>Aankomende Evenementen</h2>
+                <p class="subtitle">Markeer deze data in je agenda</p>
+            </div>
+            
+            <!-- Container voor dynamisch geladen evenementen -->
+            <div id="events-container">
+                <!-- Loading placeholder - wordt vervangen door echte content -->
+                <div style="text-align: center; padding: var(--spacing-xl); color: var(--color-text-light);">
+                    <i class="fas fa-calendar" style="font-size: 3rem; margin-bottom: var(--spacing-md); opacity: 0.5;"></i>
+                    <h3>Evenementen Laden...</h3>
+                    <p>Even geduld terwijl we de aankomende evenementen ophalen.</p>
                 </div>
-                <form class="newsletter-form">
-                    <div class="form-group">
-                        <input type="email" placeholder="Jouw e-mailadres" required>
-                        <button type="submit">
-                            <span>Inschrijven</span>
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                </form>
             </div>
-        </section>
-    </main>
+            
+            <!-- Link naar volledige agenda pagina -->
+            <div style="text-align: center; margin-top: var(--spacing-xl);">
+                <a href="agenda.html" class="btn btn-primary">
+                    <i class="fas fa-calendar"></i>
+                    Bekijk Volledige Agenda
+                </a>
+            </div>
+        </div>
+    </section>
 
+    <!-- Footer met contactinformatie en links -->
     <footer>
         <div class="container">
             <div class="footer-content">
+                <!-- Over AFC sectie in footer -->
                 <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Sportpark 1, 1234 AB Stad</p>
-                    <p><i class="fas fa-phone"></i> (012) 345 6789</p>
-                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Openingstijden</h3>
-                    <p>Maandag - Vrijdag: 09:00 - 22:00</p>
-                    <p>Zaterdag: 10:00 - 18:00</p>
-                    <p>Zondag: 12:00 - 17:00</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Volg ons</h3>
+                    <h3>Amsterdamsche FC</h3>
+                    <p>Al meer dan 100 jaar de trots van Amsterdam. Wij zijn een amateurvoetbalclub die zich inzet voor sportiviteit, respect en plezier in het voetbal.</p>
+                    <!-- Social media links -->
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -273,13 +211,148 @@
                         <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
+                
+                <!-- Snelle links sectie -->
+                <div class="footer-section">
+                    <h3>Snelle Links</h3>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="nieuws.html">Nieuws</a></p>
+                    <p><a href="agenda.html">Agenda</a></p>
+                    <p><a href="uitslagen.html">Uitslagen</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Maurice Ravellaan 4, 1083 HR Amsterdam</p>
+                    <p><i class="fas fa-phone"></i> +31 (0)20-6445575</p>
+                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Openingstijden</h3>
+                    <p>Administratie: 09:00 - 17:00</p>
+                    <p>Horeca: 15:30 - 00:00</p>
+                    <p>Training: Di & Do 19:00 - 21:00</p>
+                </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2024 AFC. Alle rechten voorbehouden.</p>
+                <p>&copy; <span id="current-year">2025</span> Amsterdamsche FC. Alle rechten voorbehouden. | 
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a> | 
+                <a href="admin/dashboard.html">Admin Panel</a></p>
             </div>
         </div>
     </footer>
 
     <script src="js/main.js"></script>
+    <script>
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            // Mobile menu toggle
+            mobileMenuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                const icon = this.querySelector('i');
+                if (navLinks.classList.contains('active')) {
+                    icon.className = 'fas fa-times';
+                } else {
+                    icon.className = 'fas fa-bars';
+                }
+            });
+            
+            // Close mobile menu when clicking on a link
+            navLinks.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    navLinks.classList.remove('active');
+                    const icon = mobileMenuToggle.querySelector('i');
+                    icon.className = 'fas fa-bars';
+                }
+            });
+            
+            // Theme toggle functionality
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.className = 'fas fa-sun';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    icon.className = 'fas fa-moon';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                const icon = themeToggle.querySelector('i');
+                icon.className = 'fas fa-sun';
+            }
+            
+            // Update current year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+
+        // Load news and events
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load news
+            fetch('php/get-news.php')
+                .then(response => response.json())
+                .then(data => {
+                    const newsContainer = document.getElementById('news-container');
+                    if (data.length > 0) {
+                        newsContainer.innerHTML = data.slice(0, 3).map(news => `
+                            <div class="card">
+                                <div class="card-content">
+                                    <h3>${news.title}</h3>
+                                    <p style="color: var(--color-text-light); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">
+                                        <i class="fas fa-calendar"></i> ${news.date}
+                                    </p>
+                                    <p>${news.content.substring(0, 150)}${news.content.length > 150 ? '...' : ''}</p>
+                                    <a href="nieuws.html" class="btn btn-secondary" style="margin-top: var(--spacing-md);">
+                                        <i class="fas fa-arrow-right"></i>
+                                        Lees Meer
+                                    </a>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading news:', error);
+                });
+
+            // Load events
+            fetch('php/get-events.php')
+                .then(response => response.json())
+                .then(data => {
+                    const eventsContainer = document.getElementById('events-container');
+                    if (data.length > 0) {
+                        eventsContainer.innerHTML = data.slice(0, 3).map(event => `
+                            <div class="event-card">
+                                <div class="event-date">
+                                    <span class="day">${new Date(event.date).getDate()}</span>
+                                    <span class="month">${new Date(event.date).toLocaleDateString('nl-NL', { month: 'short' })}</span>
+                                </div>
+                                <div class="event-info">
+                                    <h3>${event.title}</h3>
+                                    <p><i class="fas fa-clock"></i> ${event.time}</p>
+                                    <p><i class="fas fa-map-marker-alt"></i> ${event.location}</p>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading events:', error);
+                });
+        });
+    </script>
 </body>
-</html> 
+</html>

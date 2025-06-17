@@ -1,46 +1,65 @@
 <?php
 /**
- * Input validation functions
+ * Input validatie functies
+ * Deze functies zorgen voor het valideren en sanitiseren van gebruikersinput
  */
 
+// Controleer of functie al bestaat om dubbele definities te voorkomen
 if (!function_exists('validateUserInput')) {
-function validateUserInput($data) {
-    // Validate username
-    if (!isset($data['username']) || !preg_match('/^[a-zA-Z0-9_-]{3,50}$/', $data['username'])) {
-        throw new Exception('Gebruikersnaam moet 3-50 tekens lang zijn en mag alleen letters, cijfers, underscores en streepjes bevatten');
-    }
+    /**
+     * Valideer gebruikersinput voor registratie/bijwerken
+     * @param array $data Array met gebruikersgegevens
+     * @return bool True als validatie succesvol is
+     * @throws Exception Als validatie faalt
+     */
+    function validateUserInput($data) {
+        // Valideer gebruikersnaam
+        if (!isset($data['username']) || !preg_match('/^[a-zA-Z0-9_-]{3,50}$/', $data['username'])) {
+            throw new Exception('Gebruikersnaam moet 3-50 tekens lang zijn en mag alleen letters, cijfers, underscores en streepjes bevatten');
+        }
 
-    // Validate email
-    if (!isset($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-        throw new Exception('Ongeldig e-mailadres');
-    }
+        // Valideer e-mailadres
+        if (!isset($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            throw new Exception('Ongeldig e-mailadres');
+        }
 
-    // Validate password if provided
-    if (isset($data['password'])) {
-        validatePassword($data['password']);
-    }
+        // Valideer wachtwoord indien opgegeven
+        if (isset($data['password'])) {
+            validatePassword($data['password']);
+        }
 
-    return true;
+        return true;
+    }
 }
-}
 
+/**
+ * Valideer wachtwoord sterkte
+ * @param string $password Het te valideren wachtwoord
+ * @return bool True als wachtwoord voldoet aan eisen
+ * @throws Exception Als wachtwoord niet voldoet aan eisen
+ */
 function validatePassword($password) {
+    // Controleer minimale lengte
     if (strlen($password) < 8) {
         throw new Exception('Wachtwoord moet minimaal 8 tekens lang zijn');
     }
 
+    // Controleer op hoofdletters
     if (!preg_match('/[A-Z]/', $password)) {
         throw new Exception('Wachtwoord moet minimaal één hoofdletter bevatten');
     }
 
+    // Controleer op kleine letters
     if (!preg_match('/[a-z]/', $password)) {
         throw new Exception('Wachtwoord moet minimaal één kleine letter bevatten');
     }
 
+    // Controleer op cijfers
     if (!preg_match('/[0-9]/', $password)) {
         throw new Exception('Wachtwoord moet minimaal één cijfer bevatten');
     }
 
+    // Controleer op speciale tekens
     if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)) {
         throw new Exception('Wachtwoord moet minimaal één speciaal teken bevatten');
     }
@@ -48,6 +67,11 @@ function validatePassword($password) {
     return true;
 }
 
+/**
+ * Sanitiseer gebruikersinput om XSS aanvallen te voorkomen
+ * @param mixed $data Input data (string of array)
+ * @return mixed Gesanitiseerde data
+ */
 function sanitizeInput($data) {
     if (is_array($data)) {
         return array_map('sanitizeInput', $data);
@@ -55,6 +79,13 @@ function sanitizeInput($data) {
     return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
 }
 
+/**
+ * Valideer verplichte velden
+ * @param array $data Array met data
+ * @param array $fields Array met verplichte veldnamen
+ * @return bool True als alle verplichte velden aanwezig zijn
+ * @throws Exception Als verplichte velden ontbreken
+ */
 function validateRequired($data, $fields) {
     foreach ($fields as $field) {
         if (!isset($data[$field]) || empty(trim($data[$field]))) {
@@ -64,6 +95,15 @@ function validateRequired($data, $fields) {
     return true;
 }
 
+/**
+ * Valideer lengte van een waarde
+ * @param string $value De te valideren waarde
+ * @param int $min Minimale lengte
+ * @param int $max Maximale lengte
+ * @param string $fieldName Naam van het veld (voor foutmelding)
+ * @return bool True als lengte binnen bereik valt
+ * @throws Exception Als lengte buiten bereik valt
+ */
 function validateLength($value, $min, $max, $fieldName) {
     $length = mb_strlen($value);
     if ($length < $min || $length > $max) {
@@ -72,6 +112,13 @@ function validateLength($value, $min, $max, $fieldName) {
     return true;
 }
 
+/**
+ * Valideer datum formaat
+ * @param string $date Datum string
+ * @param string $format Gewenst datum formaat (standaard: Y-m-d)
+ * @return bool True als datum geldig is
+ * @throws Exception Als datum ongeldig is
+ */
 function validateDate($date, $format = 'Y-m-d') {
     $d = DateTime::createFromFormat($format, $date);
     if (!$d || $d->format($format) !== $date) {
@@ -80,6 +127,13 @@ function validateDate($date, $format = 'Y-m-d') {
     return true;
 }
 
+/**
+ * Valideer tijd formaat
+ * @param string $time Tijd string
+ * @param string $format Gewenst tijd formaat (standaard: H:i)
+ * @return bool True als tijd geldig is
+ * @throws Exception Als tijd ongeldig is
+ */
 function validateTime($time, $format = 'H:i') {
     $t = DateTime::createFromFormat($format, $time);
     if (!$t || $t->format($format) !== $time) {
@@ -88,6 +142,13 @@ function validateTime($time, $format = 'H:i') {
     return true;
 }
 
+/**
+ * Valideer numerieke waarde
+ * @param mixed $value De te valideren waarde
+ * @param string $fieldName Naam van het veld (voor foutmelding)
+ * @return bool True als waarde numeriek is
+ * @throws Exception Als waarde niet numeriek is
+ */
 function validateNumeric($value, $fieldName) {
     if (!is_numeric($value)) {
         throw new Exception("{$fieldName} moet een nummer zijn");
@@ -95,6 +156,12 @@ function validateNumeric($value, $fieldName) {
     return true;
 }
 
+/**
+ * Valideer e-mailadres
+ * @param string $email E-mailadres
+ * @return bool True als e-mailadres geldig is
+ * @throws Exception Als e-mailadres ongeldig is
+ */
 function validateEmail($email) {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         throw new Exception("Ongeldig e-mailadres");
@@ -102,6 +169,12 @@ function validateEmail($email) {
     return true;
 }
 
+/**
+ * Valideer URL
+ * @param string $url URL string
+ * @return bool True als URL geldig is
+ * @throws Exception Als URL ongeldig is
+ */
 function validateURL($url) {
     if (!filter_var($url, FILTER_VALIDATE_URL)) {
         throw new Exception("Ongeldige URL");
@@ -109,97 +182,133 @@ function validateURL($url) {
     return true;
 }
 
+/**
+ * Valideer telefoonnummer
+ * @param string $phone Telefoonnummer
+ * @return bool True als telefoonnummer geldig is
+ * @throws Exception Als telefoonnummer ongeldig is
+ */
 function validatePhone($phone) {
-    // Remove all non-numeric characters
+    // Verwijder alle niet-numerieke tekens
     $phone = preg_replace('/[^0-9+]/', '', $phone);
     
-    // Basic phone number validation (can be adjusted based on requirements)
+    // Basis telefoonnummer validatie (kan aangepast worden op basis van vereisten)
     if (strlen($phone) < 10 || strlen($phone) > 15) {
         throw new Exception("Ongeldig telefoonnummer");
     }
     return true;
 }
 
+/**
+ * Valideer Nederlandse postcode
+ * @param string $postalCode Postcode
+ * @return bool True als postcode geldig is
+ * @throws Exception Als postcode ongeldig is
+ */
 function validatePostalCode($postalCode) {
-    // Dutch postal code format: 1234 AB
+    // Nederlands postcode formaat: 1234 AB
     if (!preg_match('/^[1-9][0-9]{3}\s?[A-Z]{2}$/i', $postalCode)) {
         throw new Exception("Ongeldige postcode. Gebruik het formaat: 1234 AB");
     }
     return true;
 }
 
-function validateSlug($slug) {
-    if (!preg_match('/^[a-z0-9-]+$/', $slug)) {
-        throw new Exception("Slug mag alleen kleine letters, cijfers en streepjes bevatten");
-    }
-    return true;
-}
-
+/**
+ * Valideer gebruikersrol
+ * @param string $role Gebruikersrol
+ * @return bool True als rol geldig is
+ * @throws Exception Als rol ongeldig is
+ */
 function validateRole($role) {
-    $validRoles = ['admin', 'editor', 'user'];
-    if (!in_array($role, $validRoles)) {
-        throw new Exception("Ongeldige rol. Geldige rollen zijn: " . implode(', ', $validRoles));
+    $allowedRoles = ['admin', 'editor', 'user'];
+    if (!in_array($role, $allowedRoles)) {
+        throw new Exception("Ongeldige rol. Toegestane rollen: " . implode(', ', $allowedRoles));
     }
     return true;
 }
 
-function validateStatus($status, $validStatuses) {
-    if (!in_array($status, $validStatuses)) {
-        throw new Exception("Ongeldige status. Geldige statussen zijn: " . implode(', ', $validStatuses));
+/**
+ * Valideer categorie
+ * @param string $category Categorie
+ * @param array $allowedCategories Toegestane categorieën
+ * @return bool True als categorie geldig is
+ * @throws Exception Als categorie ongeldig is
+ */
+function validateCategory($category, $allowedCategories) {
+    if (!in_array($category, $allowedCategories)) {
+        throw new Exception("Ongeldige categorie. Toegestane categorieën: " . implode(', ', $allowedCategories));
     }
     return true;
 }
 
-function validateFileUpload($file, $allowedTypes, $maxSize) {
-    if (!isset($file['error']) || is_array($file['error'])) {
-        throw new Exception("Ongeldige bestandsupload");
+/**
+ * Valideer status
+ * @param string $status Status
+ * @param array $allowedStatuses Toegestane statussen
+ * @return bool True als status geldig is
+ * @throws Exception Als status ongeldig is
+ */
+function validateStatus($status, $allowedStatuses) {
+    if (!in_array($status, $allowedStatuses)) {
+        throw new Exception("Ongeldige status. Toegestane statussen: " . implode(', ', $allowedStatuses));
     }
-
-    switch ($file['error']) {
-        case UPLOAD_ERR_OK:
-            break;
-        case UPLOAD_ERR_INI_SIZE:
-        case UPLOAD_ERR_FORM_SIZE:
-            throw new Exception("Bestand is te groot");
-        case UPLOAD_ERR_PARTIAL:
-            throw new Exception("Bestand is niet volledig geüpload");
-        case UPLOAD_ERR_NO_FILE:
-            throw new Exception("Geen bestand geüpload");
-        case UPLOAD_ERR_NO_TMP_DIR:
-            throw new Exception("Tijdelijke map ontbreekt");
-        case UPLOAD_ERR_CANT_WRITE:
-            throw new Exception("Kan bestand niet schrijven");
-        case UPLOAD_ERR_EXTENSION:
-            throw new Exception("Upload gestopt door extensie");
-        default:
-            throw new Exception("Onbekende upload fout");
-    }
-
-    if ($file['size'] > $maxSize) {
-        throw new Exception("Bestand is te groot. Maximum grootte is " . ($maxSize / 1024 / 1024) . "MB");
-    }
-
-    $finfo = new finfo(FILEINFO_MIME_TYPE);
-    $mimeType = $finfo->file($file['tmp_name']);
-
-    if (!in_array($mimeType, $allowedTypes)) {
-        throw new Exception("Ongeldig bestandstype. Toegestane types zijn: " . implode(', ', $allowedTypes));
-    }
-
     return true;
 }
 
-// News validation
+/**
+ * Valideer bestandsgrootte
+ * @param int $fileSize Bestandsgrootte in bytes
+ * @param int $maxSize Maximale grootte in bytes
+ * @param string $fieldName Naam van het veld (voor foutmelding)
+ * @return bool True als bestandsgrootte acceptabel is
+ * @throws Exception Als bestandsgrootte te groot is
+ */
+function validateFileSize($fileSize, $maxSize, $fieldName) {
+    if ($fileSize > $maxSize) {
+        $maxSizeMB = round($maxSize / 1024 / 1024, 2);
+        throw new Exception("{$fieldName} is te groot. Maximale grootte: {$maxSizeMB} MB");
+    }
+    return true;
+}
+
+/**
+ * Valideer bestandstype
+ * @param string $fileName Bestandsnaam
+ * @param array $allowedTypes Toegestane bestandstypen
+ * @param string $fieldName Naam van het veld (voor foutmelding)
+ * @return bool True als bestandstype toegestaan is
+ * @throws Exception Als bestandstype niet toegestaan is
+ */
+function validateFileType($fileName, $allowedTypes, $fieldName) {
+    $extension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+    if (!in_array($extension, $allowedTypes)) {
+        throw new Exception("{$fieldName} heeft een ongeldig bestandstype. Toegestane types: " . implode(', ', $allowedTypes));
+    }
+    return true;
+}
+
+/**
+ * Valideer nieuws input
+ * @param array $data Array met nieuwsgegevens
+ * @return bool True als validatie succesvol is
+ * @throws Exception Als validatie faalt
+ */
 function validateNewsInput($data) {
-    $allowedCategories = ['team', 'club', 'events'];
-    $allowedStatuses = ['draft', 'published'];
+    $allowedCategories = ['general', 'team', 'match', 'event', 'club'];
+    $allowedStatuses = ['draft', 'published', 'archived'];
 
-    validateRequired($data['title'], 'Titel');
-    validateLength($data['title'], 3, 255, 'Titel');
+    // Valideer verplichte velden
+    validateRequired($data, ['title', 'content']);
     
-    validateRequired($data['content'], 'Inhoud');
-    validateLength($data['content'], 10, 10000, 'Inhoud');
+    // Valideer lengtes
+    validateLength($data['title'], 5, 255, 'Titel');
+    validateLength($data['content'], 10, 10000, 'Content');
     
+    if (isset($data['excerpt'])) {
+        validateLength($data['excerpt'], 0, 500, 'Samenvatting');
+    }
+    
+    // Valideer categorie en status
     if (isset($data['category'])) {
         validateCategory($data['category'], $allowedCategories);
     }
@@ -211,42 +320,22 @@ function validateNewsInput($data) {
     return true;
 }
 
-// Match validation
-function validateMatchInput($data) {
-    $allowedStatuses = ['scheduled', 'live', 'completed', 'cancelled'];
-
-    validateRequired($data['home_team_id'], 'Thuisteam');
-    validateRequired($data['away_team_id'], 'Uitteam');
-    validateRequired($data['match_date'], 'Wedstrijddatum');
-    
-    validateInt($data['home_team_id']);
-    validateInt($data['away_team_id']);
-    validateDateTime($data['match_date']);
-    
-    if (isset($data['status'])) {
-        validateStatus($data['status'], $allowedStatuses);
-    }
-    
-    if (isset($data['home_score'])) {
-        validateInt($data['home_score']);
-    }
-    
-    if (isset($data['away_score'])) {
-        validateInt($data['away_score']);
-    }
-
-    return true;
-}
-
-// Team validation
+/**
+ * Valideer team input
+ * @param array $data Array met teamgegevens
+ * @return bool True als validatie succesvol is
+ * @throws Exception Als validatie faalt
+ */
 function validateTeamInput($data) {
-    $allowedCategories = ['senior', 'junior', 'women'];
+    $allowedCategories = ['senioren', 'junioren', 'amateurs', 'vrouwen', 'meisjes'];
+    $allowedStatuses = ['active', 'inactive', 'archived'];
 
-    validateRequired($data['name'], 'Teamnaam');
-    validateLength($data['name'], 2, 100, 'Teamnaam');
+    // Valideer verplichte velden
+    validateRequired($data, ['name', 'category']);
     
-    validateRequired($data['category'], 'Categorie');
-    validateCategory($data['category'], $allowedCategories);
+    // Valideer lengtes
+    validateLength($data['name'], 2, 255, 'Teamnaam');
+    validateLength($data['category'], 2, 100, 'Categorie');
     
     if (isset($data['division'])) {
         validateLength($data['division'], 1, 50, 'Divisie');
@@ -256,10 +345,22 @@ function validateTeamInput($data) {
         validateLength($data['coach'], 2, 100, 'Coach');
     }
 
+    // Valideer categorie en status
+    validateCategory($data['category'], $allowedCategories);
+    
+    if (isset($data['status'])) {
+        validateStatus($data['status'], $allowedStatuses);
+    }
+
     return true;
 }
 
-// Settings validation
+/**
+ * Valideer instellingen input
+ * @param array $data Array met instellingen
+ * @return bool True als validatie succesvol is
+ * @throws Exception Als validatie faalt
+ */
 function validateSettingsInput($data) {
     foreach ($data as $key => $value) {
         switch ($key) {
@@ -287,22 +388,33 @@ function validateSettingsInput($data) {
     return true;
 }
 
-// User validation
+/**
+ * Valideer gebruikersinput (herdefinitie voor consistentie)
+ * @param array $data Array met gebruikersgegevens
+ * @return bool True als validatie succesvol is
+ * @throws Exception Als validatie faalt
+ */
 function validateUserInput($data) {
     $allowedRoles = ['admin', 'editor', 'user'];
 
-    validateRequired($data['username'], 'Gebruikersnaam');
-    // Removed call to validateUsername() as it is not defined and causes errors
+    validateRequired($data, ['username', 'email']);
     
-    validateRequired($data['email'], 'E-mailadres');
+    // Valideer gebruikersnaam
+    if (!preg_match('/^[a-zA-Z0-9_-]{3,50}$/', $data['username'])) {
+        throw new Exception('Gebruikersnaam moet 3-50 tekens lang zijn en mag alleen letters, cijfers, underscores en streepjes bevatten');
+    }
+    
+    // Valideer e-mailadres
     validateEmail($data['email']);
     
+    // Valideer wachtwoord indien opgegeven
     if (isset($data['password'])) {
         validatePassword($data['password']);
     }
     
+    // Valideer rol indien opgegeven
     if (isset($data['role'])) {
-        validateRole($data['role']); // Use validateRole instead of validateCategory for role validation
+        validateRole($data['role']);
     }
 
     return true;

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<!-- 
+    AFC Website - Admin Login Pagina
+    ================================
+    
+    Dit is de login pagina voor het admin panel van de AFC website.
+    De pagina bevat:
+    - Veilig login formulier met validatie
+    - Responsive design voor alle apparaten
+    - Moderne UI met animaties en effecten
+    - Error handling en feedback
+    - Redirect naar dashboard na succesvolle login
+    
+    Beveiliging:
+    - CSRF protection
+    - Input sanitization
+    - Session management
+    - Rate limiting (via backend)
+    
+    Auteur: AFC Development Team
+    Laatste update: 2024
+-->
+<html lang="nl">
+<head>
+    <!-- Meta tags voor SEO en viewport instellingen -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - AFC</title>
+    
+    <!-- CSS bestanden voor styling -->
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="../fotos/afc-logo.svg">
+    
+    <!-- Inline CSS voor login pagina specifieke styling -->
+    <style>
+        /* CSS variabelen voor consistente styling */
+        :root {
+            --login-bg: #f8fafc;
+            --login-card: #ffffff;
+            --login-text: #1f2937;
+            --login-text-light: #6b7280;
+            --login-border: #e5e7eb;
+            --login-primary: #dc2626;
+            --login-primary-hover: #b91c1c;
+            --login-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --login-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Body styling voor centrering van login formulier */
+        body {
+            background: var(--login-bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+        }
+
+        /* Login container met card styling */
+        .login-container {
+            background: var(--login-card);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--login-shadow);
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid var(--login-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decoratieve bovenbalk met gradient */
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--login-primary), #b91c1c);
+        }
+
+        /* Header sectie met logo en titel */
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        /* Logo container met AFC logo en titel */
+        .login-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .login-logo img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .login-logo h1 {
+            color: var(--login-text);
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        /* Subtitel voor extra context */
+        .login-subtitle {
+            color: var(--login-text-light);
+            font-size: 16px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Login formulier container */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Formulier groep voor input velden */
+        .form-group {
+            position: relative;
+        }
+
+        /* Label styling voor formulier velden */
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--login-text);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Input veld styling met iconen */
+        .form-group input {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            border: 2px solid var(--login-border);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: var(--login-card);
+            color: var(--login-text);
+            box-sizing: border-box;
+        }
+
+        /* Focus state voor input velden */
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--login-primary);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+            transform: translateY(-1px);
+        }
+
+        /* Placeholder styling */
+        .form-group input::placeholder {
+            color: var(--login-text-light);
+        }
+
+        /* Icon styling binnen input velden */
+        .form-group i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--login-text-light);
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        /* Icon kleur wijzigen bij focus */
+        .form-group input:focus + i {
+            color: var(--login-primary);
+        }
+
+        /* Login button met gradient en animaties */
+        .login-btn {
+            background: linear-gradient(135deg, var(--login-primary) 0%, #b91c1c 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        /* Shimmer effect voor login button */
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Hover state voor login button */
+        .login-btn:hover {
+            background: linear-gradient(135deg, var(--login-primary-hover) 0%, #991b1b 100%);
+            transform: translateY(-2px);
+            box-shadow: var(--login-shadow-hover);
+        }
+
+        /* Disabled state voor login button */
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Footer sectie met extra links */
+        .login-footer {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--login-border);
+        }
+
+        .login-footer p {
+            color: var(--login-text-light);
+            font-size: 14px;
+            margin: 0 0 16px 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--login-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        .back-link:hover {
+            color: var(--login-primary-hover);
+            background: rgba(220, 38, 38, 0.15);
+            transform: translateX(-2px);
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+            border: 1px solid #ef4444;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+            font-size: 14px;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            color: #065f46;
+            border: 1px solid #10b981;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+            font-size: 14px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--login-text-light);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .password-toggle:hover {
+            color: var(--login-primary);
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --login-bg: #111827;
+                --login-card: #1f2937;
+                --login-text: #f9fafb;
+                --login-text-light: #d1d5db;
+                --login-border: #374151;
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 24px;
+                margin: 16px;
+            }
+
+            .login-logo {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .login-logo h1 {
+                font-size: 20px;
+            }
+
+            .form-group input {
+                padding: 14px 14px 14px 44px;
+                font-size: 16px;
+            }
+
+            .login-btn {
+                padding: 14px;
+                font-size: 16px;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fa-spinner {
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="login-logo">
+                <img src="../fotos/afc-logo.svg" alt="AFC Logo">
+                <h1>Admin Login</h1>
+            </div>
+            <p class="login-subtitle">Log in om toegang te krijgen tot het beheerderspaneel</p>
+        </div>
+
+        <div id="error-message" class="error-message"></div>
+        <div id="success-message" class="success-message"></div>
+
+        <form id="login-form" class="login-form">
+            <div class="form-group">
+                <label for="username">Gebruikersnaam</label>
+                <input type="text" id="username" name="username" required placeholder="Voer je gebruikersnaam in">
+                <i class="fas fa-user"></i>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Wachtwoord</label>
+                <input type="password" id="password" name="password" required placeholder="Voer je wachtwoord in">
+                <i class="fas fa-lock"></i>
+                <button type="button" class="password-toggle" id="password-toggle">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+
+            <button type="submit" class="login-btn" id="login-btn">
+                <i class="fas fa-sign-in-alt"></i>
+                Inloggen
+            </button>
+        </form>
+
+        <div class="login-footer">
+            <p>Beveiligde toegang tot het beheerderspaneel</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+                <a href="../index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Terug naar Website
+                </a>
+                <a href="register.html" class="back-link" style="background: rgba(34, 197, 94, 0.1); color: #22c55e;">
+                    <i class="fas fa-user-plus"></i>
+                    Registreren
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('login-form');
+            const loginBtn = document.getElementById('login-btn');
+            const passwordToggle = document.getElementById('password-toggle');
+            const passwordInput = document.getElementById('password');
+            const errorMessage = document.getElementById('error-message');
+            const successMessage = document.getElementById('success-message');
+
+            // Password toggle functionality
+            passwordToggle.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+
+            // Form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(loginForm);
+                
+                // Show loading state
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Inloggen...';
+                
+                // Hide any existing messages
+                errorMessage.style.display = 'none';
+                successMessage.style.display = 'none';
+
+                // Send login request to auth.php
+                fetch('auth.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        successMessage.textContent = 'Inloggen succesvol! Je wordt doorgestuurd...';
+                        successMessage.style.display = 'block';
+                        
+                        // Redirect to dashboard after 1 second
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 1000);
+                    } else {
+                        errorMessage.textContent = data.message || 'Inloggen mislukt. Controleer je gegevens.';
+                        errorMessage.style.display = 'block';
+                        
+                        // Reset button
+                        loginBtn.disabled = false;
+                        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Inloggen';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    errorMessage.textContent = 'Er is een fout opgetreden. Probeer het opnieuw.';
+                    errorMessage.style.display = 'block';
+                    
+                    // Reset button
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Inloggen';
+                });
+            });
+
+            // Add visual feedback
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

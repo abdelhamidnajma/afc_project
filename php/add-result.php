@@ -1,14 +1,14 @@
 <?php
 require_once 'config.php';
 
-// Set headers for JSON response
+// Headers instellen voor JSON response
 header('Content-Type: application/json');
 
-// Get JSON data from request
+// JSON data ophalen uit request
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
-// Validate required fields
+// Verplichte velden valideren
 $required_fields = ['competition', 'team1', 'team2', 'score1', 'score2', 'date'];
 foreach ($required_fields as $field) {
     if (!isset($data[$field]) || empty($data[$field])) {
@@ -23,13 +23,13 @@ foreach ($required_fields as $field) {
 try {
     $conn = getDBConnection();
 
-    // Prepare SQL statement
+    // SQL statement voorbereiden
     $sql = "INSERT INTO results (competition, team1, team2, score1, score2, date) 
             VALUES (:competition, :team1, :team2, :score1, :score2, :date)";
     
     $stmt = $conn->prepare($sql);
     
-    // Bind parameters
+    // Parameters binden
     $stmt->bindParam(':competition', $data['competition']);
     $stmt->bindParam(':team1', $data['team1']);
     $stmt->bindParam(':team2', $data['team2']);
@@ -37,7 +37,7 @@ try {
     $stmt->bindParam(':score2', $data['score2']);
     $stmt->bindParam(':date', $data['date']);
     
-    // Execute statement
+    // Statement uitvoeren
     if ($stmt->execute()) {
         echo json_encode([
             'success' => true,

@@ -3,128 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historie - AFC</title>
+    <title>Geschiedenis - Amsterdamsche FC</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="fotos/afc-logo.svg">
 </head>
 <body>
-    <!-- Navigation -->
-    <button class="nav-toggle" aria-label="Toggle Navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-
     <header>
         <nav class="main-nav">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="images/logo.png" alt="AFC Logo">
+            <div class="logo-container">
+                <a href="index.html" class="logo-link">
+                    <img src="fotos/afc-logo.svg" alt="AFC Logo" class="logo-image" style="height: 40px !important; width: auto !important; max-height: 40px !important;">
                 </a>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
-                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i>Nieuws</a></li>
-                <li><a href="wedstrijden.html"><i class="fas fa-futbol"></i>Wedstrijden</a></li>
-                <li><a href="teams.html"><i class="fas fa-users"></i>Teams</a></li>
-                <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i> Nieuws</a></li>
+                <li><a href="agenda.html"><i class="fas fa-calendar"></i> Agenda</a></li>
+                <li><a href="uitslagen.html"><i class="fas fa-trophy"></i> Uitslagen</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="geschiedenis.html" class="active"><i class="fas fa-history"></i> Geschiedenis</a></li>
+                <li><a href="admin/dashboard.html" style="background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%); color: white;"><i class="fas fa-cog"></i> Admin</a></li>
             </ul>
-            <button class="theme-toggle" aria-label="Toggle Theme">
+            <button class="theme-toggle" id="theme-toggle">
                 <i class="fas fa-moon"></i>
             </button>
         </nav>
     </header>
 
     <main>
-        <section class="history-hero">
+        <section class="hero-section">
             <div class="container">
-                <h1>De Geschiedenis van AFC</h1>
-                <p class="subtitle">Van bescheiden begin tot moderne sportvereniging</p>
+                <div class="hero-content">
+                    <h1>De Geschiedenis van AFC</h1>
+                    <p class="subtitle">Van bescheiden begin tot moderne sportvereniging</p>
+                </div>
             </div>
         </section>
 
-        <section class="timeline-section">
+        <section class="section">
             <div class="container">
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-date">1920</div>
-                            <h3>De Oprichting</h3>
-                            <div class="timeline-image">
-                                <img src="images/history/founding.jpg" alt="Oprichting AFC">
+                <div class="section-header">
+                    <h2>Onze Geschiedenis</h2>
+                    <p class="subtitle">Meer dan 100 jaar voetbalgeschiedenis in Amsterdam</p>
+                </div>
+                
+                <div class="timeline" style="position: relative; padding: var(--spacing-xl) 0;">
+                    <div class="timeline-item" style="margin-bottom: var(--spacing-xl); position: relative;">
+                        <div class="card">
+                            <div class="card-content">
+                                <div style="display: flex; align-items: center; gap: var(--spacing-lg);">
+                                    <div style="text-align: center; min-width: 100px;">
+                                        <div style="background: var(--color-secondary); color: white; padding: var(--spacing-md); border-radius: var(--radius-lg); font-weight: 700; font-size: 1.25rem;">
+                                            1920
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">
+                                            De Oprichting
+                                        </h3>
+                                        <p style="color: var(--color-text-light); line-height: 1.6;">
+                                            AFC werd opgericht door een groep enthousiaste voetballiefhebbers in Amsterdam. De eerste trainingen vonden plaats op een weiland aan de rand van de stad. Wat begon als een kleine groep vrienden groeide uit tot een van de meest gerespecteerde amateurvoetbalclubs van Amsterdam.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <p>AFC werd opgericht door een groep enthousiaste voetballiefhebbers in Amsterdam. De eerste trainingen vonden plaats op een weiland aan de rand van de stad.</p>
                         </div>
                     </div>
 
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-date">1935</div>
-                            <h3>Eerste Echte Clubhuis</h3>
-                            <div class="timeline-image">
-                                <img src="images/history/first-clubhouse.jpg" alt="Eerste clubhuis">
+                    <div class="timeline-item" style="margin-bottom: var(--spacing-xl); position: relative;">
+                        <div class="card">
+                            <div class="card-content">
+                                <div style="display: flex; align-items: center; gap: var(--spacing-lg);">
+                                    <div style="text-align: center; min-width: 100px;">
+                                        <div style="background: var(--color-secondary); color: white; padding: var(--spacing-md); border-radius: var(--radius-lg); font-weight: 700; font-size: 1.25rem;">
+                                            1935
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">
+                                            Eerste Echte Clubhuis
+                                        </h3>
+                                        <p style="color: var(--color-text-light); line-height: 1.6;">
+                                            Na jaren van omzwervingen kreeg AFC eindelijk een eigen clubhuis. Dit betekende een grote stap voorwaarts voor de vereniging en gaf de club een vaste thuisbasis waar leden elkaar konden ontmoeten en de clubgeest kon groeien.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <p>Na jaren van omzwervingen kreeg AFC eindelijk een eigen clubhuis. Dit betekende een grote stap voorwaarts voor de vereniging.</p>
                         </div>
                     </div>
 
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-date">1950</div>
-                            <h3>Eerste Kunstgrasveld</h3>
-                            <div class="timeline-image">
-                                <img src="images/history/artificial-turf.jpg" alt="Eerste kunstgrasveld">
+                    <div class="timeline-item" style="margin-bottom: var(--spacing-xl); position: relative;">
+                        <div class="card">
+                            <div class="card-content">
+                                <div style="display: flex; align-items: center; gap: var(--spacing-lg);">
+                                    <div style="text-align: center; min-width: 100px;">
+                                        <div style="background: var(--color-secondary); color: white; padding: var(--spacing-md); border-radius: var(--radius-lg); font-weight: 700; font-size: 1.25rem;">
+                                            1950
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">
+                                            Eerste Kunstgrasveld
+                                        </h3>
+                                        <p style="color: var(--color-text-light); line-height: 1.6;">
+                                            AFC was een van de eerste clubs in Nederland die overging op kunstgras. Dit zorgde voor betere trainingsmogelijkheden en minder uitvallende wedstrijden, wat de kwaliteit van het voetbal aanzienlijk verbeterde.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <p>AFC was een van de eerste clubs in Nederland die overging op kunstgras. Dit zorgde voor betere trainingsmogelijkheden en minder uitvallende wedstrijden.</p>
                         </div>
                     </div>
 
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-date">1975</div>
-                            <h3>Uitbreiding Jeugdafdeling</h3>
-                            <div class="timeline-image">
-                                <img src="images/history/youth.jpg" alt="Jeugdafdeling">
+                    <div class="timeline-item" style="margin-bottom: var(--spacing-xl); position: relative;">
+                        <div class="card">
+                            <div class="card-content">
+                                <div style="display: flex; align-items: center; gap: var(--spacing-lg);">
+                                    <div style="text-align: center; min-width: 100px;">
+                                        <div style="background: var(--color-secondary); color: white; padding: var(--spacing-md); border-radius: var(--radius-lg); font-weight: 700; font-size: 1.25rem;">
+                                            1975
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">
+                                            Uitbreiding Jeugdafdeling
+                                        </h3>
+                                        <p style="color: var(--color-text-light); line-height: 1.6;">
+                                            De jeugdafdeling werd uitgebreid met meerdere teams. Dit was het begin van een sterke jeugdopleiding die nog steeds bestaat en vele talentvolle spelers heeft voortgebracht die later doorstroomden naar de seniorenteams.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <p>De jeugdafdeling werd uitgebreid met meerdere teams. Dit was het begin van een sterke jeugdopleiding die nog steeds bestaat.</p>
                         </div>
                     </div>
 
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-date">2000</div>
-                            <h3>Modern Sportpark</h3>
-                            <div class="timeline-image">
-                                <img src="images/history/modern-park.jpg" alt="Modern sportpark">
+                    <div class="timeline-item" style="margin-bottom: var(--spacing-xl); position: relative;">
+                        <div class="card">
+                            <div class="card-content">
+                                <div style="display: flex; align-items: center; gap: var(--spacing-lg);">
+                                    <div style="text-align: center; min-width: 100px;">
+                                        <div style="background: var(--color-secondary); color: white; padding: var(--spacing-md); border-radius: var(--radius-lg); font-weight: 700; font-size: 1.25rem;">
+                                            2000
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">
+                                            Modern Sportpark
+                                        </h3>
+                                        <p style="color: var(--color-text-light); line-height: 1.6;">
+                                            De vereniging verhuisde naar een modern sportpark met meerdere velden, een uitgebreide kantine en moderne kleedkamers. Deze verhuizing markeerde het begin van een nieuwe era voor AFC.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <p>De vereniging verhuisde naar een modern sportpark met meerdere velden, een uitgebreide kantine en moderne kleedkamers.</p>
                         </div>
                     </div>
 
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-date">2020</div>
-                            <h3>100 Jaar AFC</h3>
-                            <div class="timeline-image">
-                                <img src="images/history/century.jpg" alt="100 jaar AFC">
+                    <div class="timeline-item" style="margin-bottom: var(--spacing-xl); position: relative;">
+                        <div class="card">
+                            <div class="card-content">
+                                <div style="display: flex; align-items: center; gap: var(--spacing-lg);">
+                                    <div style="text-align: center; min-width: 100px;">
+                                        <div style="background: var(--color-secondary); color: white; padding: var(--spacing-md); border-radius: var(--radius-lg); font-weight: 700; font-size: 1.25rem;">
+                                            2020
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="margin-bottom: var(--spacing-sm); color: var(--color-text);">
+                                            100 Jaar AFC
+                                        </h3>
+                                        <p style="color: var(--color-text-light); line-height: 1.6;">
+                                            De vereniging vierde haar 100-jarig bestaan met een groot feest en speciale wedstrijden. Een mijlpaal in de geschiedenis van AFC die liet zien hoe de club was uitgegroeid tot een belangrijke speler in de Amsterdamse voetbalwereld.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <p>De vereniging vierde haar 100-jarig bestaan met een groot feest en speciale wedstrijden. Een mijlpaal in de geschiedenis van AFC.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="history-video">
+        <section class="section" style="background: var(--color-background-alt);">
             <div class="container">
-                <h2>Bekijk Onze Geschiedenis</h2>
-                <div class="video-container">
-                    <video controls poster="images/history/video-thumbnail.jpg">
-                        <source src="videos/club-history.mp4" type="video/mp4">
-                        Uw browser ondersteunt geen video weergave.
-                    </video>
+                <div class="section-header">
+                    <h2>Onze Waarden</h2>
+                    <p class="subtitle">De principes die ons al meer dan 100 jaar leiden</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg);">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 style="text-align: center; margin-bottom: var(--spacing-md);">
+                                <i class="fas fa-handshake" style="color: var(--color-secondary); font-size: 2rem;"></i>
+                            </h3>
+                            <h4 style="text-align: center; margin-bottom: var(--spacing-sm); color: var(--color-text);">
+                                Respect
+                            </h4>
+                            <p style="text-align: center; color: var(--color-text-light); line-height: 1.6;">
+                                We behandelen iedereen met respect, ongeacht achtergrond, niveau of ervaring. Respect voor de tegenstander, scheidsrechter en medespelers staat centraal in alles wat we doen.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 style="text-align: center; margin-bottom: var(--spacing-md);">
+                                <i class="fas fa-users" style="color: var(--color-secondary); font-size: 2rem;"></i>
+                            </h3>
+                            <h4 style="text-align: center; margin-bottom: var(--spacing-sm); color: var(--color-text);">
+                                Gemeenschap
+                            </h4>
+                            <p style="text-align: center; color: var(--color-text-light); line-height: 1.6;">
+                                AFC is meer dan alleen voetbal. We zijn een gemeenschap waar vriendschappen voor het leven worden gesloten en waar iedereen welkom is.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 style="text-align: center; margin-bottom: var(--spacing-md);">
+                                <i class="fas fa-star" style="color: var(--color-secondary); font-size: 2rem;"></i>
+                            </h3>
+                            <h4 style="text-align: center; margin-bottom: var(--spacing-sm); color: var(--color-text);">
+                                Kwaliteit
+                            </h4>
+                            <p style="text-align: center; color: var(--color-text-light); line-height: 1.6;">
+                                We streven naar kwaliteit in alles wat we doen, van de jeugdopleiding tot de seniorenteams, en van de faciliteiten tot de begeleiding.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -134,91 +243,79 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Sportpark 1, 1234 AB Stad</p>
-                    <p><i class="fas fa-phone"></i> (012) 345 6789</p>
-                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Volg Ons</h3>
+                    <h3>Amsterdamsche FC</h3>
+                    <p>Al meer dan 100 jaar de trots van Amsterdam. Wij zijn een amateurvoetbalclub die zich inzet voor sportiviteit, respect en plezier in het voetbal.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
+                
                 <div class="footer-section">
-                    <h3>Links</h3>
-                    <ul>
-                        <li><a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></li>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="sponsors.html">Sponsors</a></li>
-                    </ul>
+                    <h3>Snelle Links</h3>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="nieuws.html">Nieuws</a></p>
+                    <p><a href="agenda.html">Agenda</a></p>
+                    <p><a href="uitslagen.html">Uitslagen</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Maurice Ravellaan 4, 1083 HR Amsterdam</p>
+                    <p><i class="fas fa-phone"></i> +31 (0)20-6445575</p>
+                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Openingstijden</h3>
+                    <p>Administratie: 09:00 - 17:00</p>
+                    <p>Horeca: 15:30 - 00:00</p>
+                    <p>Training: Di & Do 19:00 - 21:00</p>
                 </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2024 AFC. Alle rechten voorbehouden.</p>
+                <p>&copy; <span id="current-year">2025</span> Amsterdamsche FC. Alle rechten voorbehouden. | 
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a> | 
+                <a href="#">Cookie Policy</a></p>
             </div>
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const timeline = document.querySelector('.timeline');
+            // Thema toggle functionaliteit
+            const themeToggle = document.querySelector('.theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
 
-            async function fetchHistoryItems() {
-                try {
-                    const response = await fetch('admin/api.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            action: 'get_history' // Assuming you add a get_history action to api.php
-                        })
-                    });
-
-                    const data = await response.json();
-
-                    if (data.success && data.historyItems) {
-                        displayHistoryItems(data.historyItems);
-                    } else {
-                        console.error('Error fetching history items:', data.message);
-                        timeline.innerHTML = '<p>Er is een fout opgetreden bij het laden van de geschiedenis.</p>';
-                    }
-                } catch (error) {
-                    console.error('Error fetching history items:', error);
-                    timeline.innerHTML = '<p>Kon geen verbinding maken met de server om de geschiedenis te laden.</p>';
+            function setTheme(theme) {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark-mode');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    document.documentElement.classList.remove('dark-mode');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
                 }
+                localStorage.setItem('theme', theme);
             }
 
-            function displayHistoryItems(historyItems) {
-                timeline.innerHTML = ''; // Clear current items
-                if (historyItems.length === 0) {
-                    timeline.innerHTML = '<p>Geen geschiedenis gevonden.</p>';
-                    return;
-                }
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
 
-                historyItems.forEach(item => {
-                    const timelineItem = document.createElement('div');
-                    timelineItem.classList.add('timeline-item');
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = localStorage.getItem('theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                setTheme(newTheme);
+            });
 
-                    // Basic structure - adjust based on your history data fields
-                    timelineItem.innerHTML = `
-                        <div class="timeline-content">
-                            <div class="timeline-date">${item.year}</div>
-                            <h3>${item.title}</h3>
-                            ${item.image_url ? `<div class="timeline-image"><img src="images/history/${item.image_url}" alt="${item.title}"></div>` : ''}
-                            <p>${item.description}</p>
-                        </div>
-                    `;
-                    timeline.appendChild(timelineItem);
-                });
-            }
-
-            // Initial load
-            fetchHistoryItems();
+            // Huidige jaar bijwerken
+            document.getElementById('current-year').textContent = new Date().getFullYear();
         });
     </script>
 </body>

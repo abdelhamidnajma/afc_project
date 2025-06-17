@@ -7,25 +7,323 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="../images/logo.png">
+    <link rel="icon" type="image/svg+xml" href="../fotos/afc-logo.svg">
+    <style>
+        :root {
+            --register-bg: #f8fafc;
+            --register-card: #ffffff;
+            --register-text: #1f2937;
+            --register-text-light: #6b7280;
+            --register-border: #e5e7eb;
+            --register-primary: #dc2626;
+            --register-primary-hover: #b91c1c;
+            --register-success: #22c55e;
+            --register-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        body {
+            background: var(--register-bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+        }
+
+        .register-container {
+            background: var(--register-card);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--register-shadow);
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid var(--register-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--register-primary), #b91c1c);
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .register-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .register-logo img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .register-logo h1 {
+            color: var(--register-text);
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .register-subtitle {
+            color: var(--register-text-light);
+            font-size: 16px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .register-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--register-text);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            border: 2px solid var(--register-border);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: var(--register-card);
+            color: var(--register-text);
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--register-primary);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-group input.error,
+        .form-group select.error {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--register-text-light);
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .form-group input:focus + i,
+        .form-group select:focus + i {
+            color: var(--register-primary);
+        }
+
+        .password-requirements {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 8px;
+        }
+
+        .password-requirements p {
+            margin: 0 0 12px 0;
+            font-weight: 600;
+            color: var(--register-text);
+            font-size: 14px;
+        }
+
+        .password-requirements ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .password-requirements li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--register-text-light);
+        }
+
+        .password-requirements li.valid {
+            color: var(--register-success);
+        }
+
+        .password-requirements li.invalid {
+            color: #ef4444;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .register-btn {
+            background: linear-gradient(135deg, var(--register-primary) 0%, #b91c1c 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .register-btn:hover {
+            background: linear-gradient(135deg, var(--register-primary-hover) 0%, #991b1b 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .register-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .register-footer {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--register-border);
+        }
+
+        .register-footer p {
+            color: var(--register-text-light);
+            font-size: 14px;
+            margin: 0 0 16px 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--register-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        .back-link:hover {
+            color: var(--register-primary-hover);
+            background: rgba(220, 38, 38, 0.15);
+            transform: translateX(-2px);
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            color: #065f46;
+            border: 1px solid #10b981;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+            font-size: 14px;
+        }
+
+        .error-message-global {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+            border: 1px solid #ef4444;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+            font-size: 14px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fa-spinner {
+            animation: spin 1s linear infinite;
+        }
+    </style>
 </head>
 <body>
     <div class="register-container">
         <div class="register-header">
-            <img src="../images/logo.png" alt="Logo" class="register-logo">
-            <h1>Admin Registratie</h1>
-            <p>Maak een nieuw admin account aan</p>
+            <div class="register-logo">
+                <img src="../fotos/afc-logo.svg" alt="AFC Logo">
+                <h1>Admin Registratie</h1>
+            </div>
+            <p class="register-subtitle">Maak een nieuw admin account aan</p>
         </div>
 
-        <form id="registerForm" class="register-form" method="POST" action="auth.php">
+        <div id="success-message" class="success-message"></div>
+        <div id="error-message" class="error-message-global"></div>
+
+        <form id="registerForm" class="register-form">
             <div class="form-group">
                 <label for="username">Gebruikersnaam</label>
                 <input type="text" id="username" name="username" required
                        minlength="3" maxlength="50"
                        pattern="[a-zA-Z0-9_-]+"
                        title="Alleen letters, cijfers, underscores en streepjes zijn toegestaan">
+                <i class="fas fa-user"></i>
                 <div class="error-message"></div>
             </div>
+
+            <div class="form-group">
+                <label for="email">E-mailadres</label>
+                <input type="email" id="email" name="email" required>
+                <i class="fas fa-envelope"></i>
+                <div class="error-message"></div>
+            </div>
+
             <div class="form-group">
                 <label for="role">Rol</label>
                 <select id="role" name="role" required>
@@ -33,19 +331,14 @@
                     <option value="admin">Admin</option>
                     <option value="user">User</option>
                 </select>
-                <div class="error-message"></div>
-            </div>
-
-            <div class="form-group">
-                <label for="email">E-mailadres</label>
-                <input type="email" id="email" name="email" required>
+                <i class="fas fa-user-tag"></i>
                 <div class="error-message"></div>
             </div>
 
             <div class="form-group">
                 <label for="password">Wachtwoord</label>
-                <input type="password" id="password" name="password" required
-                       minlength="8">
+                <input type="password" id="password" name="password" required minlength="8">
+                <i class="fas fa-lock"></i>
                 <div class="password-requirements">
                     <p>Wachtwoord moet voldoen aan:</p>
                     <ul>
@@ -77,21 +370,34 @@
             <div class="form-group">
                 <label for="confirmPassword">Bevestig wachtwoord</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <i class="fas fa-lock"></i>
                 <div class="error-message"></div>
             </div>
 
-            <div class="form-footer">
-                <a href="admin.html" class="login-link">Terug naar login</a>
-                <button type="submit" class="btn btn-primary">Registreren</button>
-            </div>
+            <button type="submit" class="register-btn" id="register-btn">
+                <i class="fas fa-user-plus"></i>
+                Registreren
+            </button>
         </form>
+
+        <div class="register-footer">
+            <p>Al een account? Log in om toegang te krijgen</p>
+            <a href="login.html" class="back-link">
+                <i class="fas fa-sign-in-alt"></i>
+                Terug naar Login
+            </a>
+        </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('registerForm');
+            const registerBtn = document.getElementById('register-btn');
             const password = document.getElementById('password');
             const confirmPassword = document.getElementById('confirmPassword');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            
             const requirements = {
                 length: document.getElementById('length'),
                 uppercase: document.getElementById('uppercase'),
@@ -120,13 +426,19 @@
                 });
             });
 
-            // Form validation
+            // Form validation and submission
             form.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                // Reset previous errors
+                // Reset messages
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
                 document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
                 document.querySelectorAll('input.error').forEach(el => el.classList.remove('error'));
+
+                // Show loading state
+                registerBtn.disabled = true;
+                registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registreren...';
 
                 // Validate all fields
                 let isValid = true;
@@ -159,7 +471,11 @@
                     isValid = false;
                 }
 
-                if (!isValid) return;
+                if (!isValid) {
+                    registerBtn.disabled = false;
+                    registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registreren';
+                    return;
+                }
 
                 try {
                     const response = await fetch('auth.php', {
@@ -167,36 +483,43 @@
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                body: JSON.stringify({
-                    action: 'register',
-                    username: username,
-                    role: formData.get('role'),
-                    email: email,
-                    password: pwd
-                })
+                        body: JSON.stringify({
+                            action: 'register',
+                            username: username,
+                            role: formData.get('role'),
+                            email: email,
+                            password: pwd
+                        })
                     });
 
                     const data = await response.json();
                     
                     if (data.success) {
-                        alert('Registratie succesvol! U kunt nu inloggen.');
-                        window.location.href = 'admin.html';
+                        successMessage.textContent = 'Registratie succesvol! U wordt doorgestuurd naar de login pagina...';
+                        successMessage.style.display = 'block';
+                        
+                        // Redirect after 2 seconds
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 2000);
                     } else {
-                        // Show backend error message if available
-                        const message = data.message || 'Er is een fout opgetreden bij het registreren';
-                        showError('username', message);
+                        errorMessage.textContent = data.message || 'Er is een fout opgetreden bij het registreren';
+                        errorMessage.style.display = 'block';
                     }
                 } catch (error) {
                     console.error('Registration error:', error);
-                    // Show error message from error object if available
-                    const message = error.message || 'Er is een fout opgetreden bij het registreren';
-                    showError('username', message);
+                    errorMessage.textContent = 'Er is een fout opgetreden bij het registreren. Controleer uw internetverbinding.';
+                    errorMessage.style.display = 'block';
                 }
+
+                // Reset button
+                registerBtn.disabled = false;
+                registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registreren';
             });
 
             function showError(fieldId, message) {
                 const field = document.getElementById(fieldId);
-                const errorDiv = field.nextElementSibling;
+                const errorDiv = field.parentElement.querySelector('.error-message');
                 field.classList.add('error');
                 errorDiv.textContent = message;
             }

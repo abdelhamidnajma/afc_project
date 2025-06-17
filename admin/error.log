@@ -1,0 +1,52 @@
+[17-Jun-2025 16:58:16 Europe/Berlin] Auth.php aangeroepen - Method: POST
+[17-Jun-2025 16:58:16 Europe/Berlin] POST data: Array
+(
+    [username] => admin
+    [password] => Admin123!
+)
+
+[17-Jun-2025 16:58:16 Europe/Berlin] Login poging voor gebruiker: admin
+[17-Jun-2025 16:58:16 Europe/Berlin] Database connectie succesvol
+[17-Jun-2025 16:58:16 Europe/Berlin] Gebruiker gevonden: ja
+[17-Jun-2025 16:58:16 Europe/Berlin] Wachtwoord verificatie: succesvol
+[17-Jun-2025 16:58:16 Europe/Berlin] Succesvol ingelogd voor gebruiker: admin
+[17-Jun-2025 16:58:16 Europe/Berlin] Fout bij loggen activiteit: SQLSTATE[23000]: Integrity constraint violation: 4025 CONSTRAINT `activity_log.details` failed for `afc_website`.`activity_log`
+[17-Jun-2025 17:04:21 Europe/Berlin] Auth.php aangeroepen - Method: POST
+[17-Jun-2025 17:04:21 Europe/Berlin] POST data: Array
+(
+    [username] => admin
+    [password] => Admin123!
+)
+
+[17-Jun-2025 17:04:21 Europe/Berlin] Login poging voor gebruiker: admin
+[17-Jun-2025 17:04:21 Europe/Berlin] Database connectie succesvol
+[17-Jun-2025 17:04:21 Europe/Berlin] Gebruiker gevonden: ja
+[17-Jun-2025 17:04:21 Europe/Berlin] Wachtwoord verificatie: succesvol
+[17-Jun-2025 17:04:21 Europe/Berlin] Succesvol ingelogd voor gebruiker: admin
+[17-Jun-2025 17:04:21 Europe/Berlin] Fout bij loggen activiteit: SQLSTATE[23000]: Integrity constraint violation: 4025 CONSTRAINT `activity_log.details` failed for `afc_website`.`activity_log`
+[17-Jun-2025 17:04:58 Europe/Berlin] Auth.php aangeroepen - Method: POST
+[17-Jun-2025 17:04:58 Europe/Berlin] POST data: Array
+(
+    [username] => Halil
+    [password] => Halil123!
+)
+
+[17-Jun-2025 17:04:58 Europe/Berlin] Login poging voor gebruiker: Halil
+[17-Jun-2025 17:04:59 Europe/Berlin] Database connectie succesvol
+[17-Jun-2025 17:04:59 Europe/Berlin] Gebruiker gevonden: ja
+[17-Jun-2025 17:04:59 Europe/Berlin] Wachtwoord verificatie: succesvol
+[17-Jun-2025 17:04:59 Europe/Berlin] Succesvol ingelogd voor gebruiker: Halil
+[17-Jun-2025 17:04:59 Europe/Berlin] Fout bij loggen activiteit: SQLSTATE[23000]: Integrity constraint violation: 4025 CONSTRAINT `activity_log.details` failed for `afc_website`.`activity_log`
+[17-Jun-2025 17:05:34 Europe/Berlin] Auth.php aangeroepen - Method: POST
+[17-Jun-2025 17:05:34 Europe/Berlin] POST data: Array
+(
+    [username] => Halil
+    [password] => Halil123!
+)
+
+[17-Jun-2025 17:05:34 Europe/Berlin] Login poging voor gebruiker: Halil
+[17-Jun-2025 17:05:34 Europe/Berlin] Database connectie succesvol
+[17-Jun-2025 17:05:34 Europe/Berlin] Gebruiker gevonden: ja
+[17-Jun-2025 17:05:34 Europe/Berlin] Wachtwoord verificatie: succesvol
+[17-Jun-2025 17:05:34 Europe/Berlin] Succesvol ingelogd voor gebruiker: Halil
+[17-Jun-2025 17:05:34 Europe/Berlin] Fout bij loggen activiteit: SQLSTATE[23000]: Integrity constraint violation: 4025 CONSTRAINT `activity_log.details` failed for `afc_website`.`activity_log`

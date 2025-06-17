@@ -1,24 +1,27 @@
 <?php
-// Enable error reporting but log errors to a file instead of displaying
+// Schakel foutrapportage in maar log fouten naar een bestand in plaats van te tonen
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/error.log');
 
+// Start output buffering
 ob_start();
 
+// Start sessie en importeer benodigde bestanden
 session_start();
 require_once '../config/database.php';
 require_once 'validation.php';
 
-// Initialize database if not already done
-initializeDatabase();
+// Debug: Log de request
+error_log("Auth.php aangeroepen - Method: " . $_SERVER['REQUEST_METHOD']);
+error_log("POST data: " . print_r($_POST, true));
 
-// Handle POST requests
+// Verwerk POST requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json');
     
-    // Handle JSON requests (registration)
+    // Verwerk JSON requests (registratie)
     if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
         $data = json_decode(file_get_contents('php://input'), true);
         $action = $data['action'] ?? '';
@@ -26,12 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         switch ($action) {
             case 'register':
                 try {
-                    // Validate required fields
+                    // Valideer verplichte velden
                     if (empty($data['username']) || empty($data['email']) || empty($data['password'])) {
                         throw new Exception('Alle velden zijn verplicht');
                     }
 
-                    // Validate input
+                    // Valideer input
                     validateUserInput([
                         'username' => $data['username'],
                         'email' => $data['email'],
@@ -39,142 +42,163 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'role' => $data['role'] ?? 'editor'
                     ]);
 
-                    $db = getDB();
+                    $conn = getDB();
+                    if (!$conn) {
+                        throw new Exception('Database connection failed');
+                    }
 
-                    // Check if username already exists
-                    $stmt = $db->prepare('SELECT id FROM users WHERE username = ?');
+                    // Controleer of gebruikersnaam al bestaat
+                    $stmt = $conn->prepare('SELECT id FROM users WHERE username = ?');
                     $stmt->execute([$data['username']]);
                     if ($stmt->fetch()) {
                         throw new Exception('Deze gebruikersnaam is al in gebruik');
                     }
 
-                    // Check if email already exists
-                    $stmt = $db->prepare('SELECT id FROM users WHERE email = ?');
+                    // Controleer of e-mail al bestaat
+                    $stmt = $conn->prepare('SELECT id FROM users WHERE email = ?');
                     $stmt->execute([$data['email']]);
                     if ($stmt->fetch()) {
                         throw new Exception('Dit e-mailadres is al in gebruik');
                     }
 
-                    // Hash password
+                    // Hash wachtwoord en maak gebruiker aan
                     $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
-
-                    // Insert new user
-                    $stmt = $db->prepare('
-                        INSERT INTO users (username, email, password, role, created_at, updated_at)
-                        VALUES (?, ?, ?, ?, NOW(), NOW())
+                    $stmt = $conn->prepare('
+                        INSERT INTO users (username, email, password, role) 
+                        VALUES (?, ?, ?, ?)
                     ');
-                    
-                    if ($stmt->execute([$data['username'], $data['email'], $hashedPassword, $data['role'] ?? 'editor'])) {
-                        // Log the registration
-                        logActivity(
-                            $db->lastInsertId(),
-                            'register',
-                            'user',
-                            $db->lastInsertId(),
-                            ['username' => $data['username'], 'email' => $data['email']]
-                        );
-                        echo json_encode(['success' => true, 'message' => 'Registratie succesvol']);
-                    } else {
-                        throw new Exception('Er is een fout opgetreden bij het registreren');
-                    }
+                    $stmt->execute([
+                        $data['username'],
+                        $data['email'],
+                        $hashedPassword,
+                        $data['role'] ?? 'editor'
+                    ]);
+
+                    // Log activiteit
+                    $userId = $conn->lastInsertId();
+                    logActivity($userId, 'user_registered', 'Nieuwe gebruiker geregistreerd');
+
+                    echo json_encode([
+                        'success' => true,
+                        'message' => 'Gebruiker succesvol geregistreerd'
+                    ]);
+
                 } catch (Exception $e) {
-                    error_log('Registration error: ' . $e->getMessage());
-                    http_response_code(400);
-                    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
-                }
-                exit;
-        }
-    }
-    
-    // Handle form POST requests (login)
-    if (isset($_POST['action'])) {
-        switch ($_POST['action']) {
-            case 'login':
-                try {
-                    if (!isset($_POST['username']) || !isset($_POST['password'])) {
-                        echo json_encode(['success' => false, 'message' => 'Missing credentials']);
-                        exit;
-                    }
-
-                    $user = getUserByUsername($_POST['username']);
-                    if ($user && verifyPassword($_POST['password'], $user['password'])) {
-                        // Check if account is locked
-                        if ($user['locked_until'] && strtotime($user['locked_until']) > time()) {
-                            echo json_encode([
-                                'success' => false, 
-                                'message' => 'Account is vergrendeld. Probeer het later opnieuw.'
-                            ]);
-                            exit;
-                        }
-
-                        // Update login status
-                        updateUserLoginAttempts($user['id'], true);
-                        
-                        // Set session
-                        $_SESSION['user_id'] = $user['id'];
-                        $_SESSION['username'] = $user['username'];
-                        $_SESSION['role'] = $user['role'];
-
-                        // Log successful login
-                        logActivity($user['id'], 'login', 'user', $user['id']);
-
-                        echo json_encode(['success' => true, 'user' => [
-                            'username' => $user['username'],
-                            'role' => $user['role']
-                        ]]);
-                    } else {
-                        // Update failed login attempt
-                        if ($user) {
-                            updateUserLoginAttempts($user['id'], false);
-                        }
-                        echo json_encode(['success' => false, 'message' => 'Ongeldige inloggegevens']);
-                    }
-                } catch (Exception $e) {
-                    error_log('Login error: ' . $e->getMessage());
-                    echo json_encode(['success' => false, 'message' => 'Er is een fout opgetreden bij het inloggen']);
-                }
-                break;
-
-            case 'logout':
-                if (isset($_SESSION['user_id'])) {
-                    logActivity($_SESSION['user_id'], 'logout', 'user', $_SESSION['user_id']);
-                }
-                session_destroy();
-                echo json_encode(['success' => true]);
-                break;
-
-            case 'check_auth':
-                if (isset($_SESSION['user_id'])) {
-                    echo json_encode(['success' => true, 'user' => [
-                        'username' => $_SESSION['username'],
-                        'role' => $_SESSION['role']
-                    ]]);
-                } else {
-                    echo json_encode(['success' => false]);
+                    echo json_encode([
+                        'success' => false,
+                        'message' => $e->getMessage()
+                    ]);
                 }
                 break;
 
             default:
-                echo json_encode(['success' => false, 'message' => 'Invalid action']);
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Ongeldige actie'
+                ]);
+                break;
         }
-        exit;
-    }
-}
+    } else {
+        // Verwerk normale POST requests (login)
+        $username = trim($_POST['username'] ?? '');
+        $password = $_POST['password'] ?? '';
 
-// Authentication middleware
-function requireAuth() {
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: /admin.html');
-        exit;
-    }
-}
+        // Debug: Log login poging
+        error_log("Login poging voor gebruiker: " . $username);
 
-// Role-based access control
-function requireRole($roles) {
-    if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], (array)$roles)) {
-        header('HTTP/1.1 403 Forbidden');
-        echo json_encode(['success' => false, 'message' => 'Insufficient permissions']);
-        exit;
+        try {
+            // Valideer input
+            if (empty($username) || empty($password)) {
+                throw new Exception('Gebruikersnaam en wachtwoord zijn verplicht');
+            }
+
+            // Probeer database connectie te krijgen
+            $conn = getDB();
+            if (!$conn) {
+                throw new Exception('Database connection failed');
+            }
+
+            // Debug: Log database connectie succes
+            error_log("Database connectie succesvol");
+
+            // Haal gebruiker op
+            $stmt = $conn->prepare('
+                SELECT id, username, password, email, role, login_attempts, locked_until 
+                FROM users 
+                WHERE username = ? 
+                LIMIT 1
+            ');
+            $stmt->execute([$username]);
+            $user = $stmt->fetch();
+
+            // Debug: Log gebruiker resultaat
+            error_log("Gebruiker gevonden: " . ($user ? 'ja' : 'nee'));
+
+            if (!$user) {
+                throw new Exception('Ongeldige gebruikersnaam of wachtwoord');
+            }
+
+            // Controleer of gebruiker vergrendeld is
+            if ($user['locked_until'] && strtotime($user['locked_until']) > time()) {
+                $lockoutTime = date('H:i', strtotime($user['locked_until']));
+                throw new Exception("Account is vergrendeld tot $lockoutTime");
+            }
+
+            // Verifieer wachtwoord
+            $passwordValid = password_verify($password, $user['password']);
+            error_log("Wachtwoord verificatie: " . ($passwordValid ? 'succesvol' : 'mislukt'));
+
+            if (!$passwordValid) {
+                // Update login pogingen
+                updateUserLoginAttempts($user['id'], false);
+                
+                // Controleer of account nu vergrendeld moet worden
+                if ($user['login_attempts'] + 1 >= 5) {
+                    throw new Exception('Account is vergrendeld vanwege te veel mislukte inlogpogingen');
+                }
+                
+                throw new Exception('Ongeldige gebruikersnaam of wachtwoord');
+            }
+
+            // Reset login pogingen en update laatste login
+            updateUserLoginAttempts($user['id'], true);
+
+            // Start sessie
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_user_id'] = $user['id'];
+            $_SESSION['admin_username'] = $user['username'];
+            $_SESSION['admin_email'] = $user['email'];
+            $_SESSION['admin_role'] = $user['role'];
+            $_SESSION['admin_login_time'] = time();
+
+            // Debug: Log succesvolle login
+            error_log("Succesvol ingelogd voor gebruiker: " . $user['username']);
+
+            // Log succesvolle login
+            logActivity($user['id'], 'user_login', 'Succesvol ingelogd');
+
+            echo json_encode([
+                'success' => true,
+                'message' => 'Succesvol ingelogd',
+                'redirect' => 'dashboard.html'
+            ]);
+
+        } catch (Exception $e) {
+            // Debug: Log fout
+            error_log("Login fout: " . $e->getMessage());
+            
+            echo json_encode([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
+} else {
+    // Niet-POST requests
+    http_response_code(405);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Method not allowed'
+    ]);
 }
 ?> 

@@ -1,36 +1,52 @@
-// Calendar functionality from js/calendar.js and agenda.html inline script combined
+/*
+    AFC Website - Hoofd JavaScript Bestand
+    ======================================
+    
+    Dit bestand bevat alle JavaScript functionaliteit voor de AFC website.
+    Inclusief:
+    - Kalender functionaliteit voor evenementen
+    - Event popup weergave
+    - Dynamische content loading
+    - API communicatie met backend
+    - Event handling en DOM manipulatie
+    
+    Auteur: AFC Development Team
+    Laatste update: 2024
+*/
 
-// Calendar functionality
+// Kalender functionaliteit - initialiseert de kalender met evenementen
 function initializeCalendar(year, month, events) {
+    // DOM elementen ophalen voor kalender en evenementen
     const calendarDates = document.getElementById('calendar-dates');
     const eventsList = document.getElementById('events-list');
     const popup = document.getElementById('event-popup');
     const closePopup = document.querySelector('.close-popup');
 
-    // Clear existing content
+    // Bestaande content leegmaken
     calendarDates.innerHTML = '';
     eventsList.innerHTML = '';
 
-    // Get first day of month and total days
+    // Eerste dag van de maand en totaal aantal dagen berekenen
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const totalDays = lastDay.getDate();
-    const startingDay = firstDay.getDay() || 7; // Convert Sunday (0) to 7
+    const startingDay = firstDay.getDay() || 7; // Zondag (0) omzetten naar 7
 
-    // Add empty cells for days before the first of the month
+    // Lege cellen toevoegen voor dagen voor de eerste van de maand
     for (let i = 1; i < startingDay; i++) {
         const emptyCell = document.createElement('div');
         emptyCell.className = 'calendar-date empty';
         calendarDates.appendChild(emptyCell);
     }
 
-    // Add days of the month
+    // Dagen van de maand toevoegen
     for (let day = 1; day <= totalDays; day++) {
         const dateCell = document.createElement('div');
         dateCell.className = 'calendar-date';
         dateCell.textContent = day;
+        dateCell.dataset.date = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
-        // Check if there are events on this day
+        // Controleren of er evenementen zijn op deze dag
         const currentDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         const dayEvents = events.filter(event => event.date === currentDate);
 
@@ -40,14 +56,14 @@ function initializeCalendar(year, month, events) {
             eventDot.className = 'event-dot';
             dateCell.appendChild(eventDot);
 
-            // Add click event to show popup
+            // Click event toevoegen om popup te tonen
             dateCell.addEventListener('click', () => showEventPopup(dayEvents[0]));
         }
 
         calendarDates.appendChild(dateCell);
     }
 
-    // Populate upcoming events list
+    // Aankomende evenementen lijst vullen
     const sortedEvents = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
     sortedEvents.forEach(event => {
         const eventElement = document.createElement('div');
@@ -67,12 +83,12 @@ function initializeCalendar(year, month, events) {
         eventsList.appendChild(eventElement);
     });
 
-    // Close popup when clicking the close button
+    // Popup sluiten bij klikken op sluitknop
     closePopup.addEventListener('click', () => {
         popup.style.display = 'none';
     });
 
-    // Close popup when clicking outside
+    // Popup sluiten bij klikken buiten de popup
     window.addEventListener('click', (e) => {
         if (e.target === popup) {
             popup.style.display = 'none';
@@ -80,7 +96,9 @@ function initializeCalendar(year, month, events) {
     });
 }
 
+// Evenement popup weergave - toont details van een evenement
 function showEventPopup(event) {
+    // DOM elementen ophalen voor popup content
     const popup = document.getElementById('event-popup');
     const title = document.getElementById('event-title');
     const date = document.getElementById('event-date');
@@ -88,7 +106,7 @@ function showEventPopup(event) {
     const location = document.getElementById('event-location');
     const description = document.getElementById('event-description');
 
-    // Format date
+    // Datum formatteren naar Nederlandse notatie
     const eventDate = new Date(event.date);
     const formattedDate = eventDate.toLocaleDateString('nl-NL', {
         weekday: 'long',
@@ -97,19 +115,20 @@ function showEventPopup(event) {
         year: 'numeric'
     });
 
-    // Update popup content
+    // Popup content bijwerken
     title.textContent = event.title;
     date.textContent = formattedDate;
     time.textContent = event.time;
     location.textContent = event.location;
     description.textContent = event.description;
 
-    // Show popup
+    // Popup weergeven
     popup.style.display = 'flex';
 }
 
-// Additional calendar and event handling from agenda.html inline script
+// Extra kalender en evenement handling van agenda.html inline script
 document.addEventListener('DOMContentLoaded', function() {
+    // DOM elementen ophalen voor kalender functionaliteit
     const calendarDates = document.getElementById('calendar-dates');
     const eventPopup = document.getElementById('event-popup');
     const closePopupBtn = document.querySelector('.close-popup');
@@ -120,8 +139,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const eventDescription = document.getElementById('event-description');
     const eventsList = document.getElementById('events-list');
 
+    // Array voor alle evenementen
     let allEvents = [];
 
+    // Evenementen ophalen van de API
     async function fetchEvents() {
         try {
             const response = await fetch('admin/api.php', {
@@ -141,19 +162,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 initializeCalendar(allEvents);
                 displayUpcomingEvents(allEvents);
             } else {
-                console.error('Error fetching events:', data.message);
-                // Optionally display an error message on the page
+                console.error('Fout bij ophalen evenementen:', data.message);
+                // Optioneel een foutmelding op de pagina weergeven
             }
         } catch (error) {
-            console.error('Error fetching events:', error);
-            // Optionally display an error message on the page
+            console.error('Fout bij ophalen evenementen:', error);
+            // Optioneel een foutmelding op de pagina weergeven
         }
     }
 
+    // Aankomende evenementen weergeven in de lijst
     function displayUpcomingEvents(events) {
-        eventsList.innerHTML = ''; // Clear current events
+        eventsList.innerHTML = ''; // Huidige evenementen leegmaken
         const now = new Date();
 
+        // Filteren op aankomende evenementen en sorteren op datum
         const upcomingEvents = events.filter(event => new Date(event.date) >= now)
                                      .sort((a, b) => new Date(a.date) - new Date(b.date));
 
@@ -162,6 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // Evenementen toevoegen aan de lijst
         upcomingEvents.forEach(event => {
             const eventItem = document.createElement('div');
             eventItem.classList.add('event-item');
@@ -177,9 +201,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Evenement popup weergeven bij klikken op kalender datum
     function showEventPopup(e) {
         const events = JSON.parse(e.target.dataset.events);
-        const event = events[0]; // Assuming one event per day for this simple example
+        const event = events[0]; // Aanname: één evenement per dag voor dit eenvoudige voorbeeld
 
         eventTitle.textContent = event.title;
         eventDate.textContent = new Date(event.date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -190,11 +215,12 @@ document.addEventListener('DOMContentLoaded', function() {
         eventPopup.style.display = 'block';
     }
 
+    // Event listeners voor popup sluiten
     closePopupBtn.addEventListener('click', function() {
         eventPopup.style.display = 'none';
     });
 
-    // Close popup when clicking outside
+    // Popup sluiten bij klikken buiten de popup
     window.addEventListener('click', function(e) {
         if (e.target === eventPopup) {
             eventPopup.style.display = 'none';

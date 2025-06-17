@@ -3,31 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - AFC</title>
+    <title>AFC - Contact</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="fotos/afc-logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="images/logo.png">
 </head>
 <body>
     <header>
         <nav class="main-nav">
-            <div class="logo">
+            <div class="logo-container">
                 <a href="index.html">
-                    <img src="fotos/Amsterdamsche_FC_(logo).svg" alt=fotos/fotos/Amsterdamsche_FC_(logo).svg">
+                    <img src="fotos/afc-logo.svg" alt="AFC Logo" class="logo-image" style="height: 40px !important; width: auto !important; max-height: 40px !important; max-width: 40px !important;">
                 </a>
             </div>
-            <ul class="nav-links">
-                <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
-                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i>Nieuws</a></li>
-                <li><a href="wedstrijden.html"><i class="fas fa-futbol"></i>Wedstrijden</a></li>
-                <li><a href="teams.html"><i class="fas fa-users"></i>Teams</a></li>
-                <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i>Contact</a></li>
-                <li><a href="admin.html"><i class="fas fa-user-shield"></i>Admin</a></li>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="nieuws.html"><i class="fas fa-newspaper"></i> Nieuws</a></li>
+                <li><a href="agenda.html"><i class="fas fa-calendar"></i> Agenda</a></li>
+                <li><a href="uitslagen.html"><i class="fas fa-trophy"></i> Uitslagen</a></li>
+                <li><a href="teams.html"><i class="fas fa-users"></i> Teams</a></li>
+                <li><a href="historie.html"><i class="fas fa-history"></i> Historie</a></li>
+                <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="admin/login.html" style="background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%); color: white; border-radius: var(--radius-md);"><i class="fas fa-cog"></i> Admin</a></li>
             </ul>
-            <button class="theme-toggle" aria-label="Toggle Theme">
-                <i class="fas fa-moon"></i>
-            </button>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Mobile Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </nav>
     </header>
 
@@ -36,62 +45,129 @@
             <div class="container">
                 <div class="hero-content">
                     <h1>Contact</h1>
-                    <p class="subtitle">Neem contact met ons op</p>
+                    <p class="subtitle">Neem contact met ons op voor vragen, lidmaatschap of andere informatie</p>
                 </div>
             </div>
         </section>
 
         <section class="section">
             <div class="container">
+                <div class="section-header">
+                    <h2>Neem Contact Op</h2>
+                    <p class="subtitle">We staan klaar om al je vragen te beantwoorden</p>
+                </div>
+
                 <div class="grid-2">
                     <div class="card">
                         <div class="card-content">
-                            <h2>Contactgegevens</h2>
-                            <div class="info-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <p>Maurice Ravellaan 4 1083 HR Amsterdam</p>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-phone"></i>
-                                <p>31 (0)20-6445575</p>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-envelope"></i>
-                                <p>info@afc.nl</p>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-clock"></i>
-                                <p>Administratie: 09:00 tot 17:00 Horeca: 15:30 tot 00:00 uur</p>
-                            </div>
+                            <h3><i class="fas fa-paper-plane"></i> Stuur ons een bericht</h3>
+                            <form id="contact-form">
+                                <div class="form-group">
+                                    <label for="firstName">Voornaam *</label>
+                                    <input type="text" id="firstName" name="firstName" required>
+                                    <div class="error-message" id="firstName-error"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lastName">Achternaam *</label>
+                                    <input type="text" id="lastName" name="lastName" required>
+                                    <div class="error-message" id="lastName-error"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone">Telefoonnummer</label>
+                                    <input type="tel" id="phone" name="phone">
+                                    <div class="error-message" id="phone-error"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">E-mailadres *</label>
+                                    <input type="email" id="email" name="email" required>
+                                    <div class="error-message" id="email-error"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="subject">Onderwerp *</label>
+                                    <select id="subject" name="subject" required>
+                                        <option value="">Selecteer een onderwerp</option>
+                                        <option value="Lidmaatschap">Lidmaatschap</option>
+                                        <option value="Training">Training</option>
+                                        <option value="Wedstrijden">Wedstrijden</option>
+                                        <option value="Evenementen">Evenementen</option>
+                                        <option value="Algemeen">Algemeen</option>
+                                    </select>
+                                    <div class="error-message" id="subject-error"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="message">Bericht *</label>
+                                    <textarea id="message" name="message" rows="5" required placeholder="Vertel ons waar we je mee kunnen helpen..."></textarea>
+                                    <div class="error-message" id="message-error"></div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Verstuur Bericht
+                                </button>
+                            </form>
+
+                            <div id="form-message"></div>
                         </div>
                     </div>
 
                     <div class="card">
                         <div class="card-content">
-                            <h2>Stuur ons een bericht</h2>
-                            <form class="contact-form">
-                                <div class="form-group">
-                                    <label for="name">Naam</label>
-                                    <input type="text" id="name" name="name" required>
-                                    <span id="name-error" class="error-message"></span>
+                            <h3><i class="fas fa-info-circle"></i> Contact Informatie</h3>
+                            
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h4>Adres</h4>
+                                    <p>Maurice Ravellaan 4<br>1083 HR Amsterdam</p>
                                 </div>
-                                <div class="form-group">
-                                    <label for="email">E-mail</label>
-                                    <input type="email" id="email" name="email" required>
-                                    <span id="email-error" class="error-message"></span>
+                            </div>
+
+                            <div class="info-item">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h4>Telefoon</h4>
+                                    <p>31 (0)20-6445575</p>
                                 </div>
-                                <div class="form-group">
-                                    <label for="subject">Onderwerp</label>
-                                    <input type="text" id="subject" name="subject" required>
-                                    <span id="subject-error" class="error-message"></span>
+                            </div>
+
+                            <div class="info-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h4>E-mail</h4>
+                                    <p>info@afc.nl</p>
                                 </div>
-                                <div class="form-group">
-                                    <label for="message">Bericht</label>
-                                    <textarea id="message" name="message" rows="5" required></textarea>
-                                    <span id="message-error" class="error-message"></span>
+                            </div>
+
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <h4>Openingstijden</h4>
+                                    <p>Administratie: 09:00 tot 17:00<br>Horeca: 15:30 tot 00:00 uur</p>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Verstuur</button>
-                            </form>
+                            </div>
+
+                            <div class="info-item">
+                                <i class="fas fa-calendar"></i>
+                                <div>
+                                    <h4>Trainingstijden</h4>
+                                    <p>Dinsdag & Donderdag: 19:00 - 21:00<br>
+                                    Zaterdag: 10:00 - 12:00</p>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: var(--spacing-lg); padding: var(--spacing-md); background: var(--color-background-alt); border-radius: var(--radius-lg); border-left: 4px solid var(--color-secondary);">
+                                <h4 style="margin-bottom: var(--spacing-sm); color: var(--color-secondary);">
+                                    <i class="fas fa-lightbulb"></i> Snelle Reactie
+                                </h4>
+                                <p style="margin: 0; font-size: 0.875rem; color: var(--color-text-light);">
+                                    We proberen binnen 24 uur te reageren op alle berichten. Voor dringende zaken kun je ook direct bellen.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -102,17 +178,18 @@
             <div class="container">
                 <div class="section-header">
                     <h2>Locatie</h2>
-                    <p class="subtitle">Maurice Ravellaan 4</p>
+                    <p class="subtitle">Maurice Ravellaan 4, 1083 HR Amsterdam</p>
                 </div>
                 <div class="card">
                     <div class="card-content p-0">
                         <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2436.4769617833774!2d4.915997315801474!3d52.36177097978603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609c3f87d4727%3A0x1f41c1c9c8c0c0c0!2sAmsterdam!5e0!3m2!1snl!2snl!4v1620000000000!5m2!1snl!2snl" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2436.4769617833774!2d4.915997315801474!3d52.36177097978603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609c3f87d4727%3A0x1f41c1c9c8c0c0c0!2sMaurice+Ravellaan+4%2C+1083+HR+Amsterdam!5e0!3m2!1snl!2snl!4v1620000000000!5m2!1snl!2snl" 
                             width="100%" 
                             height="450" 
                             style="border:0;" 
                             allowfullscreen="" 
-                            loading="lazy">
+                            loading="lazy"
+                            title="Locatie AFC">
                         </iframe>
                     </div>
                 </div>
@@ -124,19 +201,8 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Sportpark 1, 1234 AB Stad</p>
-                    <p><i class="fas fa-phone"></i> (012) 345 6789</p>
-                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Openingstijden</h3>
-                    <p>Maandag - Vrijdag: 09:00 - 22:00</p>
-                    <p>Zaterdag: 10:00 - 18:00</p>
-                    <p>Zondag: 12:00 - 17:00</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Volg ons</h3>
+                    <h3>Amsterdamsche FC</h3>
+                    <p>Al meer dan 100 jaar de trots van Amsterdam. Wij zijn een amateurvoetbalclub die zich inzet voor sportiviteit, respect en plezier in het voetbal.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -144,13 +210,98 @@
                         <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
+                
+                <div class="footer-section">
+                    <h3>Snelle Links</h3>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="nieuws.html">Nieuws</a></p>
+                    <p><a href="agenda.html">Agenda</a></p>
+                    <p><a href="uitslagen.html">Uitslagen</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Maurice Ravellaan 4, 1083 HR Amsterdam</p>
+                    <p><i class="fas fa-phone"></i> +31 (0)20-6445575</p>
+                    <p><i class="fas fa-envelope"></i> info@afc.nl</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Openingstijden</h3>
+                    <p>Administratie: Maandag - Vrijdag: 09:00 - 17:00</p>
+                    <p>Horeca: Maandag - Zondag: 15:30 - 00:00</p>
+                </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2024 AFC. Alle rechten voorbehouden.</p>
+                <p>&copy; <span id="current-year">2025</span> Amsterdamsche FC. Alle rechten voorbehouden.</p>
             </div>
         </div>
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/contact.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Thema toggle functionaliteit
+            const themeToggle = document.querySelector('.theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+
+            function setTheme(theme) {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark-mode');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    document.documentElement.classList.remove('dark-mode');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+                localStorage.setItem('theme', theme);
+            }
+
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = localStorage.getItem('theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                setTheme(newTheme);
+            });
+
+            // Mobiele menu functionaliteit
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileMenuClose = document.querySelector('.mobile-menu-close');
+
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            if (mobileMenuClose && mobileMenu) {
+                mobileMenuClose.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+
+            // Sluit mobiele menu bij klikken op een link
+            const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // Huidige jaar bijwerken
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+    </script>
 </body>
 </html> 

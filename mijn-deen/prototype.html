@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mijn Deen – klikbaar prototype (werktitel)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== DESIGN TOKENS (zie tokens.json) ===== */
+:root{
+  --green-900:#0F3D2E; --green-700:#1E5A44; --green-500:#2F7A5E; --green-100:#E3EFE8;
+  --gold-500:#B8893B; --gold-300:#D9B977; --gold-100:#F5ECD9;
+  --cream-50:#FBF8F2; --cream-100:#F4EFE4; --ink-900:#1C1F1D; --ink-600:#4A514C; --ink-400:#6E756F;
+  --danger:#A63D32;
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;
+  --radius-s:10px;--radius-m:16px;--radius-l:24px;--radius-pill:999px;
+  --font-latin:"Atkinson Hyperlegible",system-ui,sans-serif;
+  --font-arabic:"Amiri","Noto Naskh Arabic",serif;
+  --fs-body:17px; --fs-small:15px; --fs-title:22px; --fs-display:30px; --fs-arabic:28px;
+  --touch:48px;
+}
+[data-theme=light]{
+  --bg:var(--cream-50); --surface:#FFFFFF; --surface-2:var(--cream-100);
+  --text:var(--ink-900); --text-2:var(--ink-600); --border:#E2DCCD;
+  --primary:var(--green-700); --on-primary:#FFFFFF; --primary-soft:var(--green-100);
+  --accent:#8A6420; --accent-soft:var(--gold-100);
+  --shadow:0 1px 2px rgba(15,61,46,.06),0 4px 16px rgba(15,61,46,.06);
+}
+[data-theme=dark]{
+  --bg:#0E1512; --surface:#16201B; --surface-2:#1D2A24;
+  --text:#EEF2EF; --text-2:#B4BDB7; --border:#2B3A33;
+  --primary:#7CC4A4; --on-primary:#0E1512; --primary-soft:#1F3A2F;
+  --accent:var(--gold-300); --accent-soft:#2E2818;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font-latin);background:#d9d4c8;color:var(--text);display:flex;gap:24px;justify-content:center;padding:24px;flex-wrap:wrap}
+.controls{width:260px;font-size:14px;color:#222}
+.controls button{display:block;width:100%;margin:6px 0;padding:10px;border-radius:10px;border:1px solid #999;background:#fff;cursor:pointer;font:inherit}
+.phone{width:375px;height:780px;background:var(--bg);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.25);border:10px solid #111;display:flex;flex-direction:column}
+.phone.small{width:320px;height:620px}
+.statusbar{height:36px;display:flex;justify-content:space-between;align-items:center;padding:0 22px;font-size:13px;color:var(--text-2)}
+main{flex:1;overflow-y:auto;padding:0 var(--space-4) var(--space-5)}
+.screen{display:none}.screen.active{display:block}
+h1{font-size:var(--fs-display);margin:var(--space-2) 0 var(--space-1);line-height:1.2}
+h2{font-size:var(--fs-title);margin:var(--space-5) 0 var(--space-3)}
+h3{font-size:18px;margin:0 0 var(--space-2)}
+p{font-size:var(--fs-body);line-height:1.55;margin:0 0 var(--space-3)}
+.muted{color:var(--text-2);font-size:var(--fs-small)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);padding:var(--space-4);box-shadow:var(--shadow);margin-bottom:var(--space-3)}
+.card.hero{background:var(--primary-soft);border-color:transparent;position:relative;overflow:hidden}
+.card.hero::after{content:"";position:absolute;right:-30px;top:-30px;width:130px;height:130px;opacity:.12;
+  background:conic-gradient(from 22.5deg,var(--primary) 0 12.5%,transparent 0 25%,var(--primary) 0 37.5%,transparent 0 50%,var(--primary) 0 62.5%,transparent 0 75%,var(--primary) 0 87.5%,transparent 0);border-radius:12px;transform:rotate(45deg)}
+.btn{min-height:var(--touch);padding:0 var(--space-5);border-radius:var(--radius-pill);font:700 16px var(--font-latin);cursor:pointer;border:2px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn-primary{background:var(--primary);color:var(--on-primary)}
+.btn-secondary{background:transparent;color:var(--primary);border-color:var(--primary)}
+.btn-quiet{background:transparent;color:var(--primary);padding:0 var(--space-3)}
+.btn-block{width:100%}
+.row{display:flex;gap:var(--space-3);align-items:center}
+.between{justify-content:space-between}
+.times{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:var(--space-3);text-align:center;font-size:13px}
+.times div{padding:6px 0;border-radius:var(--radius-s)}
+.times .next{background:var(--surface);font-weight:700;color:var(--primary)}
+.times .done{color:var(--text-2)}
+.check{width:var(--touch);height:var(--touch);border-radius:50%;border:2px solid var(--primary);background:transparent;color:var(--primary);font-size:22px;cursor:pointer;transition:all .25s}
+.check.on{background:var(--primary);color:var(--on-primary)}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3)}
+.quick .card{text-align:center;cursor:pointer;margin:0}
+.icon{font-size:22px;color:var(--primary)}
+.progress{height:8px;background:var(--surface-2);border-radius:var(--radius-pill);overflow:hidden}
+.progress span{display:block;height:100%;background:var(--accent);border-radius:inherit}
+.dots{display:flex;gap:6px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--surface-2);border:1px solid var(--border)}.dots i.f{background:var(--primary);border-color:var(--primary)}
+.chip{display:inline-block;padding:4px 10px;border-radius:var(--radius-pill);background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700}
+.review{display:block;margin-top:var(--space-2);font-size:12px;color:var(--accent);border:1px dashed var(--accent);border-radius:8px;padding:4px 8px}
+.arabic{font-family:var(--font-arabic);font-size:var(--fs-arabic);direction:rtl;text-align:right;line-height:2}
+.term{background:var(--surface-2);border-radius:var(--radius-s);padding:var(--space-3);margin:var(--space-3) 0}
+.step{display:flex;gap:var(--space-3);margin-bottom:var(--space-3)}
+.step b{flex:0 0 32px;height:32px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center}
+details{border-top:1px solid var(--border);padding:var(--space-3) 0}
+summary{cursor:pointer;font-weight:700;min-height:var(--touch);display:flex;align-items:center}
+.verse{border-bottom:1px solid var(--border);padding:var(--space-4) 0}
+.vnum{display:inline-flex;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);align-items:center;justify-content:center;font-size:13px}
+.counter{width:240px;height:240px;border-radius:50%;margin:var(--space-5) auto;background:var(--primary-soft);border:none;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:var(--primary)}
+.counter .n{font-size:64px;font-weight:700}
+.compass{width:240px;height:240px;border-radius:50%;margin:var(--space-5) auto;border:2px solid var(--border);position:relative;background:var(--surface)}
+.compass .needle{position:absolute;left:50%;top:18px;width:4px;height:102px;background:var(--primary);transform-origin:bottom center;transform:translateX(-50%) rotate(38deg);border-radius:4px}
+.compass .k{position:absolute;top:6px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--text-2)}
+.setting{display:flex;justify-content:space-between;align-items:center;min-height:56px;border-bottom:1px solid var(--border);gap:12px}
+.setting:last-child{border:none}
+.toast{position:absolute;left:16px;right:16px;bottom:96px;background:var(--text);color:var(--bg);padding:12px 16px;border-radius:12px;font-size:15px;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+nav.tabs{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);background:var(--surface);padding-bottom:14px}
+nav.tabs button{background:none;border:none;min-height:60px;font:13px var(--font-latin);color:var(--text-2);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+nav.tabs button svg{width:24px;height:24px}
+nav.tabs button[aria-current=page]{color:var(--primary);font-weight:700}
+.sheet{position:absolute;inset:0;background:rgba(0,0,0,.4);display:none;align-items:flex-end}
+.sheet.show{display:flex}
+.sheet .card{width:100%;margin:0;border-radius:var(--radius-l) var(--radius-l) 0 0;padding:var(--space-5)}
+.back{background:none;border:none;color:var(--primary);font:700 16px var(--font-latin);min-height:var(--touch);cursor:pointer;padding:0}
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <h3>Mijn Deen – prototype</h3>
+  <p class="muted" style="color:#444">Werktitel. Alle religieuze inhoud is placeholder en moet door een deskundige worden gecontroleerd.</p>
+  <button onclick="toggleTheme()">Licht / donker wisselen</button>
+  <button onclick="document.querySelector('.phone').classList.toggle('small')">Klein scherm (320×620) wisselen</button>
+  <button onclick="go('dhikr')">Open dhikr-teller</button>
+  <button onclick="go('qibla')">Open qibla</button>
+  <button onclick="qState('denied')">Qibla: toestemming geweigerd</button>
+  <button onclick="qState('calib')">Qibla: kalibreren</button>
+</div>
+
+<div class="phone">
+  <div class="statusbar"><span>9:41</span><span>●●● ◔</span></div>
+  <main id="main">
+
+  <!-- VANDAAG -->
+  <section class="screen active" id="vandaag">
+    <p class="muted" style="margin-top:8px">Dinsdag 24 november · <span title="Voorbeeld, berekend door app">3 Jumada al-Akhirah 1448*</span></p>
+    <h1>Assalamu alaikum, Yusuf</h1>
+    <p class="muted">Fijn dat je er bent. Neem rustig de tijd.</p>
+
+    <div class="card hero" aria-live="polite">
+      <div class="row between">
+        <div>
+          <div class="muted">Volgend gebed</div>
+          <h3 style="font-size:24px;margin:2px 0" id="nextName">Asr</h3>
+          <div><b id="nextTime">14:02</b> · <span class="muted">over 1 u 21 min</span></div>
+        </div>
+        <button class="check" id="checkBtn" aria-pressed="false" aria-label="Dhuhr als gebeden markeren" onclick="markPrayer()">✓</button>
+      </div>
+      <div class="times" aria-label="Gebedstijden vandaag">
+        <div class="done">Fajr<br>06:58</div><div id="t-dhuhr">Dhuhr<br>12:28</div><div class="next">Asr<br>14:02</div><div>Maghrib<br>16:33</div><div>Isha<br>18:15</div>
+      </div>
+      <span class="muted" style="font-size:12px">Voorbeeldtijden · Amsterdam · methode instelbaar</span>
+    </div>
+
+    <h2>Jouw volgende stap</h2>
+    <div class="card" onclick="go('les')" style="cursor:pointer">
+      <span class="chip">Wudu · les 2 van 5</span>
+      <h3 style="margin-top:8px">De volgorde van de wassing</h3>
+      <p class="muted">Ongeveer 4 minuten</p>
+      <button class="btn btn-primary btn-block">Verder leren</button>
+    </div>
+
+    <div class="quick">
+      <div class="card" onclick="go('dhikr')" role="button" tabindex="0"><div class="icon">◎</div><b>Dhikr</b><div class="muted">Teller</div></div>
+      <div class="card" onclick="go('qibla')" role="button" tabindex="0"><div class="icon">➤</div><b>Qibla</b><div class="muted">Richting</div></div>
+    </div>
+
+    <h2>Voor vandaag</h2>
+    <div class="card">
+      <p class="muted">Ayah van de dag</p>
+      <p>[Vers in het Arabisch + Nederlandse vertaling uit een erkende bron]</p>
+      <span class="review">Inhoud te controleren door een deskundige</span>
+    </div>
+  </section>
+
+  <!-- LEREN -->
+  <section class="screen" id="leren">
+    <h1>Leren</h1>
+    <p class="muted">Begin waar je wilt. Je kunt altijd terugkomen.</p>
+    <div class="card hero" onclick="go('les')" style="cursor:pointer">
+      <div class="muted">Hier was je gebleven</div>
+      <h3 style="margin-top:4px">Wudu · De volgorde van de wassing</h3>
+      <button class="btn btn-primary">Verder</button>
+    </div>
+    <div id="modules"></div>
+  </section>
+
+  <!-- LES -->
+  <section class="screen" id="les">
+    <button class="back" onclick="go('leren')">‹ Wudu</button>
+    <div class="row between"><span class="chip">Les 2 van 5</span><div class="dots" aria-label="Les 2 van 5"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></div></div>
+    <h1 style="font-size:26px">De volgorde van de wassing</h1>
+    <p>Wudu is de kleine wassing vóór het gebed. In deze les zie je de stappen in volgorde. [Uitleg – placeholder]</p>
+    <div class="term">
+      <div class="arabic" lang="ar">وُضُوء</div>
+      <b>Wudu</b> <span class="muted">· uitspraak: woe-<u>doe</u></span>
+      <p class="muted" style="margin:4px 0 0">Betekenis: kleine rituele wassing</p>
+    </div>
+    <h2>Stap voor stap</h2>
+    <div class="step"><b>1</b><div><h3>Intentie</h3><p class="muted">[Wat je doet en zegt – placeholder]</p></div></div>
+    <div class="step"><b>2</b><div><h3>Handen wassen</h3><p class="muted">[Placeholder + eenvoudig lijndiagram]</p></div></div>
+    <div class="step"><b>3</b><div><h3>Mond spoelen</h3><p class="muted">[Placeholder]</p></div></div>
+    <span class="review">Volledige lesinhoud te controleren door een deskundige</span>
+    <details><summary>Bronnen bij deze les</summary><p class="muted">[Bronvermelding volgt na controle]</p></details>
+    <button class="btn btn-primary btn-block" id="doneBtn" onclick="lessonDone()">Les afronden</button>
+    <div class="row between" style="margin-top:12px">
+      <button class="btn btn-quiet">‹ Vorige les</button>
+      <button class="btn btn-secondary">Volgende les ›</button>
+    </div>
+  </section>
+
+  <!-- KORAN -->
+  <section class="screen" id="koran">
+    <div class="row between">
+      <button class="btn btn-secondary" onclick="sheet(true)" style="padding:0 16px">1 · Al-Fatiha ▾</button>
+      <div class="row" style="gap:4px">
+        <button class="btn btn-quiet" aria-label="Kleinere tekst" onclick="fs(-2)">A−</button>
+        <button class="btn btn-quiet" aria-label="Grotere tekst" onclick="fs(2)">A+</button>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="row between"><span class="vnum">1</span><button class="btn btn-quiet" aria-label="Bladwijzer vers 1" onclick="toast('Bladwijzer opgeslagen')">☆</button></div>
+      <div class="arabic" lang="ar" dir="rtl">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+      <p class="muted"><i>Bismillāhir-raḥmānir-raḥīm</i></p>
+      <p>[Nederlandse vertaling uit erkende bron]</p>
+    </div>
+    <div class="verse">
+      <div class="row between"><span class="vnum">2</span><button class="btn btn-quiet" aria-label="Bladwijzer vers 2">☆</button></div>
+      <div class="arabic" lang="ar" dir="rtl">ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ</div>
+      <p class="muted"><i>Al-ḥamdu lillāhi rabbil-ʿālamīn</i></p>
+      <p>[Nederlandse vertaling uit erkende bron]</p>
+    </div>
+    <span class="review">Tekst, transliteratie en vertaling te controleren door een deskundige</span>
+    <div class="card row between" style="margin-top:16px;position:sticky;bottom:0">
+      <button class="btn btn-primary" onclick="toast('Audio speelt vers 1')" aria-label="Afspelen">▶ Luisteren</button>
+      <span class="muted">Reciteur kiezen</span>
+    </div>
+  </section>
+
+  <!-- DHIKR -->
+  <section class="screen" id="dhikr">
+    <button class="back" onclick="go('vandaag')">‹ Vandaag</button>
+    <div style="text-align:center">
+      <div class="arabic" lang="ar" style="text-align:center">سُبْحَانَ ٱللَّٰهِ</div>
+      <b>SubḥānAllāh</b>
+      <p class="muted">Betekenis: [te controleren]</p>
+    </div>
+    <button class="counter" onclick="count(1)" aria-live="polite" aria-label="Tik om te tellen">
+      <span class="n" id="cnt">0</span><span id="goalTxt" class="muted">Tik om te tellen</span>
+    </button>
+    <div class="row" style="justify-content:center">
+      <button class="btn btn-secondary" onclick="count(-1)">↶ Ongedaan</button>
+      <button class="btn btn-quiet" onclick="askReset()">Opnieuw</button>
+    </div>
+    <div class="card" style="margin-top:16px"><div class="setting"><span>Doel (optioneel)</span>
+      <select onchange="goal=+this.value;count(0)" style="min-height:44px;font:inherit"><option value="0">Geen</option><option value="33">33</option><option value="100">100</option></select></div></div>
+  </section>
+
+  <!-- QIBLA -->
+  <section class="screen" id="qibla">
+    <button class="back" onclick="go('vandaag')">‹ Vandaag</button>
+    <h1>Qibla</h1>
+    <div id="qBody"></div>
+  </section>
+
+  <!-- PROFIEL -->
+  <section class="screen" id="profiel">
+    <h1>Profiel</h1>
+    <div class="card">
+      <h3>Jouw weg tot nu toe</h3>
+      <p class="muted">7 lessen bekeken · 2 modules begonnen</p>
+      <div class="progress" aria-label="Wudu 40 procent"><span style="width:40%"></span></div>
+      <p class="muted" style="margin-top:8px">Elke stap telt, in jouw tempo.</p>
+    </div>
+    <h2>Instellingen</h2>
+    <div class="card">
+      <div class="setting"><div><b>Taal</b><div class="muted">Taal van de app</div></div><span>Nederlands ›</span></div>
+      <div class="setting"><div><b>Locatie</b><div class="muted">Voor gebedstijden en qibla</div></div><span>Amsterdam ›</span></div>
+      <div class="setting"><div><b>Rekenmethode</b><div class="muted">Moskeeën rekenen soms verschillend. Kies wat jouw moskee gebruikt.</div></div><span>›</span></div>
+      <div class="setting"><div><b>Herinneringen</b><div class="muted">Vriendelijke melding voor gebed</div></div><input type="checkbox" aria-label="Herinneringen" onchange="if(this.checked)toast('We vragen nu om meldingstoestemming')"></div>
+      <div class="setting"><div><b>Donkere modus</b></div><input type="checkbox" aria-label="Donkere modus" onchange="toggleTheme()"></div>
+      <div class="setting"><div><b>Privacy</b><div class="muted">Je gegevens blijven op je telefoon</div></div><span>›</span></div>
+    </div>
+  </section>
+  </main>
+
+  <nav class="tabs" aria-label="Hoofdnavigatie">
+    <button data-t="vandaag" aria-current="page" onclick="go('vandaag')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Vandaag</button>
+    <button data-t="leren" onclick="go('leren')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h7v14H4zM13 5h7v14h-7z"/></svg>Leren</button>
+    <button data-t="koran" onclick="go('koran')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6c-3-2-6-2-8-1v14c2-1 5-1 8 1 3-2 6-2 8-1V5c-2-1-5-1-8 1z"/></svg>Koran</button>
+    <button data-t="profiel" onclick="go('profiel')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Profiel</button>
+  </nav>
+
+  <div class="sheet" id="sheet" onclick="if(event.target===this)sheet(false)">
+    <div class="card"><h3 id="sheetTitle">Kies soera en vers</h3><div id="sheetBody"></div></div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+</div>
+
+<script>
+const tabOf={les:'leren',dhikr:'vandaag',qibla:'vandaag'};
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
+  const t=tabOf[id]||id;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.dataset.t===t?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
+  document.getElementById('main').scrollTop=0;
+  if(id==='qibla'&&!window.qInit){qInit=1;qState('ask')}
+}
+function toggleTheme(){const h=document.documentElement;h.dataset.theme=h.dataset.theme==='light'?'dark':'light'}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600)}
+function markPrayer(){const b=document.getElementById('checkBtn');const on=b.classList.toggle('on');b.setAttribute('aria-pressed',on);
+  document.getElementById('t-dhuhr').classList.toggle('done',on);
+  toast(on?'Dhuhr gemarkeerd. Mooi zo.':'Markering ongedaan gemaakt')}
+const mods=[['Basisbegrippen',6,6],['Wudu',5,2],['Het gebed',8,0],['Ghusl',4,0],['Tayammum',3,0],['De vijf zuilen',5,0]];
+document.getElementById('modules').innerHTML=mods.map(([n,t,d])=>`<div class="card" onclick="go('les')" style="cursor:pointer"><div class="row between"><h3>${n}</h3><span class="muted">${d===t?'Afgerond ✓':d?d+' van '+t:t+' lessen'}</span></div><div class="progress"><span style="width:${d/t*100}%"></span></div></div>`).join('');
+function lessonDone(){const b=document.getElementById('doneBtn');b.textContent='✓ Afgerond';b.className='btn btn-secondary btn-block';toast('Les afgerond. Ga verder wanneer je wilt.')}
+let size=28;function fs(d){size=Math.min(44,Math.max(22,size+d));document.documentElement.style.setProperty('--fs-arabic',size+'px')}
+function sheet(s,html){const el=document.getElementById('sheet');el.classList.toggle('show',s);
+  if(s&&!html){document.getElementById('sheetTitle').textContent='Kies soera en vers';
+  document.getElementById('sheetBody').innerHTML='<input placeholder="Zoek soera" style="width:100%;min-height:48px;padding:0 12px;border-radius:12px;border:1px solid var(--border);font:inherit;background:var(--surface);color:var(--text)"><p style="margin-top:12px">1 · Al-Fatiha · 7 verzen</p><p>2 · Al-Baqarah · 286 verzen</p><button class="btn btn-primary btn-block" onclick="sheet(false)">Openen</button>'}}
+let c=0,goal=0;function count(d){c=Math.max(0,c+d);document.getElementById('cnt').textContent=c;
+  const g=document.getElementById('goalTxt');
+  if(goal&&c>=goal){g.textContent='Doel bereikt – je mag gewoon doorgaan';if(c===goal&&d>0&&navigator.vibrate)navigator.vibrate(40)}
+  else g.textContent=goal?c+' van '+goal:'Tik om te tellen'}
+function askReset(){if(!c)return;document.getElementById('sheetTitle').textContent='Teller op 0 zetten?';
+  document.getElementById('sheetBody').innerHTML='<p class="muted">Je huidige telling ('+c+') verdwijnt.</p><button class="btn btn-primary btn-block" onclick="c=0;count(0);sheet(false)">Op 0 zetten</button><button class="btn btn-quiet btn-block" onclick="sheet(false)">Annuleren</button>';sheet(true,1)}
+function qState(s){go('qibla');const b=document.getElementById('qBody');const S={
+ ask:'<div class="card"><h3>Om de richting te tonen, hebben we je locatie nodig</h3><p class="muted">We gebruiken je locatie alleen op je telefoon om de richting te berekenen.</p><button class="btn btn-primary btn-block" onclick="qState(\'calib\')">Locatie gebruiken</button><button class="btn btn-quiet btn-block" onclick="qState(\'manual\')">Stad zelf kiezen</button></div>',
+ denied:'<div class="card"><h3>Geen toegang tot locatie</h3><p class="muted">Geen probleem. Je kunt een stad kiezen, of toegang later aanzetten in Instellingen.</p><button class="btn btn-primary btn-block" onclick="qState(\'manual\')">Stad kiezen</button><button class="btn btn-quiet btn-block">Naar instellingen</button></div>',
+ manual:'<div class="card"><p>Gekozen stad: <b>Amsterdam</b></p></div>'+compass('Richting: 119° (zuidoost)',''),
+ calib:'<div class="card"><h3>Even kalibreren</h3><p class="muted">Beweeg je telefoon een paar keer in de vorm van een 8. Houd hem uit de buurt van metaal en magneten.</p><button class="btn btn-secondary btn-block" onclick="qState(\'ok\')">Klaar</button></div>',
+ ok:compass('Richting: 119° · nauwkeurig','<span class="chip">Nauwkeurig</span>')+'<p class="muted" style="text-align:center">Draai tot de pijl naar boven wijst. <a href="#" onclick="qState(\'calib\')">Opnieuw kalibreren</a></p>'};
+ b.innerHTML=S[s]}
+function compass(t,chip){return '<div class="compass" role="img" aria-label="'+t+'"><span class="k">N</span><div class="needle"></div></div><p style="text-align:center"><b>'+t+'</b><br>'+chip+'</p>'}
+</script>
+</body>
+</html>
